@@ -7,6 +7,7 @@ Sala::Sala(string nome)
 	this->saude = 100;
 	this->oxigenio = 100;
 	this->integridade = 100;
+	this->dano = 100 - integridade;
 	this->fogo = false;
 	this->brecha = false;
 	this->curto_circuito = false;
