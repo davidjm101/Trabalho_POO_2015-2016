@@ -3,6 +3,7 @@
 
 class Unidade {
 	int vida;
+	int tipo_unidade;
 	bool respira;
 	bool operador;
 	int mover;
@@ -19,4 +20,4 @@ public:
 	bool get_operador();
 	int get_mover();
 	int get_exoesq();
-};
+};nn

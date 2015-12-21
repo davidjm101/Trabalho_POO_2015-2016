@@ -6,6 +6,7 @@ class Sala {
 	int saude;
 	int oxigenio;
 	int integridade;
+	int dano;
 	bool fogo;
 	bool brecha;
 	bool curto_circuito;
