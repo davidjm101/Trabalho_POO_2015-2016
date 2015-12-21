@@ -7,5 +7,5 @@ class xenomorfos : public Unidade
 {
 
 
-	cout << "";
+
 };
