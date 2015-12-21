@@ -152,10 +152,13 @@
     <ClInclude Include="Unidade.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Inimigos.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nave.cpp" />
     <ClCompile Include="Sala.cpp" />
+    <ClCompile Include="Tripulacao.cpp" />
     <ClCompile Include="Unidade.cpp" />
+    <ClCompile Include="xenomorfos.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,9 @@ class Unidade {
 	int exoesq;
 
 public:
+	Unidade();
+	
+	~Unidade();
 	void set_vida();
 	void set_respira();
 	void set_operador();

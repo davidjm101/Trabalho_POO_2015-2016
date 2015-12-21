@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Unidades">
+      <UniqueIdentifier>{dae711f9-e7dc-4ffe-bf63-013149f118db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bibliotecas.h">
@@ -35,11 +38,20 @@
     <ClCompile Include="Sala.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unidade.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Nave.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unidade.cpp">
+      <Filter>Source Files\Unidades</Filter>
+    </ClCompile>
+    <ClCompile Include="Tripulacao.cpp">
+      <Filter>Source Files\Unidades</Filter>
+    </ClCompile>
+    <ClCompile Include="Inimigos.cpp">
+      <Filter>Source Files\Unidades</Filter>
+    </ClCompile>
+    <ClCompile Include="xenomorfos.cpp">
+      <Filter>Source Files\Unidades</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
