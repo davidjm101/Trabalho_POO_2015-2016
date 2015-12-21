@@ -18,9 +18,27 @@
     <ClInclude Include="bibliotecas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sala.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unidade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Accoes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sala.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unidade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Accoes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
