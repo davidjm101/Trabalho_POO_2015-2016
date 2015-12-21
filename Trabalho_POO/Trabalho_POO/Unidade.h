@@ -20,4 +20,4 @@ public:
 	bool get_operador();
 	int get_mover();
 	int get_exoesq();
-};nn
+};

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "bibliotecas.h"
 
 class Sala {
 	string nome;

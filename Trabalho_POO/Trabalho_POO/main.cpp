@@ -1,9 +1,8 @@
 #include "bibliotecas.h"
-
+#include "Nave.h"
 void main()
 {
-	cout << "asd  asd trabalho de poo" << endl;
-
-	cout << "dadsdfsdfs" << endl;
+	Nave nave;
+	nave.set_salas_normais();
 	
 }

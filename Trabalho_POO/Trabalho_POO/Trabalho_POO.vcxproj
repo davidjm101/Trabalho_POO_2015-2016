@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Accoes.h" />
     <ClInclude Include="bibliotecas.h" />
     <ClInclude Include="Nave.h" />
     <ClInclude Include="Sala.h" />

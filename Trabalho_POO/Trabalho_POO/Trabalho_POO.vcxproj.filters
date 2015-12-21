@@ -24,9 +24,6 @@
     <ClInclude Include="Unidade.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Accoes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Nave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
