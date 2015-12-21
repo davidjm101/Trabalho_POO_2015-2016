@@ -37,6 +37,11 @@ void Sala::set_integridade(int integridade)
 {
 	this->integridade = integridade;
 }
+void Sala::set_dano(int dano)
+{
+	this->dano = dano;
+
+}
 
 void Sala::set_fogo(bool existe)
 {
@@ -69,6 +74,11 @@ int Sala::get_oxigenio()
 	return oxigenio;
 }
 
+int Sala::get_dano()
+{
+	return dano;
+}
+
 int Sala::get_integridade()
 {
 	return integridade;
@@ -88,3 +98,4 @@ bool Sala::get_curto_circuito()
 {
 	return curto_circuito;
 }
+

@@ -18,12 +18,14 @@ public:
 	void set_saude(int saude);
 	void set_oxigenio(int oxigenio);
 	void set_integridade(int integridade);
+	void set_dano(int dano);
 	void set_fogo(bool existe);
 	void set_brecha(bool existe);
 	void set_curto_circuito(bool existe);
 	string get_nome();
 	int get_saude();
 	int get_oxigenio();
+	int get_dano();
 	int get_integridade();
 	bool get_fogo();
 	bool get_brecha();
