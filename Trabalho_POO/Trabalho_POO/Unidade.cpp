@@ -29,7 +29,8 @@ void Unidade::set_exoesq()
 {
 }
 int Unidade::get_vida() 
-{}
+{
+}
 int Unidade::get_mover()
 {}
 int Unidade::get_exoesq()

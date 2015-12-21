@@ -15,8 +15,8 @@ Sala::Sala(string nome)
 
 Sala::~Sala()
 {
-}
 
+}
 
 void Sala::set_nome(string nome)
 {

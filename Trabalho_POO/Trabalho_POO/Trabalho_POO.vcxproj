@@ -147,9 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="bibliotecas.h" />
+    <ClInclude Include="Inimigos.h" />
     <ClInclude Include="Nave.h" />
     <ClInclude Include="Sala.h" />
+    <ClInclude Include="Tripulacao.h" />
     <ClInclude Include="Unidade.h" />
+    <ClInclude Include="xenomorfos.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Inimigos.cpp" />

@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Unidades">
       <UniqueIdentifier>{dae711f9-e7dc-4ffe-bf63-013149f118db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Unidades">
+      <UniqueIdentifier>{51fe2fd3-a965-47d7-83fa-915740b0f0ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bibliotecas.h">
@@ -24,11 +27,20 @@
     <ClInclude Include="Sala.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Unidade.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Nave.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unidade.h">
+      <Filter>Header Files\Unidades</Filter>
+    </ClInclude>
+    <ClInclude Include="Inimigos.h">
+      <Filter>Header Files\Unidades</Filter>
+    </ClInclude>
+    <ClInclude Include="xenomorfos.h">
+      <Filter>Header Files\Unidades</Filter>
+    </ClInclude>
+    <ClInclude Include="Tripulacao.h">
+      <Filter>Header Files\Unidades</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
