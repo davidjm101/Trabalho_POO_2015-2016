@@ -148,12 +148,13 @@
   <ItemGroup>
     <ClInclude Include="Accoes.h" />
     <ClInclude Include="bibliotecas.h" />
+    <ClInclude Include="Nave.h" />
     <ClInclude Include="Sala.h" />
     <ClInclude Include="Unidade.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Accoes.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Nave.cpp" />
     <ClCompile Include="Sala.cpp" />
     <ClCompile Include="Unidade.cpp" />
   </ItemGroup>

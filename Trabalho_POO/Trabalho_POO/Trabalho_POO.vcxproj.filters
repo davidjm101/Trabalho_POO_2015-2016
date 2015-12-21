@@ -27,6 +27,9 @@
     <ClInclude Include="Accoes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Nave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -38,7 +41,7 @@
     <ClCompile Include="Unidade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Accoes.cpp">
+    <ClCompile Include="Nave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
