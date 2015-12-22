@@ -3,7 +3,7 @@
 #include "bibliotecas.h"
 #include "Unidade.h"
 
-class Inimigos: public Unidade
+class Pirata: public Unidade
 {
 
 	

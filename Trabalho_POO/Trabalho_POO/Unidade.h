@@ -13,11 +13,11 @@ public:
 	Unidade();
 	
 	~Unidade();
-	void set_vida();
-	void set_respira();
-	void set_operador();
-	void set_mover();
-	void set_exoesq();
+	void set_vida(int valor);
+	void set_respira(bool valor);
+	void set_operador(bool valor);
+	void set_mover(int valor);
+	void set_exoesq(int valor);
 	int get_vida();
 	bool get_respira();
 	bool get_operador();

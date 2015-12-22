@@ -33,13 +33,13 @@
     <ClInclude Include="Unidade.h">
       <Filter>Header Files\Unidades</Filter>
     </ClInclude>
-    <ClInclude Include="Inimigos.h">
-      <Filter>Header Files\Unidades</Filter>
-    </ClInclude>
     <ClInclude Include="xenomorfos.h">
       <Filter>Header Files\Unidades</Filter>
     </ClInclude>
     <ClInclude Include="Tripulacao.h">
+      <Filter>Header Files\Unidades</Filter>
+    </ClInclude>
+    <ClInclude Include="Pirata.h">
       <Filter>Header Files\Unidades</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +59,10 @@
     <ClCompile Include="Tripulacao.cpp">
       <Filter>Source Files\Unidades</Filter>
     </ClCompile>
-    <ClCompile Include="Inimigos.cpp">
+    <ClCompile Include="xenomorfos.cpp">
       <Filter>Source Files\Unidades</Filter>
     </ClCompile>
-    <ClCompile Include="xenomorfos.cpp">
+    <ClCompile Include="Pirata.cpp">
       <Filter>Source Files\Unidades</Filter>
     </ClCompile>
   </ItemGroup>
