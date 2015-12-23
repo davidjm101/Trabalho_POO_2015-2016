@@ -1,4 +1,5 @@
 #include "Nave.h"
+#include "Imprime.h"
 
 
 
@@ -19,9 +20,9 @@ void Nave::set_salas_normais()
 	Tripulacao trip3;
 
 	Sala s1("Propulsor",1);
-	Sala s2("Sala de maquinas",5);
-	Sala s3("Suporte de vida",6);
-	Sala s4("Controlo de escudo",7);
+	Sala s2("Sala_Maquinas",5);
+	Sala s3("Suporte_Vida",6);
+	Sala s4("Controlo_Escudo",7);
 	Sala s5("Ponte",8);
 	Sala s6("Propulsor",9);
 
@@ -41,13 +42,6 @@ void Nave::set_salas_normais()
 	salas.push_back(s4);
 	salas.push_back(s5);
 	salas.push_back(s6);
-
-	
-
-	/*for (unsigned int i = 0; i < salas.size(); i++)
-	{
-		cout << salas.at(i).get_nome() << endl;
-	}*/
 }
 
 
@@ -118,7 +112,7 @@ void Nave::set_salas_opcionais()
 
 		else if (sala == 3)
 		{
-			Sala s3("Raio laser", numero_sala);
+			Sala s3("Raio_Laser", numero_sala);
 			cout << "Raio laser adicionado a nave" << endl;
 			salas.push_back(s3);
 			contador++;
@@ -128,7 +122,7 @@ void Nave::set_salas_opcionais()
 
 		else if (sala == 4)
 		{
-			Sala s4("Auto reparador", numero_sala);
+			Sala s4("Auto_Reparador", numero_sala);
 			cout << "Auto reparador adicionado a nave" << endl;
 			salas.push_back(s4);
 			contador++;
@@ -138,7 +132,7 @@ void Nave::set_salas_opcionais()
 
 		else if (sala == 5)
 		{
-			Sala s5("Sistema de seguranca interno", numero_sala);
+			Sala s5("Sist_Seg_Interno", numero_sala);
 			cout << "Sistema de seguranca interno adicionado a nave" << endl;
 			salas.push_back(s5);
 			contador++;
@@ -158,7 +152,7 @@ void Nave::set_salas_opcionais()
 
 		else if (sala == 7)
 		{
-			Sala s7("Sala de Armas", numero_sala);
+			Sala s7("Sala_Armas", numero_sala);
 			cout << "Sala de Armas adicionado a nave" << endl;
 			salas.push_back(s7);
 			contador++;
@@ -170,7 +164,7 @@ void Nave::set_salas_opcionais()
 		{
 			if (alojamento_cap == false)
 			{
-				Sala s8("Alojamento do Capitao", numero_sala);
+				Sala s8("Aloj_Capitao", numero_sala);
 				cout << "Alojamento do Capitao adicionado a nave" << endl;
 				salas.push_back(s8);
 				contador++;
@@ -191,7 +185,7 @@ void Nave::set_salas_opcionais()
 		{
 			if (oficina_rob == false)
 			{
-				Sala s9("Oficina Robotica", numero_sala);
+				Sala s9("Oficina_Robotica", numero_sala);
 				cout << "Oficina robotica adicionado a nave" << endl;
 				salas.push_back(s9);
 				contador++;
@@ -234,9 +228,11 @@ void Nave::modificar_tripulantes(int tipo, Tripulacao *trip)
 
 void Nave::le_comando()
 {
+	Consola c;
 	string comando;
 	char nome;
 	int numero;
+	c.gotoxy(3, 26);
 	cout << "Indique o comando: ";
 	cin >> comando;
 	nome = comando[0];
@@ -303,22 +299,7 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 
 void Nave::get_info_salas()
 {
-	system("cls");
-	int aux = 1;
-	do {
-		for (int i = 0; i < salas.size(); i++)
-		{
-			if (salas.at(i).get_numero() == aux)
-			{
-				cout << salas.at(i).get_nome() << "   Numero:" << salas.at(i).get_numero();
-				cout << "   Integridade:" << salas.at(i).get_saude() << endl;
-				salas.at(i).get_info_tripulantes();
-				cout << endl;
-				break;
-			}
-		}
-		aux++;
-	} while (aux <= 12);
 	
-
+	Imprime imprime;
+	imprime.imprime_nave(salas);
 }

@@ -42,6 +42,12 @@
     <ClInclude Include="Pirata.h">
       <Filter>Header Files\Unidades</Filter>
     </ClInclude>
+    <ClInclude Include="consola.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Imprime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,6 +70,12 @@
     </ClCompile>
     <ClCompile Include="Pirata.cpp">
       <Filter>Source Files\Unidades</Filter>
+    </ClCompile>
+    <ClCompile Include="consola.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Imprime.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

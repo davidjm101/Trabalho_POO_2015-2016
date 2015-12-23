@@ -160,12 +160,8 @@ void Sala::get_info_tripulantes()
 	{
 		for (int i = 0; i < tripulantes.size(); i++)
 		{
-			cout << "Nome: " << tripulantes.at(i).get_nome() << " Vida: " << tripulantes.at(i).get_vida() << endl;
+			cout <<tripulantes.at(i).get_nome() << " ";
 		}
-	}
-	else
-	{
-		cout << "Sem tripulantes na sala" << endl;
 	}
 	
 }

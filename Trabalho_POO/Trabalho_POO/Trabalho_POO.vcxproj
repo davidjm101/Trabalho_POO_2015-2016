@@ -147,6 +147,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="bibliotecas.h" />
+    <ClInclude Include="consola.h" />
+    <ClInclude Include="Imprime.h" />
     <ClInclude Include="Pirata.h" />
     <ClInclude Include="Nave.h" />
     <ClInclude Include="Sala.h" />
@@ -155,6 +157,8 @@
     <ClInclude Include="xenomorfos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="consola.cpp" />
+    <ClCompile Include="Imprime.cpp" />
     <ClCompile Include="Pirata.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nave.cpp" />
