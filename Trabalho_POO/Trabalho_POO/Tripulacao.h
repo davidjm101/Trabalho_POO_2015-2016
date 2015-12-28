@@ -7,17 +7,20 @@
 class Tripulacao : public Unidade
 {
 	int reparador;
-	int combate;
+	int forca_combate;
 	static char letra;
 	char nome;
+	bool combate;
 
 public:
 	Tripulacao();
 	~Tripulacao();
 	void set_reparador(int valor);
-	void set_combate(int valor);
+	void set_forca_combate(int valor);
+	void set_combate(bool aux);
 	int get_reparador();
-	int get_combate();
+	int get_forca_combate();
+	bool get_combate();
 	char get_nome();
 
 };

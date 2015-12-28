@@ -1,26 +1,16 @@
 #include "bibliotecas.h"
-#include "Nave.h"
-#include "Tripulacao.h"
+#include "Turno.h"
 
 void main()
 {
 	int i = 0;
-	Nave nave;
-	nave.set_salas_normais();
-	nave.set_salas_opcionais();
-	nave.get_info_salas();
-	while (i < 3)
-	{
-		nave.le_comando();
-		nave.get_info_salas();
-		i++;
-	}
-	
-	/*nave.set_tripulantes();*/
-	
-	
-
-
-
+	Turno turno;
+	turno.inicio_jogo();
+	do {
+		/*turno.inicio_turno();*/
+		turno.fase_ordem();
+		turno.final_turno();
+		turno.eventos();
+	} while (turno.acabou_jogo()==false);
 	
 }

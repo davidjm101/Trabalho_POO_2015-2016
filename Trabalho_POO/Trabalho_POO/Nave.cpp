@@ -1,11 +1,11 @@
 #include "Nave.h"
-#include "Imprime.h"
+#include "Desenho.h"
 
 
 
 Nave::Nave()
 {
-
+	milhas = 0;
 }
 
 Nave::~Nave()
@@ -52,7 +52,8 @@ void Nave::set_tripulantes(Tripulacao *trip)// adiciona os tres primeiro tripula
 	trip->set_respira(true);
 	trip->set_operador(true);
 	trip->set_reparador(1);
-	trip->set_combate(1);
+	trip->set_forca_combate(1);
+	trip->set_combate(false);
 }
 
 void Nave::set_salas_opcionais()
@@ -226,19 +227,6 @@ void Nave::modificar_tripulantes(int tipo, Tripulacao *trip)
 	}
 }
 
-void Nave::le_comando()
-{
-	Consola c;
-	string comando;
-	char nome;
-	int numero;
-	c.gotoxy(3, 26);
-	cout << "Indique o comando: ";
-	cin >> comando;
-	nome = comando[0];
-	numero = comando[1] - '0';
-	mover_membro_tripulacao(nome,numero);
-}
 
 void Nave::mover_membro_tripulacao(char nome, int numero)
 {
@@ -246,6 +234,7 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 	Tripulacao t;
 	bool verifica = false;
 	int i;
+	//verifica se a sala indicada existe
 	for (i = 0; i < salas.size(); i++)
 	{
 		if (salas.at(i).get_numero() == numero)
@@ -258,12 +247,13 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 	if (verifica == true)
 	{
 		verifica = false;
+		
 		for (i = 0; i < salas.size(); i++)
 		{
+			//verifica em que sala existe um tripulante com este nome
 			verifica = salas.at(i).verifica_tripulante(nome);
 			if (verifica == true)
 			{
-
 				for (int j = 0; j < salas.size(); j++)
 				{
 					if (salas.at(j).get_numero() == numero)
@@ -296,10 +286,185 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 
 }
 
+void Nave::mover_nave()
+{
+	int i;
+	string nome;
+	int integridade,propulsao=0;
+	bool verifica = false;
+	//verifica se a "ponte" esta a ser operada
+	for (i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_numero() == 8)
+		{
+			verifica = salas.at(i).verifica_sala_operada();
+		}
+	}
 
-void Nave::get_info_salas()
+	if (verifica == true)
+	{	//verifica se a sala das maquinas nao tem dano
+		for (i = 0; i < salas.size(); i++)
+		{
+			if (salas.at(i).get_numero() == 5)
+			{
+				integridade = salas.at(i).get_integridade();
+			}
+		}
+	}
+
+	if (integridade == 100)
+	{
+		//vai ver quantos "prupulsores" existem e obtem o poder de propulsao de cada um
+		for (i = 0; i < salas.size(); i++)
+		{
+			nome = salas.at(i).get_nome();
+			if (nome=="Propulsor" && salas.at(i).verifica_sala_operada()==true)
+			{
+				propulsao += salas.at(i).get_integridade();
+			}
+		}
+		milhas += propulsao;
+	}
+}
+
+int Nave::get_milhas()
+{
+	return milhas;
+}
+
+void Nave::reparar_nave()
+{
+	int repara;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_integridade() < 100)
+		{
+			repara = salas.at(i).get_quanto_reparar();
+			repara += salas.at(i).get_integridade();
+			salas.at(i).set_integridade(repara);
+		}
+	}
+}
+
+
+
+void Nave::dano_po_cosmico(int sala, int dano)
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_numero() == sala)
+		{
+			salas.at(i).set_dano(dano);
+		}
+	}
+}
+
+bool Nave::get_sala_destruida()
+{
+	bool destruido = false;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_integridade() <= 0)
+		{
+			destruido = true;
+		}
+	}
+	return destruido;
+}
+
+void Nave::imprime_dados_sala()
 {
 	
-	Imprime imprime;
-	imprime.imprime_nave(salas);
+	int aux=1, x, y;
+	Consola c;
+
+	do {
+		switch (aux)
+		{
+		case 1:
+			x = 3;
+			y = 3;
+			break;
+
+		case 2:
+			x = 23;
+			y = 3;
+			break;
+
+		case 3:
+			x = 43;
+			y = 3;
+			break;
+
+		case 4:
+			x = 63;
+			y = 3;
+			break;
+
+		case 5:
+			x = 23;
+			y = 11;
+			break;
+
+		case 6:
+			x = 43;
+			y = 11;
+			break;
+
+		case 7:
+			x = 63;
+			y = 11;
+			break;
+
+		case 8:
+			x = 83;
+			y = 11;
+			break;
+
+		case 9:
+			x = 3;
+			y = 19;
+			break;
+
+		case 10:
+			x = 23;
+			y = 19;
+			break;
+
+		case 11:
+			x = 43;
+			y = 19;
+			break;
+
+		case 12:
+			x = 63;
+			y = 19;
+			break;
+		}
+
+		for (int i = 0; i < salas.size(); i++)
+		{
+			if (salas.at(i).get_numero() == aux)
+			{
+				c.gotoxy(x, y);
+				cout << aux << ":" << salas.at(i).get_nome() << endl;
+				c.gotoxy(x, y + 1);
+				cout << "Integ: " << salas.at(i).get_integridade() << endl;
+				c.gotoxy(x, y + 2);
+				cout << "Oxig: " << salas.at(i).get_oxigenio() << endl;
+				c.gotoxy(x, y + 3);
+				cout << "Trip: ";
+				salas.at(i).get_info_tripulantes();
+				c.gotoxy(x, y + 4);
+				cout << "Xeno: " << endl;
+				c.gotoxy(x, y + 5);
+				cout << "Pirat:" << endl;
+				cout << endl;
+				break;
+			}
+		}
+		aux++;
+
+
+	} while (aux <= 12);
 }

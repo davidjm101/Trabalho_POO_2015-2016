@@ -3,14 +3,14 @@
 #include "Nave.h"
 #include "consola.h"
 
-class Imprime {
+class Desenho {
 	Consola c;
 public:
-	Imprime();
-	~Imprime();
-	void imprime_nave(vector<Sala> salas);
-	void preenche_sala(int x,int y);
-	void imprime_info();
+	Desenho();
+	~Desenho();
+	void desenha_nave();
+	void desenha_info();
+	void desenha_milhas();
 	void set_sala1();
 	void set_sala2();
 	void set_sala3();

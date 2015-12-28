@@ -44,9 +44,10 @@ void Sala::set_integridade(int integridade)
 {
 	this->integridade = integridade;
 }
+
 void Sala::set_dano(int dano)
 {
-	this->dano = dano;
+	this->integridade = integridade - dano;
 
 }
 
@@ -134,6 +135,19 @@ bool Sala::verifica_tripulante(char nome)
 	return verifica;
 }
 
+bool Sala::verifica_sala_operada()
+{
+	bool verifica = false;
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i).get_operador()==true)
+		{
+			verifica = true;
+		}
+	}
+
+	return verifica;
+}
 
 Tripulacao Sala::get_tripulantes(char nome)
 {
@@ -152,6 +166,20 @@ Tripulacao Sala::get_tripulantes(char nome)
 	
 
 	return t;
+}
+
+int Sala::get_quanto_reparar()
+{
+	int repara=0;
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i).get_combate() == false)
+		{
+			repara += tripulantes.at(i).get_reparador();
+		}
+	}
+	return repara;
+	
 }
 
 void Sala::get_info_tripulantes()

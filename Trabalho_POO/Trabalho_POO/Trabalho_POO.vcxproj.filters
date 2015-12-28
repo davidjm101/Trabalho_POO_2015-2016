@@ -45,7 +45,13 @@
     <ClInclude Include="consola.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Imprime.h">
+    <ClInclude Include="Po_Cosmico.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Turno.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Desenho.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -74,7 +80,13 @@
     <ClCompile Include="consola.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Imprime.cpp">
+    <ClCompile Include="Po_Cosmico.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Turno.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Desenho.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

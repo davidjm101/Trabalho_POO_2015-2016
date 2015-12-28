@@ -38,7 +38,10 @@ public:
 	bool get_brecha();
 	bool get_curto_circuito();
 	bool verifica_tripulante(char nome);
+	bool verifica_sala_operada();
 	Tripulacao get_tripulantes(char nome);
+
+	int get_quanto_reparar();
 
 	void get_info_tripulantes();
 

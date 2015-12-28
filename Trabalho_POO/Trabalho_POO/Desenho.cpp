@@ -1,21 +1,18 @@
-#include "Imprime.h"
+#include "Desenho.h"
 
-Imprime::Imprime()
+Desenho::Desenho()
 {
 	
 }
 
-Imprime::~Imprime()
+Desenho::~Desenho()
 {
 
 }
 
-void Imprime::imprime_nave(vector<Sala> salas)
+void Desenho::desenha_nave()
 {
 	system("cls");
-	int aux = 1;
-	int x, y;
-	imprime_info();
 	set_sala1();
 	set_sala2();
 	set_sala3();
@@ -29,108 +26,11 @@ void Imprime::imprime_nave(vector<Sala> salas)
 	set_sala11();
 	set_sala12();
 
-	do {
-		switch (aux)
-		{
-			case 1:
-				x = 3;
-				y = 3;
-				break;
-
-			case 2:
-				x = 23;
-				y = 3;
-				break;
-
-			case 3:
-				x = 43;
-				y = 3;
-				break;
-
-			case 4:
-				x = 63;
-				y = 3;
-				break;
-
-			case 5:
-				x = 23;
-				y = 11;
-				break;
-
-			case 6:
-				x = 43;
-				y = 11;
-				break;
-
-			case 7:
-				x = 63;
-				y = 11;
-				break;
-
-			case 8:
-				x = 83;
-				y = 11;
-				break;
-
-			case 9:
-				x = 3;
-				y = 19;
-				break;
-
-			case 10:
-				x = 23;
-				y = 19;
-				break;
-
-			case 11:
-				x = 43;
-				y = 19;
-				break;
-
-			case 12:
-				x = 63;
-				y = 19;
-				break;
-		}
-
-		for (int i = 0; i < salas.size(); i++)
-		{
-			if (salas.at(i).get_numero() == aux)
-			{
-				c.gotoxy(x, y);
-				cout << aux << ":" <<salas.at(i).get_nome() << endl;
-				c.gotoxy(x, y+1);
-				cout << "Integ: " << salas.at(i).get_integridade() << endl;
-				c.gotoxy(x, y + 2);
-				cout << "Oxig: " << salas.at(i).get_oxigenio() << endl;
-				c.gotoxy(x, y + 3);
-				cout << "Trip: ";
-				salas.at(i).get_info_tripulantes();
-				c.gotoxy(x, y + 4);
-				cout << "Xeno: " << endl;
-				c.gotoxy(x, y + 5);
-				cout << "Pirat:" << endl;
-				cout << endl;
-				break;
-			}
-		}
-		aux++;
-
-
-	} while (aux<=12);
 		
 }
 
-void Imprime::preenche_sala(int x, int y)
-{
-	system("cls");
-	int aux = 1;
-	do {
-		
-	} while (aux <= 12);
-}
 
-void Imprime::imprime_info()
+void Desenho::desenha_info()
 {
 	int i;
 
@@ -182,7 +82,61 @@ void Imprime::imprime_info()
 	cout << "Informacao" << endl;
 }
 
-void Imprime::set_sala1()
+void Desenho::desenha_milhas()
+{
+	int i;
+
+	//canto superior esquerdo
+	c.gotoxy(84, 2);
+	cout << (char)218 << endl;
+
+	//linha de cima
+	for (i = 85; i < 116; i++)
+	{
+		c.gotoxy(i, 2);
+		cout << (char)196 << "\n";
+	}
+
+	//canto superior direito
+	c.gotoxy(116, 2);
+	cout << (char)191 << endl;
+
+	//linha esquerda
+	for (i = 3; i < 7; i++)
+	{
+		c.gotoxy(84, i);
+		cout << (char)179 << "\n";
+	}
+
+	//linha direita
+	for (i = 3; i < 7; i++)
+	{
+		c.gotoxy(116, i);
+		cout << (char)179 << "\n";
+	}
+
+	//canto inferior esquerdo
+	c.gotoxy(84, 7);
+	cout << (char)192 << endl;
+
+	//linha de baixo
+	for (i = 85; i < 116; i++)
+	{
+		c.gotoxy(i, 7);
+		cout << (char)196 << "\n";
+	}
+
+	//canto inferior direito
+	c.gotoxy(116, 7);
+	cout << (char)217 << endl;
+	
+
+	c.gotoxy(85,3);
+	cout << "Milhas Percorridas:" << endl;
+
+}
+
+void Desenho::set_sala1()
 {
 	
 	int i;
@@ -235,7 +189,7 @@ void Imprime::set_sala1()
 
 }
 
-void Imprime::set_sala2()
+void Desenho::set_sala2()
 {
 	
 	int i;
@@ -285,7 +239,7 @@ void Imprime::set_sala2()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala3()
+void Desenho::set_sala3()
 {
 
 	int i;
@@ -335,7 +289,7 @@ void Imprime::set_sala3()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala4()
+void Desenho::set_sala4()
 {
 
 	int i;
@@ -385,7 +339,7 @@ void Imprime::set_sala4()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala5()
+void Desenho::set_sala5()
 {
 	int i;
 
@@ -434,7 +388,7 @@ void Imprime::set_sala5()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala6()
+void Desenho::set_sala6()
 {
 	int i;
 
@@ -483,7 +437,7 @@ void Imprime::set_sala6()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala7()
+void Desenho::set_sala7()
 {
 	int i;
 
@@ -532,7 +486,7 @@ void Imprime::set_sala7()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala8()
+void Desenho::set_sala8()
 {
 	int i;
 
@@ -581,7 +535,7 @@ void Imprime::set_sala8()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala9()
+void Desenho::set_sala9()
 {
 	int i;
 
@@ -630,7 +584,7 @@ void Imprime::set_sala9()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala10()
+void Desenho::set_sala10()
 {
 	int i;
 
@@ -679,7 +633,7 @@ void Imprime::set_sala10()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala11()
+void Desenho::set_sala11()
 {
 	int i;
 
@@ -728,7 +682,7 @@ void Imprime::set_sala11()
 	cout << (char)217 << endl;
 }
 
-void Imprime::set_sala12()
+void Desenho::set_sala12()
 {
 	int i;
 

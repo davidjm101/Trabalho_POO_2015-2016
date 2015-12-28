@@ -148,22 +148,26 @@
   <ItemGroup>
     <ClInclude Include="bibliotecas.h" />
     <ClInclude Include="consola.h" />
-    <ClInclude Include="Imprime.h" />
+    <ClInclude Include="Desenho.h" />
     <ClInclude Include="Pirata.h" />
     <ClInclude Include="Nave.h" />
+    <ClInclude Include="Po_Cosmico.h" />
     <ClInclude Include="Sala.h" />
     <ClInclude Include="Tripulacao.h" />
+    <ClInclude Include="Turno.h" />
     <ClInclude Include="Unidade.h" />
     <ClInclude Include="xenomorfos.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="consola.cpp" />
-    <ClCompile Include="Imprime.cpp" />
+    <ClCompile Include="Desenho.cpp" />
     <ClCompile Include="Pirata.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nave.cpp" />
+    <ClCompile Include="Po_Cosmico.cpp" />
     <ClCompile Include="Sala.cpp" />
     <ClCompile Include="Tripulacao.cpp" />
+    <ClCompile Include="Turno.cpp" />
     <ClCompile Include="Unidade.cpp" />
     <ClCompile Include="xenomorfos.cpp" />
   </ItemGroup>

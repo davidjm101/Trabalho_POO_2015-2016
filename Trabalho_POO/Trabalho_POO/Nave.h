@@ -4,6 +4,7 @@
 
 class Nave 
 {
+	int milhas;
 	vector<Sala> salas;
 	
 
@@ -13,10 +14,14 @@ public:
 	void set_salas_normais();
 	void set_tripulantes(Tripulacao *trip);
 	void set_salas_opcionais();
+	void mover_nave();
 	void modificar_tripulantes(int tipo, Tripulacao *trip);
-	void le_comando();
 	void mover_membro_tripulacao(char nome, int numero);
-	void get_info_salas();
+	int get_milhas();
+	void dano_po_cosmico(int sala, int dano);
+	bool get_sala_destruida();
+	void reparar_nave();
+	void imprime_dados_sala();
 
 
 };
