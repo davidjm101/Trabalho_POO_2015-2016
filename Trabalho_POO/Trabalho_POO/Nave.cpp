@@ -48,6 +48,7 @@ void Nave::set_salas_normais()
 void Nave::set_tripulantes(Tripulacao *trip)// adiciona os tres primeiro tripulantes no inicio do jogo
 {
 	
+	trip->set_nome("Membro Tripulacao");
 	trip->set_vida(5);
 	trip->set_respira(true);
 	trip->set_operador(true);
@@ -252,7 +253,7 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 		{
 			//verifica em que sala existe um tripulante com este nome
 			verifica = salas.at(i).verifica_tripulante(nome);
-			if (verifica == true)
+			if ( verifica == true)
 			{
 				for (int j = 0; j < salas.size(); j++)
 				{

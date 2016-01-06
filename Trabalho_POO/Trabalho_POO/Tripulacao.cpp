@@ -32,6 +32,7 @@ void Tripulacao::set_combate(bool aux)
 	this->combate = aux;
 }
 
+
 int Tripulacao::get_reparador()
 {
 	return reparador;

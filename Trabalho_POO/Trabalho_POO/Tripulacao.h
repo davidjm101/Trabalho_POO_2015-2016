@@ -9,8 +9,8 @@ class Tripulacao : public Unidade
 	int reparador;
 	int forca_combate;
 	static char letra;
-	char nome;
 	bool combate;
+	char nome;
 
 public:
 	Tripulacao();
@@ -22,5 +22,4 @@ public:
 	int get_forca_combate();
 	bool get_combate();
 	char get_nome();
-
 };

@@ -10,6 +10,11 @@ Unidade::~Unidade()
 {
 }
 
+void Unidade::set_nome(string nome)
+{
+	this->nome = nome;
+}
+
 void Unidade::set_vida(int valor)
 {
 	this->vida = valor;
@@ -35,7 +40,10 @@ void Unidade::set_exoesq(int valor)
 	this->exoesq = valor;
 }
 
-
+string Unidade::get_nome()
+{
+	return nome;
+}
 int Unidade::get_vida() 
 {
 	return vida;

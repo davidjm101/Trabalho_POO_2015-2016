@@ -30,6 +30,7 @@ void Turno::fase_ordem()
 {
 	
 	string comando;
+	string token;
 	char nome;
 	int numero;
 	desenho.desenha_milhas();
@@ -38,10 +39,12 @@ void Turno::fase_ordem()
 	c.gotoxy(3, 26);
 	cout << "Indique o comando: ";
 	cin >> comando;
-	nome = comando[0];
-	numero = comando[1] - '0';
+	token = comando.substr(0,1);
+	nome = token[0];
+	token = comando.substr(1, comando.size());
+	numero = stoi(token);
 	nave.mover_membro_tripulacao(nome, numero);
-	
+	nave.imprime_dados_sala();
 	
 	
 }
@@ -86,6 +89,7 @@ void Turno::eventos()
 		numero = 0;
 	}
 	numero++;
+
 }
 
 void Turno::po_cosmico()
