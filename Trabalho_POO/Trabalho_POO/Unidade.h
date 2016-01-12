@@ -22,6 +22,7 @@ public:
 	void set_exoesq(int valor);
 	string get_nome();
 	int get_vida();
+	
 	bool get_respira();
 	bool get_operador();
 	int get_mover();

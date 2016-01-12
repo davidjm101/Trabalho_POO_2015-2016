@@ -27,7 +27,8 @@ public:
 	void set_brecha(bool existe);
 	void set_curto_circuito(bool existe);
 	void set_tripulante(Tripulacao trip);
-	
+	//void retira_vida(int valor);
+
 	string get_nome();
 	int get_numero();
 	int get_saude();

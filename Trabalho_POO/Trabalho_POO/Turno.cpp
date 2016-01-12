@@ -22,7 +22,7 @@ void Turno::inicio_jogo()
 
 void Turno::inicio_turno()
 {
-
+	
 }
 
 

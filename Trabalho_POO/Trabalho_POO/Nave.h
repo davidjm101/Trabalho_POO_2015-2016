@@ -22,6 +22,8 @@ public:
 	bool get_sala_destruida();
 	void reparar_nave();
 	void imprime_dados_sala();
+	void set_tripulantes_capitao(Tripulacao *trip);
+	void set_tripulantes_Robot(Tripulacao *trip);
 
 
 };

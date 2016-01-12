@@ -56,6 +56,36 @@ void Nave::set_tripulantes(Tripulacao *trip)// adiciona os tres primeiro tripula
 	trip->set_forca_combate(1);
 	trip->set_combate(false);
 }
+/*Alteração Henrique*/
+void Nave::set_tripulantes_capitao(Tripulacao *trip)
+{
+	trip->set_nome("Capitão");
+	trip->set_vida(6);
+	trip->set_respira(true);
+	trip->set_reparador(1);
+	trip->set_operador(true);
+	trip->set_exoesq(1);
+	trip->set_forca_combate(2);
+	trip->set_combate(false);
+
+}
+
+void Nave::set_tripulantes_Robot(Tripulacao *trip)
+{
+	trip->set_nome("Robot - X34-ZT2");
+	trip->set_vida(8);
+	trip->set_respira(false);
+	trip->set_reparador(0);
+	trip->set_operador(false);
+	trip->set_exoesq(2);
+	trip->set_forca_combate(3);
+	trip->set_combate(false);
+
+}
+
+
+/****/
+
 
 void Nave::set_salas_opcionais()
 {
