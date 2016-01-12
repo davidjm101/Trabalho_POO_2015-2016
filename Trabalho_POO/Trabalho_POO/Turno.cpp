@@ -22,7 +22,7 @@ void Turno::inicio_jogo()
 
 void Turno::inicio_turno()
 {
-
+	nave.sala_verifica_respirar();
 }
 
 
@@ -41,12 +41,18 @@ void Turno::fase_ordem()
 	cin >> comando;
 	token = comando.substr(0,1);
 	nome = token[0];
-	token = comando.substr(1, comando.size());
-	numero = stoi(token);
-	nave.mover_membro_tripulacao(nome, numero);
-	nave.imprime_dados_sala();
-	
-	
+	if (nome == '\n')
+	{
+		return;
+		
+	}
+	else
+	{
+		token = comando.substr(1, comando.size());
+		numero = stoi(token);
+		nave.mover_membro_tripulacao(nome, numero);
+		nave.imprime_dados_sala();
+	}
 }
 
 void Turno::final_turno()

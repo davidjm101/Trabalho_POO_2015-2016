@@ -146,9 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ataque_Pirata.h" />
+    <ClInclude Include="Ataque_Xenomorfo.h" />
     <ClInclude Include="bibliotecas.h" />
+    <ClInclude Include="Chuva_Meteorito.h" />
     <ClInclude Include="consola.h" />
     <ClInclude Include="Desenho.h" />
+    <ClInclude Include="Eventos.h" />
     <ClInclude Include="Pirata.h" />
     <ClInclude Include="Nave.h" />
     <ClInclude Include="Po_Cosmico.h" />
@@ -159,8 +163,11 @@
     <ClInclude Include="xenomorfos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ataque_Xenomorfo.cpp" />
+    <ClCompile Include="Chuva_Meteorito.cpp" />
     <ClCompile Include="consola.cpp" />
     <ClCompile Include="Desenho.cpp" />
+    <ClCompile Include="Eventos.cpp" />
     <ClCompile Include="Pirata.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Nave.cpp" />

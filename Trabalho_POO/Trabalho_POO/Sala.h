@@ -12,7 +12,7 @@ class Sala {
 	bool fogo;
 	bool brecha;
 	bool curto_circuito;
-	vector <Tripulacao> tripulantes;
+	vector <Tripulacao > tripulantes;
 
 public:
 	Sala(string nome, int numero);
@@ -27,6 +27,7 @@ public:
 	void set_brecha(bool existe);
 	void set_curto_circuito(bool existe);
 	void set_tripulante(Tripulacao trip);
+	void reparar_sala();
 	
 	string get_nome();
 	int get_numero();
@@ -40,9 +41,8 @@ public:
 	bool verifica_tripulante(char nome);
 	bool verifica_sala_operada();
 	Tripulacao get_tripulantes(char nome);
-
-	int get_quanto_reparar();
-
+	void verifica_tripulante_respira();
+	void atingida_meteorito(int dano);//num é o numero de vezes que a sala é atingida
 	void get_info_tripulantes();
 
 

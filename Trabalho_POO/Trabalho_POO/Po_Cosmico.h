@@ -1,5 +1,6 @@
 #pragma once
 #include "bibliotecas.h"
+#include "Eventos.h"
 
 class Po_Cosmico {
 	int dano;

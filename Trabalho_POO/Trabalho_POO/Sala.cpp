@@ -72,7 +72,20 @@ void Sala::set_tripulante(Tripulacao trip)
 	tripulantes.push_back(trip);
 }
 
-
+void Sala::reparar_sala()
+{
+	int i;
+	int reparar=0;
+	for (i = 0; i < tripulantes.size(); i++)
+	{
+		reparar+=tripulantes.at(i).quanto_reparar();
+	}
+	if (integridade < 100)
+	{
+		integridade += reparar;
+	}
+	
+}
 
 
 string Sala::get_nome()
@@ -135,7 +148,7 @@ bool Sala::verifica_tripulante(char nome)
 	return verifica;
 }
 
-bool Sala::verifica_sala_operada()
+bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser operada
 {
 	bool verifica = false;
 	for (int i = 0; i < tripulantes.size(); i++)
@@ -168,19 +181,14 @@ Tripulacao Sala::get_tripulantes(char nome)
 	return t;
 }
 
-int Sala::get_quanto_reparar()
-{
-	int repara=0;
-	for (int i = 0; i < tripulantes.size(); i++)
-	{
-		if (tripulantes.at(i).get_combate() == false)
-		{
-			repara += tripulantes.at(i).get_reparador();
-		}
-	}
-	return repara;
-	
-}
+//void Sala::verifica_tripulante_respira()
+//{
+//
+//	if (oxigenio > 0)
+//	{
+//
+//	}
+//}
 
 void Sala::get_info_tripulantes()
 {
@@ -192,4 +200,11 @@ void Sala::get_info_tripulantes()
 		}
 	}
 	
+}
+
+
+void Sala::atingida_meteorito(int dano)
+{
+	integridade -= dano;
+	brecha = true;
 }

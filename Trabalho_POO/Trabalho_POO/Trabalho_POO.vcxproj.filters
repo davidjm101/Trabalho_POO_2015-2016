@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Unidades">
       <UniqueIdentifier>{51fe2fd3-a965-47d7-83fa-915740b0f0ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Eventos">
+      <UniqueIdentifier>{bfc2b6a5-3c56-4da9-9d80-e1d6a27936be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Eventos">
+      <UniqueIdentifier>{f5c5e335-59aa-4a18-aacd-f05453f159a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bibliotecas.h">
@@ -45,14 +51,26 @@
     <ClInclude Include="consola.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Po_Cosmico.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Turno.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Desenho.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Po_Cosmico.h">
+      <Filter>Header Files\Eventos</Filter>
+    </ClInclude>
+    <ClInclude Include="Eventos.h">
+      <Filter>Header Files\Eventos</Filter>
+    </ClInclude>
+    <ClInclude Include="Ataque_Xenomorfo.h">
+      <Filter>Header Files\Eventos</Filter>
+    </ClInclude>
+    <ClInclude Include="Ataque_Pirata.h">
+      <Filter>Header Files\Eventos</Filter>
+    </ClInclude>
+    <ClInclude Include="Chuva_Meteorito.h">
+      <Filter>Header Files\Eventos</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +98,23 @@
     <ClCompile Include="consola.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Po_Cosmico.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Turno.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Desenho.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Po_Cosmico.cpp">
+      <Filter>Source Files\Eventos</Filter>
+    </ClCompile>
+    <ClCompile Include="Ataque_Xenomorfo.cpp">
+      <Filter>Source Files\Eventos</Filter>
+    </ClCompile>
+    <ClCompile Include="Eventos.cpp">
+      <Filter>Source Files\Eventos</Filter>
+    </ClCompile>
+    <ClCompile Include="Chuva_Meteorito.cpp">
+      <Filter>Source Files\Eventos</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

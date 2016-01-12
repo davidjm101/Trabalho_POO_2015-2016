@@ -6,11 +6,17 @@
 Nave::Nave()
 {
 	milhas = 0;
+	escudo = 100;
 }
 
 Nave::~Nave()
 {
 
+}
+
+void Nave::set_escudo(int escudo)
+{
+	this->escudo = escudo;
 }
 
 void Nave::set_salas_normais()
@@ -328,6 +334,11 @@ void Nave::mover_nave()
 	}
 }
 
+int Nave::get_escudo()
+{
+	return escudo;
+}
+
 int Nave::get_milhas()
 {
 	return milhas;
@@ -335,15 +346,9 @@ int Nave::get_milhas()
 
 void Nave::reparar_nave()
 {
-	int repara;
 	for (int i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i).get_integridade() < 100)
-		{
-			repara = salas.at(i).get_quanto_reparar();
-			repara += salas.at(i).get_integridade();
-			salas.at(i).set_integridade(repara);
-		}
+		salas.at(i).reparar_sala();
 	}
 }
 
@@ -468,4 +473,59 @@ void Nave::imprime_dados_sala()
 
 
 	} while (aux <= 12);
+}
+
+//void Nave::sala_verifica_respirar()//vai verificar se existe algum elemento na sala que precise de respirar
+//{
+//	for (int i = 0; i < salas.size(); i++)
+//	{
+//
+//	}
+//}
+
+bool Nave::verifica_ponte_operada()//verifica se a ponte esta a ser operada por algum tripulante
+{
+	bool verifica = false;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_nome == "Ponte")
+		{
+			verifica=salas.at(i).verifica_sala_operada();
+		}
+	}
+	return verifica;
+}
+
+void Nave::atravessa_chuva_meteoritos(int dano, int num)
+{
+	bool verifica = false;
+	int aux;
+	int conta = 0;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i).get_nome == "Raio_Laser")
+		{
+			verifica = salas.at(i).verifica_sala_operada();
+			break;
+		}
+	}
+	if (verifica == true)
+	{
+		srand(time(NULL));
+		aux = rand() % 2 + 1;
+		if (aux == 1)//raio laser nao destroi os meteoritos
+		{
+			if (escudo > 0)
+			{
+				escudo -= (dano*num);
+			}
+			else
+			{
+				do {
+					aux = rand() % 12 + 1;
+					
+				} while (conta != num);
+			}
+		}
+	}
 }
