@@ -29,6 +29,8 @@ public:
 	void set_tripulante(Tripulacao trip);
 	void reparar_sala();
 	
+	//void retira_vida(int valor);
+
 	string get_nome();
 	int get_numero();
 	int get_saude();

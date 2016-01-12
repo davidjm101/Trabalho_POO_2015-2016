@@ -30,6 +30,9 @@ public:
 	void sala_verifica_respirar();//vai verificar se existe algum elemento na sala que precise de respirar
 	void atravessa_chuva_meteoritos(int dano,int num);//num vai ser o numero de vezes que a nave vai ser atinginda
 	bool verifica_ponte_operada();
+	void set_tripulantes_capitao(Tripulacao *trip);
+	void set_tripulantes_Robot(Tripulacao *trip);
+
 
 
 };

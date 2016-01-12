@@ -20,6 +20,7 @@ void Unidade::set_vida(int valor)
 	this->vida = valor;
 }
 
+
 void Unidade::set_respira(bool valor)
 {
 	this->respira = valor;
@@ -32,7 +33,7 @@ void Unidade::set_operador(bool valor)
 
 void Unidade::set_mover(int valor)
 {
-	this->mover = valor;
+	this->mover = valor;   /*/percentagem ->verificar depois*/
 }
 
 void Unidade::set_exoesq(int valor)

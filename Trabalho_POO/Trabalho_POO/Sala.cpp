@@ -19,6 +19,12 @@ Sala::~Sala()
 {
 
 }
+/*
+void Sala::retira_vida(int valor)
+{
+	this->vida = vida + valor;
+}
+*/
 
 void Sala::set_nome(string nome)
 {
