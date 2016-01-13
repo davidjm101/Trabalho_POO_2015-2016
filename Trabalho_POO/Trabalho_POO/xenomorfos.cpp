@@ -37,19 +37,16 @@ void xenomorfos::set_forca_combate(int valor)
 	this->forca_combate = valor;
 }
 
-void xenomorfos::set_misterioso(int n_turno) //???
+void xenomorfos::set_misterioso(bool valor) //???
 {
-	while (n_turno) {   ///?????
 		srand(time(NULL));
 		int probabilidade = rand() % 4 + 1;
 
 		if (probabilidade == 1) {
-			this->misterioso = true;
-			n_turno++;
+			this->misterioso = valor;
 		}
 		else
-			this->misterioso = false;
-	}
+			this->misterioso = valor;
 }
 
 bool xenomorfos::get_misterioso()  /*ele aparece no final do proximo turno numa sala aleatoria
@@ -91,6 +88,19 @@ void xenomorfos::set_regenerador(int valor)
 {
 	
 	this->regenerador = valor;
+
+}
+void xenomorfos::altera_vida_do_Xenomorfo()
+{
+	if(this->get_vida <= 8)
+	{
+		this->set_vida += this->get_regenerador();
+	
+	}
+	else if (this->get_vida == 7)
+	{
+		this->set_vida == 8;
+	}
 }
 
 int xenomorfos::get_regenerador()
@@ -119,16 +129,9 @@ int xenomorfos::get_toxico()
 	return toxico;
 }
 
-void xenomorfos::set_hipnotizador(int valor)
+void xenomorfos::set_hipnotizador(bool valor)
 {
-	srand(time(NULL));
-	int probabilidade = rand() % 100 + 1;
-
-	if (probabilidade <= valor)
-		this->hipnotizador = true;
-	else
-		this->hipnotizador = false;
-
+		this->hipnotizador = valor;
 }
 
 bool xenomorfos::get_hipnotizador()

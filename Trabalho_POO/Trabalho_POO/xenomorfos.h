@@ -26,15 +26,15 @@ class xenomorfos : public Unidade
 		void set_xenomorfo(int valor);
 		void set_reparador(int valor);
 		void set_forca_combate(int valor);
-		void set_misterioso(int n_turno);
+		void set_misterioso(bool valor);
 		void set_casulo(int valor);
 		void set_combate(bool aux);
 		void set_regenerador(int valor);
 		void set_flamejante(bool aux);
 		void set_toxico(int valor);
-		void set_hipnotizador(int valor);
+		void set_hipnotizador(bool valor);
 		void set_mutatis_mutandis(int valor);
-
+		void altera_vida_do_Xenomorfo();
 
 		int get_xenomorfo();
 		bool get_mutatis_mutandis();

@@ -53,8 +53,11 @@ public:
 	bool verifica_sala_operada();
 	Tripulacao* obtem_tripulante(char nome);
 	void inser_tripulante(Tripulacao* t);
-	void verifica_tripulante_respira();
+	void trata_caracteristica_unidade_respira();
+	void trata_caracteristica_toxico();
+
 	void atingida_meteorito(int dano);//num é o numero de vezes que a sala é atingida
+
 	void invadida_piratas(int num);//num é o numero de piratas que invadem a sala
 	void atacada_piratas(int dano);
 	void invadida_xenomorfos();
@@ -63,6 +66,18 @@ public:
 	void get_letra_xenomorfos();
 	void get_letra_piratas();
 	void get_info_tripulante(char nome);
+
+	void sala_invadida_piratas(int num);//num é o numero de piratas que invadem a sala
+	void sala_atacada_piratas(int dano);
+	void get_info_tripulantes();
+	void trata_caracteristica_indeciso();
+	void trata_caracteristica_hipnotizador(int valor);
+	void trata_caracteristica_Regenerador();
+	void trata_caracteristica_Misterioso();
+	void trata_caracteristica_Robotico();
+	void trata_caracteristica_Reparador(int valor);
+	void altera_valor_do_dano(int valor);
+
 
 
 
