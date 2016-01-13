@@ -9,8 +9,8 @@ void main()
 	do {
 		/*turno.inicio_turno();*/
 		turno.fase_ordem();
-		turno.final_turno();
-		/*turno.eventos();*/
+		/*turno.final_turno();*/
+		turno.eventos();
 	} while (turno.acabou_jogo()==false);
 	
 }

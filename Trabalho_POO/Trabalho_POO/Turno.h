@@ -3,14 +3,20 @@
 #include "Nave.h"
 #include "Desenho.h"
 #include "consola.h"
+#include "Eventos.h"
+#include "Ataque_Pirata.h"
+#include "Ataque_Xenomorfo.h"
+#include "Chuva_Meteorito.h"
+#include "Po_Cosmico.h"
 
 
 class Turno
 {
 	int numero;
-	Nave nave;
+	Nave* nave;
 	Consola c;
 	Desenho desenho;
+	vector<Eventos*> evento;
 public:
 	Turno();
 	~Turno();
@@ -19,7 +25,6 @@ public:
 	void fase_ordem();
 	void final_turno();
 	void eventos();
-	void po_cosmico();
 	bool acabou_jogo();
 
 };

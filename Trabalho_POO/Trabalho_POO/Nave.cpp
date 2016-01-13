@@ -220,11 +220,6 @@ void Nave::adiciona_tripulantes()
 }
 
 
-
-
-
-
-
 int Nave::get_escudo()
 {
 	return escudo;
@@ -234,7 +229,6 @@ int Nave::get_milhas()
 {
 	return milhas;
 }
-
 
 
 //mover membro da tripulacao
@@ -340,20 +334,6 @@ void Nave::reparar_nave()
 	}
 }
 
-
-
-void Nave::dano_po_cosmico(int sala, int dano)
-{
-	for (int i = 0; i < salas.size(); i++)
-	{
-		if (salas.at(i)->get_numero() == sala)
-		{
-			salas.at(i)->set_dano(dano);
-		}
-	}
-}
-
-
 //verifica se existe alguma sala que esteja destruida
 bool Nave::get_sala_destruida()
 {
@@ -451,12 +431,16 @@ void Nave::imprime_dados_sala()
 				c.gotoxy(x, y + 2);
 				cout << "Oxig: " << salas.at(i)->get_oxigenio() << endl;
 				c.gotoxy(x, y + 3);
-				cout << "Trip: ";
-				salas.at(i)->get_info_tripulantes();
+				cout << "Prob: CC BR FG";
 				c.gotoxy(x, y + 4);
-				cout << "Xeno: " << endl;
+				cout << "Trip: ";
+				salas.at(i)->get_letra_tripulantes();
 				c.gotoxy(x, y + 5);
-				cout << "Pirat:" << endl;
+				cout << "Xeno: ";
+				salas.at(i)->get_letra_xenomorfos();
+				c.gotoxy(x, y + 6);
+				cout << "Pirat:";
+				salas.at(i)->get_letra_piratas();
 				cout << endl;
 				break;
 			}
@@ -466,7 +450,13 @@ void Nave::imprime_dados_sala()
 }
 
 
-
+void Nave::imprime_dado_tripulante(char letra)
+{
+	for (int i=0; i < salas.size(); i++)
+	{
+		salas.at(i)->get_info_tripulante(letra);
+	}
+}
 
 //void Nave::sala_verifica_respirar()//vai verificar se existe algum elemento na sala que precise de respirar
 //{
@@ -483,7 +473,7 @@ bool Nave::verifica_ponte_operada()
 	bool verifica = false;
 	for (int i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome == "Ponte") 
+		if (salas.at(i)->get_nome() == "Ponte") 
 		{
 			verifica=salas.at(i)->verifica_sala_operada();
 		}
@@ -501,24 +491,25 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 	//verifica se a nave tem raio laser, e se tiver se esta a ser operado
 	for (i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome == "Raio_Laser")
+		if (salas.at(i)->get_nome() == "Raio_Laser")
 		{
 			verifica = salas.at(i)->verifica_sala_operada();
 			break;
 		}
 	}
-	if (verifica == true)
-	{
+	
 		srand(time(NULL));
 		aux = rand() % 2 + 1;
-		if (aux == 1)//raio laser nao destroi os meteoritos
+		if ((aux == 1 && verifica==false) || (aux == 2 && verifica == false))//raio laser nao destroi os meteoritos
 		{
 			if (escudo > 0)
 			{
 				escudo -= (dano*num);
+				c.gotoxy(85, 19);
 				cout << "A nave atravessou chuva meteoritos" << endl;
 				c.gotoxy(85, 20);
 				cout << "o escudo da nave sofreu dano" << endl;
+				system("PAUSE");
 			}
 			else
 			{
@@ -539,6 +530,7 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 				cout << "varia salas sofreram dano" << endl;
 				c.gotoxy(85, 21);
 				cout << "e se encontram com brechas" << endl;
+				system("PAUSE");
 			}
 			
 		}
@@ -550,9 +542,11 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 			cout << "o raio laser destrui!!!" << endl;
 			c.gotoxy(85, 21);
 			cout << "todos os meteoritos." << endl;
+			system("PAUSE");
 		}
-	}
+	
 }
+
 
 //nave foi atacada por piratas
 void Nave::ataque_pirata(int dano, int num)
@@ -561,6 +555,7 @@ void Nave::ataque_pirata(int dano, int num)
 	bool verifica=false;
 	int i,aux;
 
+	//verifica se a nave ainda tem escudo
 	if (escudo > 0)
 	{
 		if ((escudo - dano) > 0)
@@ -571,18 +566,37 @@ void Nave::ataque_pirata(int dano, int num)
 		{
 			dano_excesso = dano - escudo;
 			escudo = 0;
-			//sala recebe o dano_excesso e fogo ou curto circuito ou brecha
+			srand(time(NULL));
+			aux = rand() % 12 + 1;
+			for (i = 0; i < salas.size(); i++)
+			{
+				if (salas.at(i)->get_numero() == aux)
+				{
+					salas.at(i)->atacada_piratas(dano_excesso);
+					break;
+				}
+			}
 		}
 	}
+	// a nave ja nao tem escudo
 	else
 	{
-		//sala recebe o dano e fogo ou curto circuito ou brecha
+		srand(time(NULL));
+		aux = rand() % 12 + 1;
+		for (i = 0; i < salas.size(); i++)
+		{
+			if (salas.at(i)->get_numero() == aux)
+			{
+				salas.at(i)->atacada_piratas(dano);
+				break;
+			}
+		}
 	}
 
 	//verifica que o raio laser esta operacional
 	for (i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome == "Raio_Laser")
+		if (salas.at(i)->get_nome() == "Raio_Laser")
 		{
 			verifica = salas.at(i)->verifica_sala_operada();
 			break;
@@ -597,10 +611,17 @@ void Nave::ataque_pirata(int dano, int num)
 		{
 			if (salas.at(i)->get_numero()==aux)
 			{
-				
+				salas.at(i)->invadida_piratas(num);
 				break;
 			}
 		}
+		c.gotoxy(85, 19);
+		cout << "A nave foi atacada por piratas," << endl;
+		c.gotoxy(85, 20);
+		cout << "recebeu dano," << endl;
+		c.gotoxy(85, 21);
+		cout << "a nave foi invadida" << endl;
+		system("PAUSE");
 	}
 	else
 	{
@@ -610,5 +631,61 @@ void Nave::ataque_pirata(int dano, int num)
 		cout << "os piratas foram afugentados," << endl;
 		c.gotoxy(85, 21);
 		cout << "a nave nao foi invadida" << endl;
+		system("PAUSE");
 	}
+}
+
+//nave invadida por xenomorfos
+void Nave::invadida_xenomorfos()
+{
+	int aux;
+
+	srand(time(NULL));
+	aux = rand() % 12 + 1;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_numero() == aux)
+		{
+			salas.at(i)->invadida_xenomorfos();
+			break;
+		}
+	}
+	c.gotoxy(85, 19);
+	cout << "A nave foi atacada por" << endl;
+	c.gotoxy(85, 20);
+	cout << "xenomorfos, uma das salas!!!" << endl;
+	c.gotoxy(85, 21);
+	cout << "foi invadida." << endl;
+	system("PAUSE");
+}
+
+//nave atravessa po cosmico
+void Nave::atravessa_po_cosmico(int dano)
+{
+	int aux,aux2;
+
+	srand(time(NULL));
+	aux = rand() % 5 + 3;
+	do
+	{
+		aux2 = rand() % 12 + 1;
+		for (int i = 0; i < salas.size(); i++)
+		{
+			if (salas.at(i)->get_numero() == aux2)
+			{
+				salas.at(i)->atingida_po_cosmico(dano);
+				break;
+			}
+		}
+
+		aux--;
+	} while (aux>0);
+
+	c.gotoxy(85, 19);
+	cout << "A nave atravessou campo" << endl;
+	c.gotoxy(85, 20);
+	cout << "de po cosmico, varia salas!!!" << endl;
+	c.gotoxy(85, 21);
+	cout << "receberam dano." << endl;
+	system("PAUSE");
 }

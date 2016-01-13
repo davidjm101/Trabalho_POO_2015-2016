@@ -8,9 +8,9 @@ class xenomorfos : public Unidade
 		int xenomorfo;
 		int reparador;
 		int forca_combate;
-		static char letra;
+		static char aux;
 		bool combate;
-		char nome;
+		char letra;
 		bool misterioso;
 		bool casulo;
 		int regenerador;
@@ -47,5 +47,5 @@ class xenomorfos : public Unidade
 		int get_reparador();
 		int get_forca_combate();
 		bool get_combate();
-		char get_nome();
+		char get_letra();
 };

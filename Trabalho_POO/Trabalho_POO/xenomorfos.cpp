@@ -2,14 +2,14 @@
 #include "xenomorfos.h"
 #include "Sala.h"
 
-char xenomorfos::letra = 'a';
+char xenomorfos::aux = 'a';
 
 
 
 xenomorfos::xenomorfos()
 {
-	this->nome = this->letra;
-	this->letra++;
+	this->letra = this->aux;
+	this->aux++;
 }
 
 xenomorfos::~xenomorfos()
@@ -152,4 +152,10 @@ bool xenomorfos::get_mutatis_mutandis()
 {
 
 	return mutatis_mutandis;
+}
+
+
+char xenomorfos::get_letra()
+{
+	return letra;
 }

@@ -1,6 +1,6 @@
 #include "bibliotecas.h"
 #include "Tripulacao.h"
-
+#include "consola.h"
 
 
 char Tripulacao::aux = 'a';
@@ -62,4 +62,14 @@ int Tripulacao::quanto_reparar()//retorna quanto e que o tripulante repara se na
 		return reparar;
 	}
 	return 0;
+}
+
+void Tripulacao::get_info()
+{
+	Consola c;
+	c.gotoxy(85, 19);
+	cout << "Nome: " << get_nome() << "Vida " << get_vida()<< endl;
+	c.gotoxy(85, 20);
+	cout << "Forca Combate: " << forca_combate << endl;
+	system("PAUSE");
 }

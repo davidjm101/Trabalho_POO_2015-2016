@@ -23,4 +23,5 @@ public:
 	bool get_combate();
 	char get_letra();
 	int quanto_reparar();//retorna quanto e que o tripulante repara se nao estiver em combate
+	void get_info();
 };

@@ -120,6 +120,7 @@ void Sala::set_pirata()
 	pirata->set_forca_combate_para_Inimigo(1);
 	pirata->set_forca_combate_para_Sala(2);
 	pirata->set_mover(15);
+	piratas.push_back(pirata);
 }
 
 //adiciona um xenomorfo geigermorfo
@@ -133,6 +134,7 @@ void Sala::set_xenomorfo_geigermorfo()
 	xen->set_mover(50);
 	xen->set_casulo(20);
 	xen->set_exoesq(3);
+	Xenomorfos.push_back(xen);
 }
 
 void Sala::set_xenomorfo_casulo_geigermorfo()
@@ -142,6 +144,7 @@ void Sala::set_xenomorfo_casulo_geigermorfo()
 	xen->set_vida(6);
 	xen->set_xenomorfo(0);
 	xen->set_exoesq(1);
+	Xenomorfos.push_back(xen);
 
 }
 
@@ -157,6 +160,7 @@ void Sala::set_xenomorfo_blob()
 	xen->set_reparador(6);
 	xen->set_operador(true);
 	xen->set_mover(15);
+	Xenomorfos.push_back(xen);
 }
 
 void Sala::set_xenomorfo_mxyzypykwi()
@@ -169,6 +173,7 @@ void Sala::set_xenomorfo_mxyzypykwi()
 	xen->set_mover(30);
 	xen->set_mutatis_mutandis(10);
 	xen->set_respira(true);
+	Xenomorfos.push_back(xen);
 }
 
 
@@ -288,9 +293,8 @@ void Sala::reparar_sala()
 }
 
 
-
-
-bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser operada
+//verifica se a sala em questao esta a ser operada
+bool Sala::verifica_sala_operada()
 {
 	bool verifica = false;
 	for (int i = 0; i < tripulantes.size(); i++)
@@ -317,7 +321,7 @@ bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser ope
 
 
 //sbuscar 
-void Sala::get_info_tripulantes()
+void Sala::get_letra_tripulantes()
 {
 	if (tripulantes.size() > 0)
 	{
@@ -329,6 +333,43 @@ void Sala::get_info_tripulantes()
 	
 }
 
+void Sala::get_letra_xenomorfos()
+{
+	if (Xenomorfos.size() > 0)
+	{
+		for (int i = 0; i < Xenomorfos.size(); i++)
+		{
+			cout << Xenomorfos.at(i)->get_letra() << " ";
+		}
+	}
+
+}
+
+void Sala::get_letra_piratas()
+{
+	if (piratas.size() > 0)
+	{
+		for (int i = 0; i < piratas.size(); i++)
+		{
+			cout << piratas.at(i)->get_letra() << " ";
+		}
+	}
+
+}
+
+
+void Sala::get_info_tripulante(char nome)
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_letra() == nome)
+		{
+			tripulantes.at(i)->get_info();
+		}
+	}
+}
+
+
 //sala atingida por meteoritos
 void Sala::atingida_meteorito(int dano)
 {
@@ -337,7 +378,7 @@ void Sala::atingida_meteorito(int dano)
 }
 
 //sala atacada por nave pirata
-void Sala::sala_atacada_piratas(int dano)
+void Sala::atacada_piratas(int dano)
 {
 	int aux;
 	integridade -= dano;
@@ -365,11 +406,38 @@ void Sala::sala_atacada_piratas(int dano)
 }
 
 //sala invadida por piratas
-void Sala::sala_invadida_piratas(int num)
+void Sala::invadida_piratas(int num)
 {
 	do
 	{
-		//chamar funcao que acresenta pirata
+		set_pirata();
 		num--;
-	} while (num != 0);
+	} while (num > 0);
+}
+
+//sala invadida por xenomorfos
+void Sala::invadida_xenomorfos()
+{
+	int aux;
+
+	srand(time(NULL));
+	aux = rand() % 3 + 1;
+	if (aux == 1)
+	{
+		set_xenomorfo_geigermorfo();
+	}
+	else if (aux == 2)
+	{
+		set_xenomorfo_blob();
+	}
+	else
+	{
+		set_xenomorfo_mxyzypykwi();
+	}
+}
+
+//sala atingida por po cosmico
+void Sala::atingida_po_cosmico(int dano)
+{
+	integridade -= dano;
 }

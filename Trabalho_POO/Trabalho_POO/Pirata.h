@@ -8,9 +8,9 @@ class Pirata: public Unidade
 	int reparador;
 	int forca_combate_para_Inimigo;
 	int forca_combate_para_Sala;
-	static char letra;
+	static char aux;
 	bool combate;
-	char nome;
+	char letra;
 
 public:
 	Pirata();
@@ -21,7 +21,7 @@ public:
 	int get_forca_combate_para_Inimigo();
 	int get_forca_combate_para_Sala();
 	bool get_combate();
-	char get_nome();
+	char get_letra();
 	
 	
 };

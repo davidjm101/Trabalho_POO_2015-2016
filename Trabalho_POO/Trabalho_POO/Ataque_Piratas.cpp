@@ -12,10 +12,10 @@ Ataque_Piratas::~Ataque_Piratas()
 
 void Ataque_Piratas::accao(Nave *nave)
 {
-	int aux;
+	int aux,aux2;
 	srand(time(NULL));
-	aux = rand() % 60 + 30;
+	aux = 30 + (rand() % 31);//gera numero aleatorio entre 30 e 60
 	set_dano(aux);
-	aux = rand() % 5 + 3;
-	nave->ataque_pirata(get_dano(), aux);
+	aux2 = 3 + (rand() % 2);//gera numero aleatorio entre 3 e 5
+	nave->ataque_pirata(get_dano(), aux2);
 }

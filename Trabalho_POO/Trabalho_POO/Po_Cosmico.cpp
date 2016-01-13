@@ -2,14 +2,16 @@
 
 Po_Cosmico::Po_Cosmico()
 {
-	dano = 10;
+	int dano = 10;
+	set_dano(dano);
 }
 
 Po_Cosmico::~Po_Cosmico()
 {
 }
 
-int Po_Cosmico::get_dano()
+void Po_Cosmico::accao(Nave* nave)
 {
-	return dano;
+	nave->atravessa_po_cosmico(get_dano());
 }
+

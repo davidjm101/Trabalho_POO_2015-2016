@@ -10,7 +10,7 @@ Ataque_Xenomorfo::~Ataque_Xenomorfo()
 
 }
 
-void Ataque_Xenomorfo::accao()
+void Ataque_Xenomorfo::accao(Nave* nave)
 {
-
+	nave->invadida_xenomorfos();
 }

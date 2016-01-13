@@ -2,10 +2,9 @@
 #include "bibliotecas.h"
 #include "Eventos.h"
 
-class Po_Cosmico {
-	int dano;
+class Po_Cosmico : public Eventos{
 public:
 	Po_Cosmico();
 	~Po_Cosmico();
-	int get_dano();
+	virtual void accao(Nave *nave);
 };

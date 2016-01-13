@@ -3,12 +3,12 @@
 
 
 
-char Pirata::letra = 'P';
+char Pirata::aux = 'P';
 
 Pirata::Pirata()
 {
-	this->nome = this->letra;
-	this->letra++;
+	this->letra = this->aux;
+	this->aux++;
 }
 
 Pirata::~Pirata()
@@ -48,8 +48,8 @@ bool Pirata::get_combate()
 	return combate;
 }
 
-char Pirata::get_nome()
+char Pirata::get_letra()
 {
-	return nome;
+	return letra;
 }
 

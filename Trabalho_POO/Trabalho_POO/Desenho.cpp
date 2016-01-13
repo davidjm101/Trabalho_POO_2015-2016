@@ -157,32 +157,32 @@ void Desenho::set_sala1()
 	cout << (char)191 << endl;
 
 	//linha esquerda
-	for (i = 3; i < 9; i++)
+	for (i = 3; i < 10; i++)
 	{
 		c.gotoxy(2, i);
 		cout << (char)179 << "\n";
 	}
 
 	//linha direita
-	for (i = 3; i < 9; i++)
+	for (i = 3; i < 10; i++)
 	{
 		c.gotoxy(20, i);
 		cout << (char)179 << "\n";
 	}
 
 	//canto inferior esquerdo
-	c.gotoxy(2, 9);
+	c.gotoxy(2, 10);
 	cout << (char)192 << endl;
 
 	//linha de baixo
 	for (i = 3; i < 20; i++)
 	{
-		c.gotoxy(i, 9);
+		c.gotoxy(i, 10);
 		cout << (char)196 << "\n";
 	}
 
 	//canto inferior direito
-	c.gotoxy(20, 9);
+	c.gotoxy(20, 10);
 	cout << (char)217 << endl;
 
 	
@@ -210,32 +210,32 @@ void Desenho::set_sala2()
 	cout << (char)191 << endl;
 
 	//linha esquerda
-	for (i = 3; i < 9; i++)
+	for (i = 3; i < 10; i++)
 	{
 		c.gotoxy(22, i);
 		cout << (char)179 << "\n";
 	}
 
 	//linha direita
-	for (i = 3; i < 9; i++)
+	for (i = 3; i < 10; i++)
 	{
 		c.gotoxy(40, i);
 		cout << (char)179 << "\n";
 	}
 
 	//canto inferior esquerdo
-	c.gotoxy(22, 9);
+	c.gotoxy(22, 10);
 	cout << (char)192 << endl;
 
 	//linha de baixo
 	for (i = 23; i < 40; i++)
 	{
-		c.gotoxy(i, 9);
+		c.gotoxy(i, 10);
 		cout << (char)196 << "\n";
 	}
 
 	//canto inferior direito
-	c.gotoxy(40, 9);
+	c.gotoxy(40, 10);
 	cout << (char)217 << endl;
 }
 
