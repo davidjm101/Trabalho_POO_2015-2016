@@ -6,7 +6,7 @@
 Nave::Nave()
 {
 	milhas = 0;
-	escudo = 100;
+	escudo = 10;
 }
 
 Nave::~Nave()
@@ -431,7 +431,7 @@ void Nave::imprime_dados_sala()
 				c.gotoxy(x, y + 2);
 				cout << "Oxig: " << salas.at(i)->get_oxigenio() << endl;
 				c.gotoxy(x, y + 3);
-				cout << "Prob: CC BR FG";
+				cout << "Prob: " << salas.at(i)->get_problema_fogo() << " " << salas.at(i)->get_problema_brecha() << " " << salas.at(i)->get_problema_curto_circuito();
 				c.gotoxy(x, y + 4);
 				cout << "Trip: ";
 				salas.at(i)->get_letra_tripulantes();
@@ -458,13 +458,17 @@ void Nave::imprime_dado_tripulante(char letra)
 	}
 }
 
-void Nave::sala_verifica_respirar()//vai verificar se existe algum elemento na sala que precise de respirar
+
+//vai verificar se existe algum elemento nas salas que precise de respirar
+void Nave::sala_verifica_respirar()
 {
 	for (int i = 0; i < salas.size(); i++)
 	{
 		salas.at(i)->trata_caracteristica_unidade_respira();		
 	}
 }
+
+
 
 void Nave::sala_verifica_toxicidade()
 {
@@ -684,7 +688,6 @@ void Nave::invadida_xenomorfos()
 			break;
 		}
 	}
-<<<<<<< HEAD
 	c.gotoxy(85, 19);
 	cout << "A nave foi atacada por" << endl;
 	c.gotoxy(85, 20);
@@ -725,17 +728,35 @@ void Nave::atravessa_po_cosmico(int dano)
 	system("PAUSE");
 }
 
-}
-
-void Nave::sala_verifica_Reparador() 
+//verifica se alguma sala esta em fogo e se estiver provoca o dano
+void Nave::dano_sala_fogo()
 {
-	for (i = 0; i < salas.size(); i++)
+	for (int i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome == "Raio_Laser")
-		{
-			verifica = salas.at(i)->verifica_sala_operada();
-			break;
-		}
+		salas.at(i)->dano_fogo();
 	}
 }
+
+//verifica se alguma sala tem curto_circuito e se estiver provoca o dano
+void Nave::dano_sala_curto_circuito()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->dano_curto_circuito();
+	}
+}
+
+
+
+//void Nave::sala_verifica_Reparador() 
+//{
+//	for (i = 0; i < salas.size(); i++)
+//	{
+//		if (salas.at(i)->get_nome == "Raio_Laser")
+//		{
+//			verifica = salas.at(i)->verifica_sala_operada();
+//			break;
+//		}
+//	}
+//}
 

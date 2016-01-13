@@ -34,7 +34,7 @@ void Turno::inicio_jogo()
 
 void Turno::inicio_turno()
 {
-
+	nave->sala_verifica_respirar();
 
 }
 
@@ -57,14 +57,15 @@ void Turno::fase_ordem()
 	c.gotoxy(3, 26);
 
 	cout << "Indique o comando: ";
-	cin.ignore();
+	cin >> comando;
+	/*cin.ignore();
 	getline(cin,comando);
 	if (comando.size() > 2)
 	{
 		token=comando.substr(5, 1);
 		nome= token[0];
 		nave->imprime_dado_tripulante(nome);
-	}
+	}*/
 		token = comando.substr(0, 1);
 		nome = token[0];
 		token = comando.substr(1, comando.size());
@@ -95,7 +96,7 @@ void Turno::eventos()
 	if (numero == 5)
 	{
 		/*aux = rand() % 4 + 1;*/
-		evento.at(2)->accao(nave);
+		evento.at(0)->accao(nave);
 		nave->imprime_dados_sala();
 		numero =1;	
 		

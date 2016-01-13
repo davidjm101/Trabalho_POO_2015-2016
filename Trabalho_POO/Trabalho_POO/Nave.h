@@ -20,13 +20,7 @@ public:
 	void adiciona_tripulantes();
 	void mover_nave();
 	void mover_membro_tripulacao(char nome, int numero);
-
-
-
-	int get_escudo();
-	int get_milhas();
-	bool get_sala_destruida();
-
+	
 	void sala_verifica_misterioso();
 
 	void reparar_nave();
@@ -34,22 +28,21 @@ public:
 	void sala_verifica_respirar(); //vai verificar se existe algum elemento na sala que precise de respirar
 	void atravessa_chuva_meteoritos(int dano, int num);//num vai ser o numero de vezes que a nave vai ser atinginda
 	void ataque_pirata(int dano, int num);//num vai ser o numero de piratas que entraram na nave
-
 	void invadida_xenomorfos();
 	void atravessa_po_cosmico(int dano);
 	bool verifica_ponte_operada();
 	void imprime_dado_tripulante(char letra);
 
+	void dano_sala_fogo();
+	void dano_sala_curto_circuito();
 
 
 	void sala_verifica_toxicidade();
 	void sala_verifica_Regenerador();
-	void dano_po_cosmico(int sala, int dano);
 	
 	int get_escudo();
 	int get_milhas();
 	bool get_sala_destruida();
-	bool verifica_ponte_operada();
 	void sala_verifica_Robotico();
 	void sala_verifica_Reparador();
 	

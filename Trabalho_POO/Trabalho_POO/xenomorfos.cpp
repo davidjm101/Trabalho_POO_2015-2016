@@ -92,15 +92,15 @@ void xenomorfos::set_regenerador(int valor)
 }
 void xenomorfos::altera_vida_do_Xenomorfo()
 {
-	if(this->get_vida <= 8)
+	/*if(this->get_vida() <= 8)
 	{
 		this->set_vida += this->get_regenerador();
 	
-	}
-	else if (this->get_vida == 7)
+	}*/
+	/*else if (this->get_vida() == 7)
 	{
-		this->set_vida == 8;
-	}
+		this->set_vida() == 8;
+	}*/
 }
 
 int xenomorfos::get_regenerador()

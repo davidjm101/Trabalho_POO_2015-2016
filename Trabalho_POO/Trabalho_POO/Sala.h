@@ -62,6 +62,13 @@ public:
 	void atacada_piratas(int dano);
 	void invadida_xenomorfos();
 	void atingida_po_cosmico(int dano);
+
+	void dano_fogo();
+	void dano_curto_circuito();
+	string get_problema_fogo();
+	string get_problema_brecha();
+	string get_problema_curto_circuito();
+
 	void get_letra_tripulantes();
 	void get_letra_xenomorfos();
 	void get_letra_piratas();

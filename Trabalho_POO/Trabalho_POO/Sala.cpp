@@ -190,11 +190,6 @@ void Sala::remove_tripulante()
 	}
 }
 
-
-
-
-
-
 string Sala::get_nome()
 {
 	return nome;
@@ -274,6 +269,20 @@ Tripulacao* Sala::obtem_tripulante(char nome)
 void Sala::inser_tripulante(Tripulacao* t)
 {
 	tripulantes.push_back(t);
+}
+
+
+//sbuscar 
+void Sala::get_letra_tripulantes()
+{
+	if (tripulantes.size() > 0)
+	{
+		for (int i = 0; i < tripulantes.size(); i++)
+		{
+			cout << tripulantes.at(i)->get_letra() << " ";
+		}
+	}
+
 }
 
 //reparar sala
@@ -384,12 +393,12 @@ void Sala::trata_caracteristica_hipnotizador(int valor)
 		{
 			int escolhe_unidade = rand() % tripulantes.size() + 1;
 
-			if (tripulantes.at(escolhe_unidade)->get_indeciso == false) {
+			if (tripulantes.at(escolhe_unidade)->get_indeciso() == false) {
 				tripulantes.at(escolhe_unidade)->set_indeciso(0);
 				Xenomorfos.at(i)->set_hipnotizador(true);
 
 			}
-			else if (tripulantes.at(escolhe_unidade)->get_indeciso == true) {
+			else if (tripulantes.at(escolhe_unidade)->get_indeciso() == true) {
 				tripulantes.at(escolhe_unidade)->set_indeciso(1);
 				Xenomorfos.at(i)->set_hipnotizador(true);
 			}
@@ -405,33 +414,25 @@ void Sala::trata_caracteristica_Misterioso()
 {
 	for (int i = 0; i < Xenomorfos.size(); i++)
 	{
-		if (Xenomorfos.at(i)->get_nome == "Geigermorfo")
+		if (Xenomorfos.at(i)->get_nome() == "Geigermorfo")
 		{
 			Xenomorfos.at(i)->set_misterioso(true);
 		}
 	}
 }
-//sbuscar 
-void Sala::get_letra_tripulantes()
-{
-	if (tripulantes.size() > 0)
-	{
-		for (int i = 0; i < tripulantes.size(); i++)
-		{
-			cout << tripulantes.at(i)->get_letra() << " ";
-		}
-	}
-	
-}
+
+
+
+
 void Sala::trata_caracteristica_Regenerador()
 {
-	for (int i = 0; i < Xenomorfos.size(); i++)
+	/*for (int i = 0; i < Xenomorfos.size(); i++)
 	{
-		if (Xenomorfos.at(i)->get_nome = "Blob")
+		if (Xenomorfos.at(i)->get_nome() = "Blob")
 		{
 			Xenomorfos.at(i)->altera_vida_do_Xenomorfo();
 		}
-	}
+	}*/
 
 }
 
@@ -439,7 +440,7 @@ void Sala::trata_caracteristica_Robotico()
 {
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_nome == "Robot - X34-ZT2" && this->curto_circuito == true)
+		if (tripulantes.at(i)->get_nome() == "Robot - X34-ZT2" && this->curto_circuito == true)
 		{
 			tripulantes.at(i)->set_robotico(true); ///vai activar a propriedade de robotico que depois impossibilita mover
 		}
@@ -490,6 +491,7 @@ void Sala::atingida_meteorito(int dano)
 {
 	integridade -= dano;
 	brecha = true;
+	oxigenio = 0;
 }
 
 //sala atacada por nave pirata
@@ -517,9 +519,9 @@ void Sala::atacada_piratas(int dano)
 	else
 	{
 		brecha = true;
+		oxigenio = 0;
 	}
 }
-
 
 //sala invadida por piratas
 void Sala::invadida_piratas(int num)
@@ -558,21 +560,129 @@ void Sala::atingida_po_cosmico(int dano)
 {
 	integridade -= dano;
 
-	} while (num != 0);
 }
+
+
+
+//verifica que a sala esta em fogo e se sim cada unidade perde vida
+void Sala::dano_fogo()
+{
+	int aux = 2;
+	if (oxigenio == 0)
+	{
+		fogo = false;
+	}
+
+	if (fogo == true)
+	{
+		for (int i = 0; i < tripulantes.size(); i++)
+		{
+			tripulantes.at(i)->reduz_vida(aux);
+		}
+
+		for (int i = 0; i < piratas.size(); i++)
+		{
+			piratas.at(i)->reduz_vida(aux);
+		}
+
+		for (int i = 0; i < Xenomorfos.size(); i++)
+		{
+			Xenomorfos.at(i)->reduz_vida(aux);
+		}
+	}
+}
+
+//verifica que a sala esta em curto_circuito e se sim cada unidade perde vida
+void Sala::dano_curto_circuito()
+{
+	int aux;
+	int dano = 0;
+	aux = rand() % 1 + 4;
+	//saiu a probabilidade de 25% logo todas as unidades vao receber dano
+	if (aux == 1)
+	{
+		if (tripulantes.size() > 0)//verifica se exitem alguns tripulantes na sala
+		{
+			dano += (tripulantes.size() + 1);//se sim o dano vai se igual a size do array + 1, pois o array comeca em 0
+		}
+		if (piratas.size() > 0)//verifica se exitem alguns piratas na sala
+		{
+			dano += (piratas.size() + 1);//se sim o dano vai se igual a size do array + 1, pois o array comeca em 0
+		}
+		if (Xenomorfos.size() > 0)//verifica se exitem alguns xenomorfos na sala
+		{
+			dano += (Xenomorfos.size() + 1);//se sim o dano vai se igual a size do array + 1, pois o array comeca em 0
+		}
+				
+		
+		for (int i = 0; i < tripulantes.size(); i++)
+		{
+			tripulantes.at(i)->reduz_vida(dano);
+		}
+
+		for (int i = 0; i < piratas.size(); i++)
+		{
+			piratas.at(i)->reduz_vida(dano);
+		}
+
+		for (int i = 0; i < Xenomorfos.size(); i++)
+		{
+			Xenomorfos.at(i)->reduz_vida(dano);
+		}
+	}
+
+}
+
+//retorna string FG caso a sala esteja em fogo
+string Sala::get_problema_fogo()
+{
+	string aux="";
+	if (fogo == true)
+	{
+		aux = "FG";
+	}
+	return aux;
+}
+
+//retorna string BR caso a sala tenha brecha
+string Sala::get_problema_brecha()
+{
+	string aux = "";
+	if (brecha == true)
+	{
+		aux = "BR";
+	}
+	return aux;
+}
+
+//retorna string CC caso a sala tenha curto_circuito
+string Sala::get_problema_curto_circuito()
+{
+	string aux = "";
+	if (curto_circuito == true)
+	{
+		aux = "CC";
+	}
+	return aux;
+}
+
+
+
+
+
 
 void Sala::trata_caracteristica_Reparador(int valor) 
 {
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_combate == false && this->dano < 100 && Xenomorfos.at(i)->get_nome == "Capitão")
+		if (tripulantes.at(i)->get_combate() == false && this->dano < 100 && Xenomorfos.at(i)->get_nome() == "Capitão")
 			this->altera_valor_do_dano(valor);
 
 	
 	}
 	for (int i = 0; i < Xenomorfos.size(); i++)
 	{
-		if (Xenomorfos.at(i)->get_combate == false && this->dano < 100 && Xenomorfos.at(i)->get_nome=="Blob")
+		if (Xenomorfos.at(i)->get_combate() == false && this->dano < 100 && Xenomorfos.at(i)->get_nome()=="Blob")
 			this->altera_valor_do_dano(valor);
 	}
 

@@ -7,7 +7,7 @@ void main()
 	Turno turno;
 	turno.inicio_jogo();
 	do {
-		/*turno.inicio_turno();*/
+		turno.inicio_turno();
 		turno.fase_ordem();
 		/*turno.final_turno();*/
 		turno.eventos();
