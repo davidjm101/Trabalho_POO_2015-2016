@@ -14,7 +14,7 @@ class Sala {
 	bool brecha;
 	bool curto_circuito;
 	vector <Tripulacao*> tripulantes;
-	vector <xenomorfos*> xenomorfos;
+	vector <xenomorfos*> Xenomorfos;
 	vector <Pirata*> piratas;
 
 public:
@@ -31,6 +31,11 @@ public:
 	void set_tripulante();
 	void set_capitao();
 	void set_robot();
+	void set_pirata();
+	void set_xenomorfo_geigermorfo();
+	void set_xenomorfo_casulo_geigermorfo();
+	void set_xenomorfo_blob();
+	void set_xenomorfo_mxyzypykwi();
 	void remove_tripulante();
 	void reparar_sala();
 	

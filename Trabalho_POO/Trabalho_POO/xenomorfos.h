@@ -5,7 +5,7 @@
 
 class xenomorfos : public Unidade
 {
-		
+		int xenomorfo;
 		int reparador;
 		int forca_combate;
 		static char letra;
@@ -23,19 +23,20 @@ class xenomorfos : public Unidade
 	public:
 		xenomorfos();
 		~xenomorfos();
-		
+		void set_xenomorfo(int valor);
 		void set_reparador(int valor);
 		void set_forca_combate(int valor);
 		void set_misterioso(int n_turno);
 		void set_casulo(int valor);
 		void set_combate(bool aux);
 		void set_regenerador(int valor);
-		void set_flamejante();
+		void set_flamejante(bool aux);
 		void set_toxico(int valor);
 		void set_hipnotizador(int valor);
 		void set_mutatis_mutandis(int valor);
 
 
+		int get_xenomorfo();
 		bool get_mutatis_mutandis();
 		bool get_hipnotizador();
 		int get_toxico();

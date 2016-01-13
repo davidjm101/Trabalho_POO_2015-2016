@@ -17,6 +17,16 @@ xenomorfos::~xenomorfos()
 
 }
 
+void xenomorfos::set_xenomorfo(int valor)
+{
+
+	this->xenomorfo = valor;
+}
+int xenomorfos::get_xenomorfo()
+{
+	return xenomorfo;
+}
+
 void xenomorfos::set_reparador(int valor)
 {
 	this->reparador = valor;
@@ -79,7 +89,7 @@ bool xenomorfos::get_combate()
 
 void xenomorfos::set_regenerador(int valor)
 {
-	//this->set_vida(++valor);
+	
 	this->regenerador = valor;
 }
 
@@ -88,9 +98,9 @@ int xenomorfos::get_regenerador()
 	return regenerador;
 }
 
-void xenomorfos::set_flamejante() 
+void xenomorfos::set_flamejante(bool aux) 
 {
-	/*acabar*/
+	this->flamejante = aux;
 	
 }
 
@@ -101,7 +111,7 @@ bool xenomorfos::get_flamejante()
 
 void xenomorfos::set_toxico(int valor)
 {
-
+	this->toxico = valor;
 
 }
 int xenomorfos::get_toxico()
@@ -111,6 +121,13 @@ int xenomorfos::get_toxico()
 
 void xenomorfos::set_hipnotizador(int valor)
 {
+	srand(time(NULL));
+	int probabilidade = rand() % 100 + 1;
+
+	if (probabilidade <= valor)
+		this->hipnotizador = true;
+	else
+		this->hipnotizador = false;
 
 }
 
@@ -121,7 +138,13 @@ bool xenomorfos::get_hipnotizador()
 
 void xenomorfos::set_mutatis_mutandis(int valor)
 {
-/*acabar*/
+	srand(time(NULL));
+	int probabilidade = rand() % 100 + 1;
+
+	if (probabilidade <= valor)
+		this->mutatis_mutandis = true;
+	else
+		this->mutatis_mutandis = false;
 
 }
 

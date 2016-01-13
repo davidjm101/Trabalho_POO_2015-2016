@@ -111,6 +111,66 @@ void Sala::set_robot()
 	tripulantes.push_back(trip);
 }
 
+//adiciona um pirata
+void Sala::set_pirata()
+{
+	Pirata* pirata = new Pirata();
+	pirata->set_vida(4);
+	pirata->set_respira(true);
+	pirata->set_forca_combate_para_Inimigo(1);
+	pirata->set_forca_combate_para_Sala(2);
+	pirata->set_mover(15);
+}
+
+//adiciona um xenomorfo geigermorfo
+void Sala::set_xenomorfo_geigermorfo()
+{
+	xenomorfos* xen = new xenomorfos();
+	xen->set_nome("Geigermorfo");
+	xen->set_vida(4);
+	xen->set_xenomorfo(3);
+	xen->set_misterioso(true);
+	xen->set_mover(50);
+	xen->set_casulo(20);
+	xen->set_exoesq(3);
+}
+
+void Sala::set_xenomorfo_casulo_geigermorfo()
+{
+	xenomorfos* xen = new xenomorfos();
+	xen->set_nome("Casulo de Geigermorfo");
+	xen->set_vida(6);
+	xen->set_xenomorfo(0);
+	xen->set_exoesq(1);
+
+}
+
+void Sala::set_xenomorfo_blob()
+{
+	xenomorfos* xen = new xenomorfos();
+	xen->set_nome("Blob");
+	xen->set_vida(8);
+	xen->set_xenomorfo(0);
+	xen->set_regenerador(2);
+	xen->set_flamejante(true);
+	xen->set_toxico(true);
+	xen->set_reparador(6);
+	xen->set_operador(true);
+	xen->set_mover(15);
+}
+
+void Sala::set_xenomorfo_mxyzypykwi()
+{
+	xenomorfos* xen = new xenomorfos();
+	xen->set_nome("Mxyzypykwi");
+	xen->set_vida(8);
+	xen->set_xenomorfo(0);
+	xen->set_hipnotizador(15);
+	xen->set_mover(30);
+	xen->set_mutatis_mutandis(10);
+	xen->set_respira(true);
+}
+
 
 
 void Sala::remove_tripulante()
