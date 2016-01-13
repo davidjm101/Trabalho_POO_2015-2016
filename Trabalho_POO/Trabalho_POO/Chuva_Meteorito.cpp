@@ -12,11 +12,12 @@ Chuva_Meteorito::~Chuva_Meteorito()
 
 }
 
+//acontecimento da chuva de meteoritos
 void Chuva_Meteorito::accao(Nave *nave)
 {
 	int aux;
 	srand(time(NULL));
-	if (nave->verifica_ponte_operada() == true)
+	if (nave->verifica_ponte_operada() == true)//ponte esta a ser operada, antige a nave entre 4a8 vezes
 	{
 		aux = rand() % 8 + 4;
 		nave->atravessa_chuva_meteoritos(get_dano(), aux);

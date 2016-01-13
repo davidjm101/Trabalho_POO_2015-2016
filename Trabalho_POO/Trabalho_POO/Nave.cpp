@@ -476,31 +476,36 @@ void Nave::imprime_dados_sala()
 //	}
 //}
 
-bool Nave::verifica_ponte_operada()//verifica se a ponte esta a ser operada por algum tripulante
+
+//verifica se a ponte esta a ser operada por algum tripulante
+bool Nave::verifica_ponte_operada() 
 {
 	bool verifica = false;
-	//for (int i = 0; i < salas.size(); i++)
-	//{
-	//	if (salas.at(i)->get_nome == "Ponte")
-	//	{
-	//		verifica=salas.at(i)->verifica_sala_operada();
-	//	}
-	//}
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_nome == "Ponte") 
+		{
+			verifica=salas.at(i)->verifica_sala_operada();
+		}
+	}
 	return verifica;
 }
 
+
+//nave atravessa uma nuvem de meteoritos
 void Nave::atravessa_chuva_meteoritos(int dano, int num)
 {
 	bool verifica = false;
 	int aux;
-	int conta = 0;
-	for (int i = 0; i < salas.size(); i++)
+	int conta = 0,i;
+	//verifica se a nave tem raio laser, e se tiver se esta a ser operado
+	for (i = 0; i < salas.size(); i++)
 	{
-		/*if (salas.at(i)->get_nome == "Raio_Laser")
+		if (salas.at(i)->get_nome == "Raio_Laser")
 		{
 			verifica = salas.at(i)->verifica_sala_operada();
 			break;
-		}*/
+		}
 	}
 	if (verifica == true)
 	{
@@ -511,14 +516,99 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 			if (escudo > 0)
 			{
 				escudo -= (dano*num);
+				cout << "A nave atravessou chuva meteoritos" << endl;
+				c.gotoxy(85, 20);
+				cout << "o escudo da nave sofreu dano" << endl;
 			}
 			else
 			{
 				do {
 					aux = rand() % 12 + 1;
-					
+					for (i = 0; i < salas.size(); i++)
+					{
+						if (salas.at(i)->get_numero() == aux)
+						{
+							salas.at(i)->atingida_meteorito(dano);
+							conta++;
+						}
+					}
 				} while (conta != num);
+				c.gotoxy(85, 19);
+				cout << "A nave atravessou chuva meteoritos" << endl;
+				c.gotoxy(85, 20);
+				cout << "varia salas sofreram dano" << endl;
+				c.gotoxy(85, 21);
+				cout << "e se encontram com brechas" << endl;
+			}
+			
+		}
+		else
+		{
+			c.gotoxy(85, 19);
+			cout << "A nave atravessou chuva meteoritos" << endl;
+			c.gotoxy(85, 20);
+			cout << "o raio laser destrui!!!" << endl;
+			c.gotoxy(85, 21);
+			cout << "todos os meteoritos." << endl;
+		}
+	}
+}
+
+//nave foi atacada por piratas
+void Nave::ataque_pirata(int dano, int num)
+{
+	int dano_excesso;
+	bool verifica=false;
+	int i,aux;
+
+	if (escudo > 0)
+	{
+		if ((escudo - dano) > 0)
+		{
+			escudo -= dano;
+		}
+		else
+		{
+			dano_excesso = dano - escudo;
+			escudo = 0;
+			//sala recebe o dano_excesso e fogo ou curto circuito ou brecha
+		}
+	}
+	else
+	{
+		//sala recebe o dano e fogo ou curto circuito ou brecha
+	}
+
+	//verifica que o raio laser esta operacional
+	for (i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_nome == "Raio_Laser")
+		{
+			verifica = salas.at(i)->verifica_sala_operada();
+			break;
+		}
+	}
+	//caso nao esteja uma sala e invadida por piratas
+	if (verifica == false)
+	{
+		srand(time(NULL));
+		aux = rand() % 12 + 1;
+		for (i = 0; i < salas.size(); i++)
+		{
+			if (salas.at(i)->get_numero()==aux)
+			{
+				
+				break;
 			}
 		}
+	}
+	else
+	{
+		c.gotoxy(85, 19);
+		cout << "A nave foi atacada por piratas," << endl;
+		c.gotoxy(85, 20);
+		cout << "os piratas foram afugentados," << endl;
+		c.gotoxy(85, 21);
+		cout << "a nave nao foi invadida" << endl;
 	}
 }

@@ -293,13 +293,13 @@ void Sala::reparar_sala()
 bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser operada
 {
 	bool verifica = false;
-	/*for (int i = 0; i < tripulantes.size(); i++)
+	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i).get_operador()==true)
+		if (tripulantes.at(i)->get_operador()==true)
 		{
 			verifica = true;
 		}
-	}*/
+	}
 
 	return verifica;
 }
@@ -329,9 +329,47 @@ void Sala::get_info_tripulantes()
 	
 }
 
-
+//sala atingida por meteoritos
 void Sala::atingida_meteorito(int dano)
 {
 	integridade -= dano;
 	brecha = true;
+}
+
+//sala atacada por nave pirata
+void Sala::sala_atacada_piratas(int dano)
+{
+	int aux;
+	integridade -= dano;
+	srand(time(NULL));
+	aux = rand() % 3 + 1;
+	//mete fogo a sala
+	if (aux == 1)
+	{
+		if (brecha == false)//verifica se a brecha na sala, poisa caso houver nao pode haver fogo
+		{
+			fogo = true;
+		}
+		
+	}
+	//mete curto circuito a sala
+	else if (aux == 2)
+	{
+		curto_circuito = true;
+	}
+	//mete brecha a sala
+	else
+	{
+		brecha = true;
+	}
+}
+
+//sala invadida por piratas
+void Sala::sala_invadida_piratas(int num)
+{
+	do
+	{
+		//chamar funcao que acresenta pirata
+		num--;
+	} while (num != 0);
 }

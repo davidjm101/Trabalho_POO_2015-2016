@@ -55,6 +55,8 @@ public:
 	void inser_tripulante(Tripulacao* t);
 	void verifica_tripulante_respira();
 	void atingida_meteorito(int dano);//num é o numero de vezes que a sala é atingida
+	void sala_invadida_piratas(int num);//num é o numero de piratas que invadem a sala
+	void sala_atacada_piratas(int dano);
 	void get_info_tripulantes();
 
 
