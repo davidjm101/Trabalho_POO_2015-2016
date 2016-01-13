@@ -259,12 +259,12 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 	{
 		for (i = 0; i < salas.size(); i++)
 		{
-			verifica = salas.at(i)->verifica_tripulante(nome);
-			if (verifica == true)
-			{
-				t = salas.at(i)->obtem_tripulante(nome);
-				break;
-			}
+				verifica = salas.at(i)->verifica_tripulante(nome);
+				if (verifica == true)
+				{
+					t = salas.at(i)->obtem_tripulante(nome);
+					break;
+				}
 		}
 	}
 
@@ -468,13 +468,47 @@ void Nave::imprime_dados_sala()
 
 
 
-//void Nave::sala_verifica_respirar()//vai verificar se existe algum elemento na sala que precise de respirar
-//{
-//	for (int i = 0; i < salas.size(); i++)
-//	{
-//
-//	}
-//}
+void Nave::sala_verifica_respirar()//vai verificar se existe algum elemento na sala que precise de respirar
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_unidade_respira();		
+	}
+}
+
+void Nave::sala_verifica_toxicidade()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_toxico();
+	}
+}
+
+void Nave::sala_verifica_misterioso() //vai verificar se existe algum misterioso
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_Misterioso();  /*FALTA VER A CENA DOS TURNOS DO XENOMORFO A DESAPARECER
+														 */
+	}
+}
+
+void Nave::sala_verifica_Regenerador() //vai verificar se existe algum misterioso
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_Regenerador();  /*FALTA VER A CENA DOS TURNOS DO XENOMORFO A DESAPARECER
+														 */
+	}
+}
+
+void Nave::sala_verifica_Robotico() //vai verificar o robotico
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_Robotico();  										  
+	}
+}
 
 
 //verifica se a ponte esta a ser operada por algum tripulante
@@ -610,5 +644,17 @@ void Nave::ataque_pirata(int dano, int num)
 		cout << "os piratas foram afugentados," << endl;
 		c.gotoxy(85, 21);
 		cout << "a nave nao foi invadida" << endl;
+	}
+}
+
+void Nave::sala_verifica_Reparador() 
+{
+	for (i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_nome == "Raio_Laser")
+		{
+			verifica = salas.at(i)->verifica_sala_operada();
+			break;
+		}
 	}
 }

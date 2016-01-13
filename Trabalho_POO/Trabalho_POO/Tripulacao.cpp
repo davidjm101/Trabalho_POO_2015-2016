@@ -32,7 +32,33 @@ void Tripulacao::set_combate(bool aux)
 {
 	this->combate = aux;
 }
+void Tripulacao::set_indeciso(int conta_numero_vezes_hipnotizado)
+{
+		srand(time(NULL));
+		int probabilidade = rand() % 100 + 1;
 
+		if (conta_numero_vezes_hipnotizado == 0) 
+		{
+			if (probabilidade <= 50)
+				this->indeciso = true;
+			else
+				this->indeciso = false;
+		}
+		else if (conta_numero_vezes_hipnotizado == 1)
+		{
+			if (probabilidade <= 75)
+				this->indeciso = true;
+			else
+				this->indeciso = false;
+		}
+		else
+			this->indeciso = true;
+}
+
+bool Tripulacao::get_indeciso()
+{
+	return indeciso;
+}
 
 int Tripulacao::get_reparar()
 {
@@ -62,4 +88,13 @@ int Tripulacao::quanto_reparar()//retorna quanto e que o tripulante repara se na
 		return reparar;
 	}
 	return 0;
+}
+
+void Tripulacao::set_robotico(bool valor)
+{
+	this->robotico = valor;
+}
+
+bool Tripulacao::get_robotico() {
+	return robotico;
 }

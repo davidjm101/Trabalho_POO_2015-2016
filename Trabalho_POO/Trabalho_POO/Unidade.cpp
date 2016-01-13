@@ -1,4 +1,4 @@
-#include "bibliotecas.h"
+  #include "bibliotecas.h"
 #include "Unidade.h"
 
 
@@ -19,7 +19,16 @@ void Unidade::set_vida(int valor)
 {
 	this->vida = valor;
 }
-
+//reduz a vida da unidade
+void Unidade::reduz_vida(int valor)
+{
+	this->vida = vida - valor;
+}
+//acrescenta vida à unidade
+void Unidade::acrescenta_vida(int valor)
+{
+	this->vida = vida + valor;
+}
 
 void Unidade::set_respira(bool valor)
 {
@@ -70,3 +79,15 @@ bool Unidade::get_operador()
 {
 	return operador;
 }
+
+void Unidade::set_reparador(int valor)
+{
+	this->reparador = valor;
+}
+
+int Unidade::get_reparador()
+{
+	return reparador;
+}
+
+

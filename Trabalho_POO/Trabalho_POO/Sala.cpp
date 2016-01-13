@@ -254,7 +254,7 @@ Tripulacao* Sala::obtem_tripulante(char nome)
 	Tripulacao* t= new Tripulacao();
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome)
+		if (tripulantes.at(i)->get_letra() == nome )
 		{
 
 			t = tripulantes.at(i);
@@ -305,17 +305,108 @@ bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser ope
 }
 
 
+//opera o oxigenio existente na sala consoante o numero de unidades pertencentes a esta sala no momento
+void Sala::trata_caracteristica_unidade_respira()
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_respira() == true)
+		{
+			if (oxigenio > 0)
+				oxigenio = oxigenio - 1;
+			else
+				tripulantes.at(i)->reduz_vida(1);
+		}
+	}
 
-//void Sala::verifica_tripulante_respira()
-//{
-//
-//	if (oxigenio > 0)
-//	{
-//
-//	}
-//}
+	for (int i = 0; i < piratas.size(); i++)
+	{
+		if (piratas.at(i)->get_respira() == true)
+		{
+			if (oxigenio > 0)
+				oxigenio = oxigenio - 1;
+			else
+				piratas.at(i)->reduz_vida(1);
+		}
+	}
+
+	for (int i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (Xenomorfos.at(i)->get_respira() == true)
+		{
+			if (oxigenio > 0)
+				oxigenio = oxigenio - 1;
+			else
+				Xenomorfos.at(i)->reduz_vida(1);
+		}
+
+		else if (Xenomorfos.at(i)->get_flamejante() == true)  ///Instrução de verificação se o xenomorfo é flamejante
+		{
+			oxigenio = oxigenio - 5;
+			
+		}
+
+	}
+
+}
+
+void Sala::trata_caracteristica_toxico() /// vai verificar as unidades que contenham toxicidade e retirar vidas aos outros que nao sao toxicos
+{
+	for (int i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (int valordetoxico = Xenomorfos.at(i)->get_toxico() > 0)
+		{
+			for (int i = 0; i < piratas.size(); i++)
+			{
+				piratas.at(i)->reduz_vida(valordetoxico);
+			}
+
+			for (int i = 0; i < tripulantes.size(); i++)
+			{
+				tripulantes.at(i)->reduz_vida(valordetoxico);
+			}
+		}
+	}
+}
+
+void Sala::trata_caracteristica_hipnotizador(int valor)
+{
+	srand(time(NULL));
+	int probabilidade = rand() % 100 + 1;
+
+	for (int i = 0; i < Xenomorfos.size(); i++) {
+
+		if (probabilidade <= valor)
+		{
+			int escolhe_unidade = rand() % tripulantes.size() + 1;
+
+			if (tripulantes.at(escolhe_unidade)->get_indeciso == false) {
+				tripulantes.at(escolhe_unidade)->set_indeciso(0);
+				Xenomorfos.at(i)->set_hipnotizador(true);
+
+			}
+			else if (tripulantes.at(escolhe_unidade)->get_indeciso == true) {
+				tripulantes.at(escolhe_unidade)->set_indeciso(1);
+				Xenomorfos.at(i)->set_hipnotizador(true);
+			}
+
+		}
+		Xenomorfos.at(i)->set_hipnotizador(false);
+	}
+
+}
 
 
+void Sala::trata_caracteristica_Misterioso()
+{
+	for (int i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (Xenomorfos.at(i)->get_nome == "Geigermorfo")
+		{
+			Xenomorfos.at(i)->set_misterioso(true);
+		}
+	}
+}
 //sbuscar 
 void Sala::get_info_tripulantes()
 {
@@ -328,6 +419,30 @@ void Sala::get_info_tripulantes()
 	}
 	
 }
+void Sala::trata_caracteristica_Regenerador()
+{
+	for (int i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (Xenomorfos.at(i)->get_nome = "Blob")
+		{
+			Xenomorfos.at(i)->altera_vida_do_Xenomorfo();
+		}
+	}
+
+}
+
+void Sala::trata_caracteristica_Robotico() 
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_nome == "Robot - X34-ZT2" && this->curto_circuito == true)
+		{
+			tripulantes.at(i)->set_robotico(true); ///vai activar a propriedade de robotico que depois impossibilita mover
+		}
+	}
+}
+
+
 
 //sala atingida por meteoritos
 void Sala::atingida_meteorito(int dano)
@@ -364,6 +479,7 @@ void Sala::sala_atacada_piratas(int dano)
 	}
 }
 
+
 //sala invadida por piratas
 void Sala::sala_invadida_piratas(int num)
 {
@@ -372,4 +488,28 @@ void Sala::sala_invadida_piratas(int num)
 		//chamar funcao que acresenta pirata
 		num--;
 	} while (num != 0);
+}
+
+void Sala::trata_caracteristica_Reparador(int valor) 
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_combate == false && this->dano < 100 && Xenomorfos.at(i)->get_nome == "Capitão")
+			this->altera_valor_do_dano(valor);
+
+	
+	}
+	for (int i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (Xenomorfos.at(i)->get_combate == false && this->dano < 100 && Xenomorfos.at(i)->get_nome=="Blob")
+			this->altera_valor_do_dano(valor);
+	}
+
+
+}
+
+
+void Sala::altera_valor_do_dano(int valor)
+{
+	this->dano += valor;
 }
