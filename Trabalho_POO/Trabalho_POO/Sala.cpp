@@ -5,7 +5,6 @@ Sala::Sala(string nome , int numero)
 {
 	this->nome = nome;
 	this->numero = numero;
-	this->saude = 100;
 	this->oxigenio = 100;
 	this->integridade = 100;
 	this->dano = 100 - integridade;
@@ -36,11 +35,6 @@ void Sala::set_numero(int numero)
 	this->numero = numero;
 }
 
-void Sala::set_saude(int saude)
-{
-	this->saude = saude;
-}
-
 void Sala::set_oxigenio(int oxigenio)
 {
 	this->oxigenio = oxigenio;
@@ -62,7 +56,6 @@ void Sala::set_fogo(bool existe)
 	this->fogo = existe;
 }
 
-
 void Sala::set_brecha(bool existe)
 {
 	this->brecha = existe;
@@ -73,25 +66,68 @@ void Sala::set_curto_circuito(bool existe)
 	this->curto_circuito = existe;
 }
 
-void Sala::set_tripulante(Tripulacao trip)
+
+//adiciona um tripulante a sala
+void Sala::set_tripulante()
 {
+	Tripulacao* trip = new Tripulacao();
+	trip->set_nome("Membro Tripulacao");
+	trip->set_vida(5);
+	trip->set_respira(true);
+	trip->set_operador(true);
+	trip->set_reparador(1);
+	trip->set_forca_combate(1);
+	trip->set_combate(false);
 	tripulantes.push_back(trip);
 }
 
-void Sala::reparar_sala()
+//adiciona um capitao a sala
+void Sala::set_capitao()
 {
-	int i;
-	int reparar=0;
-	for (i = 0; i < tripulantes.size(); i++)
-	{
-		reparar+=tripulantes.at(i).quanto_reparar();
-	}
-	if (integridade < 100)
-	{
-		integridade += reparar;
-	}
-	
+	Tripulacao* trip = new Tripulacao();
+	trip->set_nome("Capitão");
+	trip->set_vida(6);
+	trip->set_respira(true);
+	trip->set_reparador(1);
+	trip->set_operador(true);
+	trip->set_exoesq(1);
+	trip->set_forca_combate(2);
+	trip->set_combate(false);
+	tripulantes.push_back(trip);
 }
+
+//adiciona um robot a sala
+void Sala::set_robot()
+{
+	Tripulacao* trip = new Tripulacao();
+	trip->set_nome("Robot - X34-ZT2");
+	trip->set_vida(8);
+	trip->set_respira(false);
+	trip->set_reparador(0);
+	trip->set_operador(false);
+	trip->set_exoesq(2);
+	trip->set_forca_combate(3);
+	trip->set_combate(false);
+	tripulantes.push_back(trip);
+}
+
+
+
+void Sala::remove_tripulante()
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_nome() == "Membro Tripulacao")
+		{
+			tripulantes.erase(tripulantes.begin() + i);
+			break;
+		}
+	}
+}
+
+
+
+
 
 
 string Sala::get_nome()
@@ -99,15 +135,9 @@ string Sala::get_nome()
 	return nome;
 }
 
-
 int Sala::get_numero()
 {
 	return numero;
-}
-
-int Sala::get_saude()
-{
-	return saude;
 }
 
 int Sala::get_oxigenio()
@@ -140,52 +170,81 @@ bool Sala::get_curto_circuito()
 	return curto_circuito;
 }
 
+
+
+
+//verifica se existe algum tripulante na sala com este nome
 bool Sala::verifica_tripulante(char nome)
 {
 	bool verifica = false;
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i).get_nome() == nome)
+		if (tripulantes.at(i)->get_letra() == nome)
 		{
 			verifica = true;
 		}
 	}
-
 	return verifica;
 }
+
+//obtem o tripulante da sala original para se mover para outra sala
+//apagando-o da sala original
+Tripulacao* Sala::obtem_tripulante(char nome)
+{
+	Tripulacao* t= new Tripulacao();
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_letra() == nome)
+		{
+
+			t = tripulantes.at(i);
+			tripulantes.erase(tripulantes.begin()+i);
+			break;
+		}
+	}
+  return t;
+}
+
+//insere o tripulante na nova sala depois de mover
+void Sala::inser_tripulante(Tripulacao* t)
+{
+	tripulantes.push_back(t);
+}
+
+//reparar sala
+void Sala::reparar_sala()
+{
+	int i;
+	int reparar = 0;
+	for (i = 0; i < tripulantes.size(); i++)
+	{
+		reparar += tripulantes.at(i)->quanto_reparar();
+	}
+	if (integridade < 100)
+	{
+		integridade += reparar;
+	}
+
+}
+
+
+
 
 bool Sala::verifica_sala_operada()//verifica se a sala em questao esta a ser operada
 {
 	bool verifica = false;
-	for (int i = 0; i < tripulantes.size(); i++)
+	/*for (int i = 0; i < tripulantes.size(); i++)
 	{
 		if (tripulantes.at(i).get_operador()==true)
 		{
 			verifica = true;
 		}
-	}
+	}*/
 
 	return verifica;
 }
 
-Tripulacao Sala::get_tripulantes(char nome)
-{
-	Tripulacao t;
-	for (int i = 0; i < tripulantes.size(); i++)
-	{
-		if (tripulantes.at(i).get_nome() == nome)
-		{
 
-			t = tripulantes.at(i);
-			tripulantes.erase(tripulantes.begin()+i);
-			
-		}
-	}
-
-	
-
-	return t;
-}
 
 //void Sala::verifica_tripulante_respira()
 //{
@@ -196,13 +255,15 @@ Tripulacao Sala::get_tripulantes(char nome)
 //	}
 //}
 
+
+//sbuscar 
 void Sala::get_info_tripulantes()
 {
 	if (tripulantes.size() > 0)
 	{
 		for (int i = 0; i < tripulantes.size(); i++)
 		{
-			cout <<tripulantes.at(i).get_nome() << " ";
+			cout << tripulantes.at(i)->get_letra() << " ";
 		}
 	}
 	

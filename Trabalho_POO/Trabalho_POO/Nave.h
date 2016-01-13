@@ -6,7 +6,7 @@ class Nave
 {
 	int milhas;
 	int escudo;
-	vector<Sala> salas;
+	vector<Sala*> salas;
 	
 
 public:
@@ -14,10 +14,11 @@ public:
 	~Nave();
 	void set_escudo(int escudo);
 	void set_salas_normais();
-	void set_tripulantes(Tripulacao *trip);
 	void set_salas_opcionais();
+	void adiciona_tripulantes();
+
+
 	void mover_nave();
-	void modificar_tripulantes(int tipo, Tripulacao *trip);
 	void mover_membro_tripulacao(char nome, int numero);
 
 

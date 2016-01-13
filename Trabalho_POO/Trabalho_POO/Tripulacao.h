@@ -8,9 +8,9 @@ class Tripulacao : public Unidade
 {
 	int reparar;
 	int forca_combate;
-	static char letra;
+	static char aux;
 	bool combate;
-	char nome;
+	char letra;
 
 public:
 	Tripulacao();
@@ -21,6 +21,6 @@ public:
 	int get_reparar();
 	int get_forca_combate();
 	bool get_combate();
-	char get_nome();
+	char get_letra();
 	int quanto_reparar();//retorna quanto e que o tripulante repara se nao estiver em combate
 };

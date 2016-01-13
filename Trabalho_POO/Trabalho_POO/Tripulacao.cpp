@@ -3,12 +3,12 @@
 
 
 
-char Tripulacao::letra = 'a';
+char Tripulacao::aux = 'a';
 
 Tripulacao::Tripulacao()
 {
-	this->nome = this->letra;
-	this->letra++;
+	this->letra = this->aux;
+	this->aux++;
 	
 }
 
@@ -50,9 +50,9 @@ bool Tripulacao::get_combate()
 	return combate;
 }
 
-char Tripulacao::get_nome()
+char Tripulacao::get_letra()
 {
-	return nome;
+	return  letra;
 }
 
 int Tripulacao::quanto_reparar()//retorna quanto e que o tripulante repara se nao estiver em combate

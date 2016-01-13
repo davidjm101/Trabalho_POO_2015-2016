@@ -116,5 +116,8 @@
     <ClCompile Include="Chuva_Meteorito.cpp">
       <Filter>Source Files\Eventos</Filter>
     </ClCompile>
+    <ClCompile Include="Ataque_Piratas.cpp">
+      <Filter>Source Files\Eventos</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

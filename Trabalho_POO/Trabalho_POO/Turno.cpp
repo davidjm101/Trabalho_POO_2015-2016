@@ -14,6 +14,7 @@ void Turno::inicio_jogo()
 {
 	nave.set_salas_normais();
 	nave.set_salas_opcionais();
+	nave.adiciona_tripulantes();
 	desenho.desenha_nave();
 	desenho.desenha_info();
 	desenho.desenha_milhas();
@@ -23,7 +24,10 @@ void Turno::inicio_jogo()
 void Turno::inicio_turno()
 {
 
-	/*nave.sala_verifica_respirar();*/
+	desenho.desenha_nave();
+	desenho.desenha_info();
+	desenho.desenha_milhas();
+	nave.imprime_dados_sala();
 
 }
 
@@ -43,23 +47,20 @@ void Turno::fase_ordem()
 	cin >> comando;
 	token = comando.substr(0,1);
 	nome = token[0];
-	if (nome == '\n')
-	{
-		return;
-		
-	}
-	else
-	{
-		token = comando.substr(1, comando.size());
-		numero = stoi(token);
-		nave.mover_membro_tripulacao(nome, numero);
-		nave.imprime_dados_sala();
-	}
+	token = comando.substr(1, comando.size());
+	numero = stoi(token);
+	nave.mover_membro_tripulacao(nome, numero);
+	desenho.desenha_nave();
+	desenho.desenha_info();
+	nave.imprime_dados_sala();
+	nave.imprime_dados_sala();
+	
 }
 
 void Turno::final_turno()
 {
-	nave.reparar_nave();
+	/*nave.reparar_nave();*/
+	nave.imprime_dados_sala();
 	nave.mover_nave();
 	desenho.desenha_milhas();
 	c.gotoxy(85, 4);

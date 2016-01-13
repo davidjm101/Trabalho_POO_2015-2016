@@ -163,6 +163,7 @@
     <ClInclude Include="xenomorfos.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ataque_Piratas.cpp" />
     <ClCompile Include="Ataque_Xenomorfo.cpp" />
     <ClCompile Include="Chuva_Meteorito.cpp" />
     <ClCompile Include="consola.cpp" />
