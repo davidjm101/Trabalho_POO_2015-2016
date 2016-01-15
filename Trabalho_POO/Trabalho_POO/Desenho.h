@@ -11,6 +11,10 @@ public:
 	void desenha_nave();
 	void desenha_info();
 	void desenha_milhas();
+	void desenha_info_tripulantes();
+	void desenha_info_xenomorfos();
+	void desenha_info_piratas();
+
 	void set_sala1();
 	void set_sala2();
 	void set_sala3();

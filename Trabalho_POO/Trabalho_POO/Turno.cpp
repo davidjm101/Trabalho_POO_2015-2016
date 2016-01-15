@@ -29,13 +29,16 @@ void Turno::inicio_jogo()
 	desenho.desenha_nave();
 	desenho.desenha_info();
 	desenho.desenha_milhas();
+	desenho.desenha_info_tripulantes();
+	desenho.desenha_info_xenomorfos();
+	desenho.desenha_info_piratas();
 	nave->imprime_dados_sala();
 }
 
 void Turno::inicio_turno()
 {
 	nave->sala_verifica_respirar();
-
+	nave->imprime_dado_tripulante();
 }
 
 
@@ -77,13 +80,14 @@ void Turno::fase_ordem()
 	desenho.desenha_info();
 	desenho.desenha_milhas();
 	nave->imprime_dados_sala();
+	nave->imprime_dado_tripulante();
 	
 	
 }
 
 void Turno::final_turno()
 {
-	
+	nave->mover_nave();
 	c.gotoxy(85, 4);
 	cout << nave->get_milhas();
 }

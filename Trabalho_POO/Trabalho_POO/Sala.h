@@ -16,6 +16,8 @@ class Sala {
 	vector <Tripulacao*> tripulantes;
 	vector <xenomorfos*> Xenomorfos;
 	vector <Pirata*> piratas;
+	int valor_escudo;
+	bool escudo_ativado;
 
 public:
 	Sala(string nome, int numero);
@@ -28,6 +30,8 @@ public:
 	void set_fogo(bool existe);
 	void set_brecha(bool existe);
 	void set_curto_circuito(bool existe);
+
+
 	void set_tripulante();
 	void set_capitao();
 	void set_robot();
@@ -36,8 +40,10 @@ public:
 	void set_xenomorfo_casulo_geigermorfo();
 	void set_xenomorfo_blob();
 	void set_xenomorfo_mxyzypykwi();
+
+
 	void remove_tripulante();
-	void reparar_sala();
+
 	
 	//void retira_vida(int valor);
 
@@ -53,11 +59,17 @@ public:
 	bool verifica_sala_operada();
 	Tripulacao* obtem_tripulante(char nome);
 	void inser_tripulante(Tripulacao* t);
+
+
 	void trata_caracteristica_unidade_respira();
 	void trata_caracteristica_toxico();
+	
+	bool verifica_tripulante_indeciso(char nome);
+
+
+	void reparar_sala();
 
 	void atingida_meteorito(int dano);//num é o numero de vezes que a sala é atingida
-
 	void invadida_piratas(int num);//num é o numero de piratas que invadem a sala
 	void atacada_piratas(int dano);
 	void invadida_xenomorfos();
@@ -72,10 +84,9 @@ public:
 	void get_letra_tripulantes();
 	void get_letra_xenomorfos();
 	void get_letra_piratas();
-	void get_info_tripulante(char nome);
+	void get_info_tripulante();
 
-	void sala_invadida_piratas(int num);//num é o numero de piratas que invadem a sala
-	void sala_atacada_piratas(int dano);
+
 	void get_info_tripulantes();
 	void trata_caracteristica_indeciso();
 	void trata_caracteristica_hipnotizador(int valor);
@@ -84,7 +95,15 @@ public:
 	void trata_caracteristica_Robotico();
 	void trata_caracteristica_Reparador(int valor);
 	void altera_valor_do_dano(int valor);
-
+	
+	
+	void combate();
+	void suporte_vida();
+	bool controlo_escudo();
+	void sistema_seguranca_interno();
+	void enfermaria();
+	void sala_armas();
+	void auto_reparador();
 
 
 

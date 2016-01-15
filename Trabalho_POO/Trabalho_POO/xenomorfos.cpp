@@ -27,15 +27,6 @@ int xenomorfos::get_xenomorfo()
 	return xenomorfo;
 }
 
-void xenomorfos::set_reparador(int valor)
-{
-	this->reparador = valor;
-}
-
-void xenomorfos::set_forca_combate(int valor)
-{
-	this->forca_combate = valor;
-}
 
 void xenomorfos::set_misterioso(bool valor) //???
 {
@@ -72,16 +63,6 @@ bool xenomorfos::get_casulo()
 
 }
 
-void xenomorfos::set_combate(bool aux)
-{
-
-	this->combate = aux;
-}
-
-bool xenomorfos::get_combate()
-{
-	return combate;
-}
 
 
 void xenomorfos::set_regenerador(int valor)

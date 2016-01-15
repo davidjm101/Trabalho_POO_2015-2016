@@ -11,6 +11,8 @@ Sala::Sala(string nome , int numero)
 	this->fogo = false;
 	this->brecha = false;
 	this->curto_circuito = false;
+	this->escudo_ativado = true;
+	this->valor_escudo = 0;
 
 }
 
@@ -75,9 +77,10 @@ void Sala::set_tripulante()
 	trip->set_vida(5);
 	trip->set_respira(true);
 	trip->set_operador(true);
-	trip->set_reparador(1);
+	trip->set_quanto_reparar(1);
 	trip->set_forca_combate(1);
 	trip->set_combate(false);
+	trip->set_repara(true);
 	tripulantes.push_back(trip);
 }
 
@@ -88,11 +91,12 @@ void Sala::set_capitao()
 	trip->set_nome("Capitão");
 	trip->set_vida(6);
 	trip->set_respira(true);
-	trip->set_reparador(1);
+	trip->set_quanto_reparar(1);
 	trip->set_operador(true);
 	trip->set_exoesq(1);
 	trip->set_forca_combate(2);
 	trip->set_combate(false);
+	trip->set_repara(true);
 	tripulantes.push_back(trip);
 }
 
@@ -103,11 +107,12 @@ void Sala::set_robot()
 	trip->set_nome("Robot - X34-ZT2");
 	trip->set_vida(8);
 	trip->set_respira(false);
-	trip->set_reparador(0);
+	trip->set_quanto_reparar(1);
 	trip->set_operador(false);
 	trip->set_exoesq(2);
 	trip->set_forca_combate(3);
 	trip->set_combate(false);
+	trip->set_repara(false);
 	tripulantes.push_back(trip);
 }
 
@@ -134,9 +139,11 @@ void Sala::set_xenomorfo_geigermorfo()
 	xen->set_mover(50);
 	xen->set_casulo(20);
 	xen->set_exoesq(3);
+	xen->set_repara(false);
 	Xenomorfos.push_back(xen);
 }
 
+//adiciona um xenomorfo casulo
 void Sala::set_xenomorfo_casulo_geigermorfo()
 {
 	xenomorfos* xen = new xenomorfos();
@@ -144,10 +151,12 @@ void Sala::set_xenomorfo_casulo_geigermorfo()
 	xen->set_vida(6);
 	xen->set_xenomorfo(0);
 	xen->set_exoesq(1);
+	xen->set_repara(false);
 	Xenomorfos.push_back(xen);
 
 }
 
+//adiciona um xenomorfo blob
 void Sala::set_xenomorfo_blob()
 {
 	xenomorfos* xen = new xenomorfos();
@@ -157,12 +166,14 @@ void Sala::set_xenomorfo_blob()
 	xen->set_regenerador(2);
 	xen->set_flamejante(true);
 	xen->set_toxico(true);
-	xen->set_reparador(6);
+	xen->set_quanto_reparar(6);
+	xen->set_repara(true);
 	xen->set_operador(true);
 	xen->set_mover(15);
 	Xenomorfos.push_back(xen);
 }
 
+//adiciona um xenomorfo mxyzypykwi
 void Sala::set_xenomorfo_mxyzypykwi()
 {
 	xenomorfos* xen = new xenomorfos();
@@ -173,6 +184,7 @@ void Sala::set_xenomorfo_mxyzypykwi()
 	xen->set_mover(30);
 	xen->set_mutatis_mutandis(10);
 	xen->set_respira(true);
+	xen->set_repara(false);
 	Xenomorfos.push_back(xen);
 }
 
@@ -247,6 +259,20 @@ bool Sala::verifica_tripulante(char nome)
 	return verifica;
 }
 
+//verifica se o tripulante esta indeciso e se vai se mover ou nao
+bool Sala::verifica_tripulante_indeciso(char nome)
+{
+	bool verifica = false;
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		if (tripulantes.at(i)->get_letra() == nome)
+		{
+			verifica=tripulantes.at(i)->get_indeciso();
+		}
+	}
+	return verifica;
+}
+
 //obtem o tripulante da sala original para se mover para outra sala
 //apagando-o da sala original
 Tripulacao* Sala::obtem_tripulante(char nome)
@@ -285,19 +311,44 @@ void Sala::get_letra_tripulantes()
 
 }
 
+
 //reparar sala
 void Sala::reparar_sala()
 {
 	int i;
-	int reparar = 0;
-	for (i = 0; i < tripulantes.size(); i++)
-	{
-		reparar += tripulantes.at(i)->quanto_reparar();
-	}
 	if (integridade < 100)
 	{
-		integridade += reparar;
+		for (i = 0; i < tripulantes.size(); i++)
+		{
+			if (tripulantes.at(i)->get_repara() == true && tripulantes.at(i)->get_combate() == false)
+			{
+				integridade += tripulantes.at(i)->get_quanto_reparar();
+			}
+			//verifica se a integridade passou dos 100 depois de reparar
+			if (integridade > 100)
+			{
+				//repoem a 100, pois a integridade nao deve ser maior que 100 e para o ciclo
+				integridade = 100;
+				break;
+			}
+		}
+
+		for (i = 0; i < Xenomorfos.size(); i++)
+		{
+			if (Xenomorfos.at(i)->get_repara() == true)
+			{
+				integridade += Xenomorfos.at(i)->get_quanto_reparar();
+			}
+			//verifica se a integridade passou dos 100 depois de reparar
+			if (integridade > 100)
+			{
+				//repoem a 100, pois a integridade nao deve ser maior que 100 e para o ciclo
+				integridade = 100;
+				break;
+			}
+		}
 	}
+	
 
 }
 
@@ -328,7 +379,15 @@ void Sala::trata_caracteristica_unidade_respira()
 			if (oxigenio > 0)
 				oxigenio = oxigenio - 1;
 			else
+			{
 				tripulantes.at(i)->reduz_vida(1);
+				//se o tripulante ja nao tiver vida entao e removido do vector
+				if (tripulantes.at(i)->get_vida() <= 0)
+				{
+					tripulantes.erase(tripulantes.begin() + i);
+				}
+			}
+				
 		}
 	}
 
@@ -339,7 +398,15 @@ void Sala::trata_caracteristica_unidade_respira()
 			if (oxigenio > 0)
 				oxigenio = oxigenio - 1;
 			else
+			{
 				piratas.at(i)->reduz_vida(1);
+				//se o pirata ja nao tiver vida entao e removido do vector
+				if (piratas.at(i)->get_vida() <= 0)
+				{
+					piratas.erase(piratas.begin() + i);
+				}
+			}
+				
 		}
 	}
 
@@ -350,33 +417,56 @@ void Sala::trata_caracteristica_unidade_respira()
 			if (oxigenio > 0)
 				oxigenio = oxigenio - 1;
 			else
+			{
 				Xenomorfos.at(i)->reduz_vida(1);
+				//se o xenomorfo ja nao tiver vida entao e removido do vector
+				if (Xenomorfos.at(i)->get_vida() <= 0)
+				{
+					Xenomorfos.erase(Xenomorfos.begin() + i);
+				}
+			}
+				
 		}
 
-		else if (Xenomorfos.at(i)->get_flamejante() == true)  ///Instrução de verificação se o xenomorfo é flamejante
+		if (Xenomorfos.at(i)->get_flamejante() == true)  ///Instrução de verificação se o xenomorfo é flamejante
 		{
-			oxigenio = oxigenio - 5;
-			
+			oxigenio = oxigenio - 5;	
 		}
 
 	}
 
 }
 
-void Sala::trata_caracteristica_toxico() /// vai verificar as unidades que contenham toxicidade e retirar vidas aos outros que nao sao toxicos
+// vai verificar as unidades que contenham toxicidade e retirar vidas aos outros que nao sao toxicos
+void Sala::trata_caracteristica_toxico() 
 {
-	for (int i = 0; i < Xenomorfos.size(); i++)
+	int valordetoxico;
+	int i;
+
+	for (i = 0; i < Xenomorfos.size(); i++)
 	{
-		if (int valordetoxico = Xenomorfos.at(i)->get_toxico() > 0)
+		valordetoxico = Xenomorfos.at(i)->get_toxico();
+		
+		if (valordetoxico > 0)
 		{
-			for (int i = 0; i < piratas.size(); i++)
+			for (int j = 0; j < piratas.size(); j++)
 			{
-				piratas.at(i)->reduz_vida(valordetoxico);
+				piratas.at(j)->reduz_vida(valordetoxico);
+				//se o pirata ja nao tiver vida entao e removido do vector
+				if (piratas.at(j)->get_vida() <= 0)
+				{
+					piratas.erase(piratas.begin() + j);
+				}
 			}
 
-			for (int i = 0; i < tripulantes.size(); i++)
+			for (int z = 0; z < tripulantes.size(); z++)
 			{
-				tripulantes.at(i)->reduz_vida(valordetoxico);
+				tripulantes.at(z)->reduz_vida(valordetoxico);
+				//se o tripulante ja nao tiver vida entao e removido do vector
+				if (tripulantes.at(z)->get_vida() <= 0)
+				{
+					tripulantes.erase(tripulantes.begin() + z);
+				}
 			}
 		}
 	}
@@ -474,14 +564,11 @@ void Sala::get_letra_piratas()
 }
 
 
-void Sala::get_info_tripulante(char nome)
+void Sala::get_info_tripulante()
 {
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome)
-		{
-			tripulantes.at(i)->get_info();
-		}
+		tripulantes.at(i)->get_info();
 	}
 }
 
@@ -560,6 +647,170 @@ void Sala::atingida_po_cosmico(int dano)
 {
 	integridade -= dano;
 
+}
+
+//combate dentro de uma sala
+void Sala::combate()
+{
+	int num_trip_sala, num_xenomorfos_sala, num_piratas_sala;
+	int i;
+	int ataque;
+	int aux;
+	int exoesqueleto;
+	bool verifica = true;
+
+	num_trip_sala = tripulantes.size();
+	num_xenomorfos_sala = Xenomorfos.size();
+	num_piratas_sala = piratas.size();
+	
+	if (num_trip_sala != 0)
+	{
+		//tripulante ataca
+		for (i = 0; i < tripulantes.size(); i++)
+		{
+			verifica = true;
+			//vai verificar se o tripulante e robot
+			if (tripulantes.at(i)->get_nome() == "Robot - X34 - ZT2")
+			{
+				//se for robot, ve se a sala esta em curto circuito
+				if (curto_circuito == true)
+				{
+					//se tiver o robot nao pode atacar
+					verifica = false;
+				}
+			}
+			//este verifica e por causa do robot
+			if (verifica == true)
+			{
+				tripulantes.at(i)->set_combate(true);
+				tripulantes.at(i)->set_operador(false);
+				tripulantes.at(i)->set_repara(false);
+
+				//existe piratas e xenomorfos para atacar
+				if (num_xenomorfos_sala != 0 && num_piratas_sala != 0)
+				{
+					aux = rand() % 2 + 1;
+					if (aux == 1)//atacar xenomorfos
+					{
+						ataque = tripulantes.at(i)->get_forca_combate();//vai buscar a forca de ataque 
+						//verifica se o tripulante tem arma, e se tiver vai buscar a forca ataque da arma
+						if (tripulantes.at(i)->get_arma() == true)
+						{
+							ataque += tripulantes.at(i)->get_forca_arma();
+						}
+						aux = rand() % (num_xenomorfos_sala - 1);//escolhe qual o xenomorfos a atacar
+						exoesqueleto = Xenomorfos.at(aux)->get_exoesq();//vai buscar o numero de exoesqueleto do xenomorfo
+						if (exoesqueleto != ataque)//se o exoesqueleto for diferente da forca de ataque do pirata
+						{
+							ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
+							Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
+						}
+						//se o xenomorfos ja nao tiver vida, e removido do vector
+						if (Xenomorfos.at(aux)->get_vida() <= 0)
+						{
+							Xenomorfos.erase(Xenomorfos.begin()+aux);
+						}
+					}
+					else//atacar pirata
+					{
+						ataque = tripulantes.at(i)->get_forca_combate();//vai buscar a forca de ataque 
+						//verifica se o tripulante tem arma, e se tiver vai buscar a forca ataque da arma
+						if (tripulantes.at(i)->get_arma() == true)
+						{
+							ataque += tripulantes.at(i)->get_forca_arma();
+						}
+						aux = rand() % (num_piratas_sala - 1);//escolhe qual o pirata a atacar
+						piratas.at(aux)->reduz_vida(ataque);//ataca o pirata	
+						//se o pirata ja nao tiver vida, e removido do vector
+						if (piratas.at(aux)->get_vida() <= 0)
+						{
+							piratas.erase(piratas.begin() + aux);
+						}
+					}
+				}
+
+				//existe apena piratas para atacar
+				else if (num_xenomorfos_sala == 0 && num_piratas_sala != 0)
+				{
+					ataque = tripulantes.at(i)->get_forca_combate();//vai buscar a forca de ataque
+				    //verifica se o tripulante tem arma, e se tiver vai buscar a forca ataque da arma
+					if (tripulantes.at(i)->get_arma() == true)
+					{
+						ataque += tripulantes.at(i)->get_forca_arma();
+					}
+					aux = rand() % (num_piratas_sala - 1);//escolhe qual o pirata a atacar
+					piratas.at(aux)->reduz_vida(ataque);//ataca o pirata
+					//se o pirata ja nao tiver vida, e removido do vector
+					if (piratas.at(aux)->get_vida() <= 0)
+					{
+						piratas.erase(piratas.begin() + aux);
+					}
+				}
+
+				//existe apena xenomorfos para atacar
+				else if (num_xenomorfos_sala != 0 && num_piratas_sala == 0)
+				{
+					ataque = tripulantes.at(i)->get_forca_combate();//vai buscar a forca de ataque 
+					//verifica se o tripulante tem arma, e se tiver vai buscar a forca ataque da arma
+					if (tripulantes.at(i)->get_arma() == true)
+					{
+						ataque += tripulantes.at(i)->get_forca_arma();
+					}
+					aux = rand() % (num_xenomorfos_sala - 1);//escolhe qual o xenomorfos a atacar
+					exoesqueleto = Xenomorfos.at(aux)->get_exoesq();//vai buscar o numero de exoesqueleto do xenomorfo
+					if (exoesqueleto != ataque)//se o exoesqueleto for diferente da forca de ataque do pirata
+					{
+						ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
+						Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
+					}
+					//se o xenomorfos ja nao tiver vida, e removido do vector
+					if (Xenomorfos.at(aux)->get_vida() <= 0)
+					{
+						Xenomorfos.erase(Xenomorfos.begin() + aux);
+					}
+				}
+
+				num_xenomorfos_sala = Xenomorfos.size();
+				num_piratas_sala = piratas.size();
+				if (num_xenomorfos_sala == 0 && num_piratas_sala == 0)
+				{
+					tripulantes.at(i)->set_combate(false);
+					tripulantes.at(i)->set_operador(true);
+					tripulantes.at(i)->set_repara(true);
+				}
+			}	
+		}
+	}
+	
+	
+
+
+
+	//pirata ataca tripulante
+	for (i = 0; i < piratas.size(); i++)
+	{
+		if (num_trip_sala == 0)//caso nao exista ninguem na sala o pirata ataca a sala
+		{
+			ataque = piratas.at(i)->get_forca_combate_para_Sala();//vai buscar a forca de ataque para a atacar a sala
+			integridade -= ataque;
+		}
+		else//vai atacar um elemento da sala 
+		{
+			ataque = piratas.at(i)->get_forca_combate_para_Inimigo();//vai buscar a forca de ataque para atacar tripulante
+			aux = rand() % (num_trip_sala-1);//escolhe qual o triplante a atacar
+			exoesqueleto=tripulantes.at(aux)->get_exoesq();//vai buscar o numero de exoesqueleto do tripulante
+			if (exoesqueleto != ataque)//se o exoesqueleto for diferente da forca de ataque do pirata
+			{
+				ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
+				tripulantes.at(aux)->reduz_vida(ataque);//ataca o tripulante
+			}
+			//se o tripulante ja nao tiver vida entao e removido do vector
+			if (tripulantes.at(aux)->get_vida() <= 0)
+			{
+				tripulantes.erase(tripulantes.begin() + aux);
+			}
+		}
+	}
 }
 
 
@@ -667,13 +918,87 @@ string Sala::get_problema_curto_circuito()
 }
 
 
+//funcao da sala de controlo de escudo
+bool Sala::controlo_escudo()
+{
+	bool verifica = true;
+	if (integridade < 100)
+	{
+		verifica = false;
+	}
+	else
+	{
+		verifica = true;
+	}
+		
+	return verifica;
+}
+
+//funcao da sala suporte de vida
+void Sala::suporte_vida()
+{
+	if (oxigenio < 100)
+	{
+		oxigenio += 2;
+	}
+}
+
+//funcao da sala sistema de seguranca interno
+void Sala::sistema_seguranca_interno()
+{
+	int i;
+	int sala;
+	if (integridade == 100)
+	{
+		for (i = 0; i < piratas.size(); i++)
+		{
+			//falta verificar o parte de set combate
+			piratas.at(i)->reduz_vida(1);
+		}
+	}
+}
+
+//funcao da sala de enfermaria
+void Sala::enfermaria()
+{
+	if (integridade == 100)
+	{
+		for (int i = 0; i < tripulantes.size(); i++)
+		{
+			tripulantes.at(i)->acrescenta_vida(1);
+		}
+	}
+}
+
+//funcao da sala de armas
+void Sala::sala_armas()
+{
+	for (int i = 0; i < tripulantes.size(); i++)
+	{
+		tripulantes.at(i)->set_arma(true);
+	}
+}
+
+//funcao da sala auto reparador
+void Sala::auto_reparador()
+{
+	if (integridade < 100)
+	{
+		integridade += 5;
+
+		if (integridade > 100)
+		{
+			integridade = 100;
+		}
+	}
+}
 
 
 
 
 void Sala::trata_caracteristica_Reparador(int valor) 
 {
-	for (int i = 0; i < tripulantes.size(); i++)
+	/*for (int i = 0; i < tripulantes.size(); i++)
 	{
 		if (tripulantes.at(i)->get_combate() == false && this->dano < 100 && Xenomorfos.at(i)->get_nome() == "Capitão")
 			this->altera_valor_do_dano(valor);
@@ -684,7 +1009,7 @@ void Sala::trata_caracteristica_Reparador(int valor)
 	{
 		if (Xenomorfos.at(i)->get_combate() == false && this->dano < 100 && Xenomorfos.at(i)->get_nome()=="Blob")
 			this->altera_valor_do_dano(valor);
-	}
+	}*/
 
 
 }

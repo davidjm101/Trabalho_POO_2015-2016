@@ -136,6 +136,158 @@ void Desenho::desenha_milhas()
 
 }
 
+void Desenho::desenha_info_tripulantes()
+{
+	int i;
+
+	//canto superior esquerdo
+	c.gotoxy(118, 2);
+	cout << (char)218 << endl;
+
+	//linha de cima
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 2);
+		cout << (char)196 << "\n";
+	}
+
+	////canto superior direito
+	c.gotoxy(165, 2);
+	cout << (char)191 << endl;
+
+	////linha esquerda
+	for (i = 3; i < 13; i++)
+	{
+		c.gotoxy(118, i);
+		cout << (char)179 << "\n";
+	}
+
+	////linha direita
+	for (i = 3; i < 13; i++)
+	{
+		c.gotoxy(165, i);
+		cout << (char)179 << "\n";
+	}
+
+	////canto inferior esquerdo
+	c.gotoxy(118, 13);
+	cout << (char)192 << endl;
+
+	////linha de baixo
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 13);
+		cout << (char)196 << "\n";
+	}
+
+	////canto inferior direito
+	c.gotoxy(165, 13);
+	cout << (char)217 << endl;
+
+	c.gotoxy(120, 2);
+	cout << "Tripulantes:";
+}
+
+void Desenho::desenha_info_xenomorfos()
+{
+	int i;
+
+	//canto superior esquerdo
+	c.gotoxy(118, 14);
+	cout << (char)218 << endl;
+
+	//linha de cima
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 14);
+		cout << (char)196 << "\n";
+	}
+
+	////canto superior direito
+	c.gotoxy(165, 14);
+	cout << (char)191 << endl;
+
+	////linha esquerda
+	for (i = 15; i < 26; i++)
+	{
+		c.gotoxy(118, i);
+		cout << (char)179 << "\n";
+	}
+
+	////linha direita
+	for (i = 15; i < 26; i++)
+	{
+		c.gotoxy(165, i);
+		cout << (char)179 << "\n";
+	}
+
+	////canto inferior esquerdo
+	c.gotoxy(118, 26);
+	cout << (char)192 << endl;
+
+	////linha de baixo
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 26);
+		cout << (char)196 << "\n";
+	}
+
+	////canto inferior direito
+	c.gotoxy(165, 26);
+	cout << (char)217 << endl;
+}
+
+
+void Desenho::desenha_info_piratas()
+{
+	int i;
+
+	//canto superior esquerdo
+	c.gotoxy(118, 27);
+	cout << (char)218 << endl;
+
+	//linha de cima
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 27);
+		cout << (char)196 << "\n";
+	}
+
+	////canto superior direito
+	c.gotoxy(165, 27);
+	cout << (char)191 << endl;
+
+	////linha esquerda
+	for (i = 28; i < 39; i++)
+	{
+		c.gotoxy(118, i);
+		cout << (char)179 << "\n";
+	}
+
+	////linha direita
+	for (i = 28; i < 39; i++)
+	{
+		c.gotoxy(165, i);
+		cout << (char)179 << "\n";
+	}
+
+	////canto inferior esquerdo
+	c.gotoxy(118, 39);
+	cout << (char)192 << endl;
+
+	////linha de baixo
+	for (i = 119; i < 165; i++)
+	{
+		c.gotoxy(i, 39);
+		cout << (char)196 << "\n";
+	}
+
+	////canto inferior direito
+	c.gotoxy(165, 39);
+	cout << (char)217 << endl;
+}
+
+
 void Desenho::set_sala1()
 {
 	

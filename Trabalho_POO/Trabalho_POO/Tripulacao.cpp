@@ -9,6 +9,8 @@ Tripulacao::Tripulacao()
 {
 	this->letra = this->aux;
 	this->aux++;
+	this->arma = false;
+	this->forca_arma = 1;
 	
 }
 
@@ -17,10 +19,9 @@ Tripulacao::~Tripulacao()
 
 }
 
-void Tripulacao::set_reparador( int valor)
-{
-	this->reparar = valor;
-}
+
+
+
 
 void Tripulacao::set_forca_combate(int valor)
 {
@@ -32,6 +33,18 @@ void Tripulacao::set_combate(bool aux)
 {
 	this->combate = aux;
 }
+
+void Tripulacao::set_forca_arma(int valor)
+{
+	this->forca_arma = valor;
+}
+
+void Tripulacao::set_arma(bool aux)
+{
+	this->arma = aux;
+}
+
+
 void Tripulacao::set_indeciso(int conta_numero_vezes_hipnotizado)
 {
 		srand(time(NULL));
@@ -57,13 +70,24 @@ void Tripulacao::set_indeciso(int conta_numero_vezes_hipnotizado)
 
 bool Tripulacao::get_indeciso()
 {
-	return indeciso;
+	bool verifica = false;
+	int aux;
+	if (indeciso == true)
+	{
+		aux = rand() % 2 + 1;
+		if (aux == 1)//ignora o comando de mover
+		{
+			verifica = true;
+		}
+		else
+		{
+			verifica = false;
+		}
+	}
+	return verifica;
 }
 
-int Tripulacao::get_reparar()
-{
-	return reparar;
-}
+
 
 int Tripulacao::get_forca_combate()
 {
@@ -76,27 +100,20 @@ bool Tripulacao::get_combate()
 	return combate;
 }
 
+
 char Tripulacao::get_letra()
 {
 	return  letra;
 }
 
-int Tripulacao::quanto_reparar()//retorna quanto e que o tripulante repara se nao estiver em combate
-{
-	if (combate == false)
-	{
-		return reparar;
-	}
-	return 0;
-}
 
 void Tripulacao::get_info()
 {
 	Consola c;
-	c.gotoxy(85, 19);
-	cout << "Nome: " << get_nome() << "Vida " << get_vida() << endl;
-	c.gotoxy(85, 20);
-	cout << "Forca Combate: " << forca_combate << endl;
+	c.gotoxy(120, 3);
+	cout << "Nome: " << get_nome() << " Letra: " << letra << " Vida: " << get_vida() << endl;
+	//c.gotoxy(85, 20);
+	//cout << "Forca Combate: " << forca_combate << endl;
 	system("PAUSE");
 }
 void Tripulacao::set_robotico(bool valor)
@@ -107,4 +124,14 @@ void Tripulacao::set_robotico(bool valor)
 bool Tripulacao::get_robotico() {
 	return robotico;
 
+}
+
+int Tripulacao::get_forca_arma()
+{
+	return forca_arma;
+}
+
+bool Tripulacao::get_arma()
+{
+	return arma;
 }

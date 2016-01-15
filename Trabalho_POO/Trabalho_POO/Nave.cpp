@@ -6,7 +6,7 @@
 Nave::Nave()
 {
 	milhas = 0;
-	escudo = 10;
+	escudo = 100;
 }
 
 Nave::~Nave()
@@ -256,8 +256,14 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 				verifica = salas.at(i)->verifica_tripulante(nome);
 				if (verifica == true)
 				{
-					t = salas.at(i)->obtem_tripulante(nome);
-					break;
+					verifica = salas.at(i)->verifica_tripulante_indeciso(nome);//vai verificar se o tripulante este indeciso
+					//se retornar false, quer dizer que nao esta e entao move-se
+					if (verifica == false)
+					{
+						t = salas.at(i)->obtem_tripulante(nome);
+						verifica = true;
+						break;
+					}			
 				}
 		}
 	}
@@ -293,7 +299,7 @@ void Nave::mover_nave()
 	//verifica se a "ponte" esta a ser operada
 	for (i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_numero() == 8)
+		if (salas.at(i)->get_nome() == "Ponte")
 		{
 			verifica = salas.at(i)->verifica_sala_operada();
 		}
@@ -303,7 +309,7 @@ void Nave::mover_nave()
 	{	//verifica se a sala das maquinas nao tem dano
 		for (i = 0; i < salas.size(); i++)
 		{
-			if (salas.at(i)->get_numero() == 5)
+			if (salas.at(i)->get_nome() == "Sala_Maquinas")
 			{
 				integridade = salas.at(i)->get_integridade();
 			}
@@ -315,8 +321,8 @@ void Nave::mover_nave()
 		//vai ver quantos "prupulsores" existem e obtem o poder de propulsao de cada um
 		for (i = 0; i < salas.size(); i++)
 		{
-			nome = salas.at(i)->get_nome();
-			if (nome == "Propulsor" && salas.at(i)->verifica_sala_operada() == true)
+			/*nome = salas.at(i)->get_nome();*/
+			if (salas.at(i)->get_nome() == "Propulsor" && salas.at(i)->verifica_sala_operada() == true)
 			{
 				propulsao += salas.at(i)->get_integridade();
 			}
@@ -326,6 +332,7 @@ void Nave::mover_nave()
 }
 
 
+//reparar as salas da nave
 void Nave::reparar_nave()
 {
 	for (int i = 0; i < salas.size(); i++)
@@ -333,6 +340,7 @@ void Nave::reparar_nave()
 		salas.at(i)->reparar_sala();
 	}
 }
+
 
 //verifica se existe alguma sala que esteja destruida
 bool Nave::get_sala_destruida()
@@ -349,7 +357,7 @@ bool Nave::get_sala_destruida()
 }
 
 
-//imprime os dados das sala e das unidades
+//imprime os dados das sala
 void Nave::imprime_dados_sala()
 {
 	
@@ -450,11 +458,11 @@ void Nave::imprime_dados_sala()
 }
 
 
-void Nave::imprime_dado_tripulante(char letra)
+void Nave::imprime_dado_tripulante()
 {
 	for (int i=0; i < salas.size(); i++)
 	{
-		salas.at(i)->get_info_tripulante(letra);
+		salas.at(i)->get_info_tripulante();
 	}
 }
 
@@ -743,6 +751,212 @@ void Nave::dano_sala_curto_circuito()
 	for (int i = 0; i < salas.size(); i++)
 	{
 		salas.at(i)->dano_curto_circuito();
+	}
+}
+
+//parte onde se ira ocorrer combate
+void Nave::combate()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->combate();
+	}
+}
+
+//acontecimentos relativos as salas da nave
+void Nave::accoes_salas()
+{
+	int i,j;
+	int num_sala,aux;
+
+	for (i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
+		{
+			//verifica se a sala nao tem dano, se retornar falso é porque tem dano
+			if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
+			{
+				escudo_desativado = escudo;
+				escudo = 0;
+				escudo_activado = false;
+			}
+			else
+			{
+				if (escudo_activado == false)
+				{
+					escudo = escudo_desativado;
+					escudo_activado = true;
+				}		
+			}	
+		}
+		
+		//se for a sala de sistema de segurança interno
+		if (salas.at(i)->get_nome() == "Sist_Seg_Interno" && salas.at(i)->get_integridade() == 100)
+		{
+			salas.at(i)->sistema_seguranca_interno();
+			num_sala = salas.at(i)->get_numero();
+			switch (num_sala)
+			{
+			
+				case 2:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 3:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 4:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 10:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 11:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 12:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				default:
+					break;
+
+			}
+		}
+
+		//se for a sala de suporte de vida
+		if (salas.at(i)->get_nome() == "Suporte_Vida" && salas.at(i)->get_integridade()==100)
+		{
+			for (j = 0; j < salas.size(); j++)
+			{
+				salas.at(j)->suporte_vida();
+			}
+		}
+
+		//se for a sala enfermaria
+		if (salas.at(i)->get_nome() == "Enfermaria" && salas.at(i)->get_integridade() == 100)
+		{
+				salas.at(j)->enfermaria();
+		}
+
+		// se for a sala de armas
+		if (salas.at(i)->get_nome() == "Sala_Armas")
+		{
+			salas.at(j)->sala_armas();
+		}
+
+		//se for a sala auto reparador
+		if (salas.at(i)->get_nome() == "Auto_Reparador" && salas.at(i)->get_integridade() == 100)
+		{
+			num_sala = salas.at(i)->get_numero();
+			switch (num_sala)
+			{
+
+			case 2:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			case 3:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			case 4:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			case 10:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			case 11:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			case 12:
+				for (j = 0; j < salas.size(); j++)
+				{
+					aux = salas.at(j)->get_numero();
+					if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
+					{
+						salas.at(j)->auto_reparador();
+					}
+				}
+				break;
+			default:
+				break;
+
+			}
+		}
 	}
 }
 

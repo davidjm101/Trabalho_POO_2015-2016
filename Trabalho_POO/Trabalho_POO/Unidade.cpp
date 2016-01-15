@@ -19,6 +19,13 @@ void Unidade::set_vida(int valor)
 {
 	this->vida = valor;
 }
+
+
+void Unidade::set_quanto_reparar(int valor)
+{
+	this->quanto_repara = valor;
+}
+
 //reduz a vida da unidade
 void Unidade::reduz_vida(int valor)
 {
@@ -48,6 +55,11 @@ void Unidade::set_mover(int valor)
 void Unidade::set_exoesq(int valor)
 {
 	this->exoesq = valor;
+}
+
+void  Unidade::set_repara(bool aux)
+{
+	this->repara = aux;
 }
 
 string Unidade::get_nome()
@@ -80,14 +92,15 @@ bool Unidade::get_operador()
 	return operador;
 }
 
-void Unidade::set_reparador(int valor)
+int  Unidade::get_quanto_reparar()
 {
-	this->reparador = valor;
+	return quanto_repara;
 }
 
-int Unidade::get_reparador()
+bool Unidade::get_repara()
 {
-	return reparador;
+	return repara;
 }
+
 
 
