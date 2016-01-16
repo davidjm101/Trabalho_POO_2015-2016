@@ -10,10 +10,11 @@ public:
 	~Desenho();
 	void desenha_nave();
 	void desenha_info();
-	void desenha_milhas();
-	void desenha_info_tripulantes();
-	void desenha_info_xenomorfos();
-	void desenha_info_piratas();
+	void desenha_info_nave();
+	void desenha_info_unidades();
+	void desenha_accoes();
+	void desenha_comando();
+	
 
 	void set_sala1();
 	void set_sala2();

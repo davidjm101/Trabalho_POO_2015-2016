@@ -6,7 +6,8 @@ void main()
 	int i = 0;
 	Turno turno;
 	turno.inicio_jogo();
-	turno.inicio_turno();
+	turno.fase_ordem();
+	/*turno.inicio_turno();*/
 	/*do {
 		turno.inicio_turno();
 		turno.fase_ordem();

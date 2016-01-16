@@ -28,10 +28,10 @@ void Turno::inicio_jogo()
 	nave->adiciona_tripulantes();
 	desenho.desenha_nave();
 	desenho.desenha_info();
-	desenho.desenha_milhas();
-	desenho.desenha_info_tripulantes();
-	desenho.desenha_info_xenomorfos();
-	desenho.desenha_info_piratas();
+	desenho.desenha_info_nave();
+	desenho.desenha_info_unidades();
+	desenho.desenha_accoes();
+	desenho.desenha_comando();
 	nave->imprime_dados_sala();
 }
 
@@ -49,17 +49,17 @@ void Turno::fase_ordem()
 	string token;
 	char nome;
 	int numero;
-	desenho.desenha_nave();
-	desenho.desenha_info();
-	desenho.desenha_milhas();
-	nave->imprime_dados_sala();
-	c.gotoxy(85, 4);
+	//desenho.desenha_nave();
+	//desenho.desenha_info();
+	//desenho.desenha_milhas();
+	//nave->imprime_dados_sala();
+	c.gotoxy(104, 4);
 	cout << nave->get_milhas();
-	c.gotoxy(85, 6);
+	c.gotoxy(92, 6);
 	cout << nave->get_escudo();
-	c.gotoxy(3, 26);
-
-	cout << "Indique o comando: ";
+	
+	//ler comando
+	c.gotoxy(22, 31);
 	cin >> comando;
 	/*cin.ignore();
 	getline(cin,comando);
@@ -78,7 +78,7 @@ void Turno::fase_ordem()
 	
 	desenho.desenha_nave();
 	desenho.desenha_info();
-	desenho.desenha_milhas();
+	desenho.desenha_info_nave();
 	nave->imprime_dados_sala();
 	nave->imprime_dado_tripulante();
 	
@@ -116,7 +116,7 @@ bool Turno::acabou_jogo()
 {
 	bool aux = false;
 	bool destruido = false;
-	if (nave->get_milhas() >= (4000 + 1000) || nave->get_sala_destruida()==true)
+	if (nave->get_milhas() >= (4000 + 1000) || nave->get_sala_destruida()==true || nave->verifica_existe_tripulantes()==false)
 	{
 		aux = true;
 	}

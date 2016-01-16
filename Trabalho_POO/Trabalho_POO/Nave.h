@@ -35,6 +35,8 @@ public:
 	bool verifica_ponte_operada();
 	
 
+	void trata_efeito_mutanti_mutantis();
+
 	void imprime_dados_sala();
 	void imprime_dado_tripulante();
 
@@ -48,6 +50,7 @@ public:
 	int get_escudo();
 	int get_milhas();
 	bool get_sala_destruida();
+	bool verifica_existe_tripulantes();
 	void sala_verifica_Robotico();
 	void sala_verifica_Reparador();
 	

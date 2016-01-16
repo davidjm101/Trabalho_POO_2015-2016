@@ -237,6 +237,8 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 
 	Tripulacao* t = new Tripulacao();
 	bool verifica = false;
+	bool robot_move;
+	bool indeciso;
 	int i;
 	//verifica se a sala indicada existe
 	for (i = 0; i < salas.size(); i++)
@@ -248,22 +250,29 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 		}
 	}
 
-	//verifica que existe o tripulante indicado
+	
 	if (verifica == true)
 	{
 		for (i = 0; i < salas.size(); i++)
 		{
+			    //verifica que existe o tripulante indicado
 				verifica = salas.at(i)->verifica_tripulante(nome);
 				if (verifica == true)
 				{
-					verifica = salas.at(i)->verifica_tripulante_indeciso(nome);//vai verificar se o tripulante este indeciso
-					//se retornar false, quer dizer que nao esta e entao move-se
-					if (verifica == false)
+					//verifica se caso for robot se ele se pode mover
+					robot_move = salas.at(i)->verifica_robot_curto_circuito(nome);
+					if(robot_move ==true)
 					{
-						t = salas.at(i)->obtem_tripulante(nome);
-						verifica = true;
-						break;
-					}			
+						//vai verificar se o tripulante este indeciso
+						indeciso = salas.at(i)->verifica_tripulante_indeciso(nome);
+						//se retornar false, quer dizer que nao esta e entao move-se
+						if (indeciso == false)
+						{
+							t = salas.at(i)->obtem_tripulante(nome);
+							verifica = true;
+							break;
+						}
+					}	
 				}
 		}
 	}
@@ -356,6 +365,22 @@ bool Nave::get_sala_destruida()
 	return destruido;
 }
 
+//verifica se ainda existe tripulantes na sala
+bool Nave::verifica_existe_tripulantes()
+{
+	int num=0;
+	bool verifica=true;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		num+=salas.at(i)->get_num_tripulantes();
+	}
+	if (num == 0)
+	{
+		verifica = false;
+	}
+	return verifica;
+}
+
 
 //imprime os dados das sala
 void Nave::imprime_dados_sala()
@@ -389,42 +414,42 @@ void Nave::imprime_dados_sala()
 
 		case 5:
 			x = 23;
-			y = 11;
+			y = 12;
 			break;
 
 		case 6:
 			x = 43;
-			y = 11;
+			y = 12;
 			break;
 
 		case 7:
 			x = 63;
-			y = 11;
+			y = 12;
 			break;
 
 		case 8:
 			x = 83;
-			y = 11;
+			y = 12;
 			break;
 
 		case 9:
 			x = 3;
-			y = 19;
+			y = 21;
 			break;
 
 		case 10:
 			x = 23;
-			y = 19;
+			y = 21;
 			break;
 
 		case 11:
 			x = 43;
-			y = 19;
+			y = 21;
 			break;
 
 		case 12:
 			x = 63;
-			y = 19;
+			y = 21;
 			break;
 		}
 
@@ -476,7 +501,52 @@ void Nave::sala_verifica_respirar()
 	}
 }
 
-
+//vai verifica se existe algum elemto mutanti mutantis e se vai se mudar a sala
+void Nave::trata_efeito_mutanti_mutantis()
+{
+	bool verifica;
+	int aux;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		verifica = salas.at(i)->trata_caracteristica_mutatis_mutantis();
+		if (verifica = true)
+		{
+			aux = rand() % 9 + 1;
+			switch (aux)
+			{
+				case 1:
+					salas.at(i)->set_nome("Propulsor");
+					break;
+				case 2:
+					salas.at(i)->set_nome("Beliche");
+					break;
+				case 3:
+					salas.at(i)->set_nome("Raio_Laser");
+					break;
+				case 4:
+					salas.at(i)->set_nome("Auto_Reparador");
+					break;
+				case 5:
+					salas.at(i)->set_nome("Sist_Seg_Interno");
+					break;
+				case 6:
+					salas.at(i)->set_nome("Enfermaria");
+					break;
+				case 7:
+					salas.at(i)->set_nome("Sala_Armas");
+					break;
+				case 8:
+					salas.at(i)->set_nome("Aloj_Capitao");
+					break;
+				case 9:
+					salas.at(i)->set_nome("Oficina_Robotica");
+					break;
+				default:
+					break;
+			}
+		}
+	}
+}
 
 void Nave::sala_verifica_toxicidade()
 {
@@ -486,31 +556,10 @@ void Nave::sala_verifica_toxicidade()
 	}
 }
 
-void Nave::sala_verifica_misterioso() //vai verificar se existe algum misterioso
-{
-	for (int i = 0; i < salas.size(); i++)
-	{
-		salas.at(i)->trata_caracteristica_Misterioso();  /*FALTA VER A CENA DOS TURNOS DO XENOMORFO A DESAPARECER
-														 */
-	}
-}
 
-void Nave::sala_verifica_Regenerador() //vai verificar se existe algum misterioso
-{
-	for (int i = 0; i < salas.size(); i++)
-	{
-		salas.at(i)->trata_caracteristica_Regenerador();  /*FALTA VER A CENA DOS TURNOS DO XENOMORFO A DESAPARECER
-														 */
-	}
-}
 
-void Nave::sala_verifica_Robotico() //vai verificar o robotico
-{
-	for (int i = 0; i < salas.size(); i++)
-	{
-		salas.at(i)->trata_caracteristica_Robotico();  										  
-	}
-}
+
+
 
 
 //verifica se a ponte esta a ser operada por algum tripulante
@@ -759,7 +808,10 @@ void Nave::combate()
 {
 	for (int i = 0; i < salas.size(); i++)
 	{
-		salas.at(i)->combate();
+		salas.at(i)->combate_tripulante();
+		salas.at(i)->combate_xenomorfos();
+		salas.at(i)->combate_piratas();
+		
 	}
 }
 
