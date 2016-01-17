@@ -240,6 +240,7 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 	bool robot_move;
 	bool indeciso;
 	int i;
+	int aux;
 	//verifica se a sala indicada existe
 	for (i = 0; i < salas.size(); i++)
 	{
@@ -265,6 +266,14 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 					{
 						//vai verificar se o tripulante este indeciso
 						indeciso = salas.at(i)->verifica_tripulante_indeciso(nome);
+						if (indeciso == true)
+						{
+							aux= rand() % 2 + 1;//vai ver se o tripulante se move com uma probabilidade de 50%
+							if (aux == 1)//vai mover
+							{
+								indeciso = false;
+							}
+						}
 						//se retornar false, quer dizer que nao esta e entao move-se
 						if (indeciso == false)
 						{
@@ -483,13 +492,7 @@ void Nave::imprime_dados_sala()
 }
 
 
-void Nave::imprime_dado_tripulante()
-{
-	for (int i=0; i < salas.size(); i++)
-	{
-		salas.at(i)->get_info_tripulante();
-	}
-}
+
 
 
 //vai verificar se existe algum elemento nas salas que precise de respirar
@@ -504,12 +507,12 @@ void Nave::sala_verifica_respirar()
 //vai verifica se existe algum elemto mutanti mutantis e se vai se mudar a sala
 void Nave::trata_efeito_mutanti_mutantis()
 {
-	bool verifica;
+	bool verifica=false;
 	int aux;
 	for (int i = 0; i < salas.size(); i++)
 	{
 		verifica = salas.at(i)->trata_caracteristica_mutatis_mutantis();
-		if (verifica = true)
+		if (verifica == true)
 		{
 			aux = rand() % 9 + 1;
 			switch (aux)
@@ -548,7 +551,8 @@ void Nave::trata_efeito_mutanti_mutantis()
 	}
 }
 
-void Nave::sala_verifica_toxicidade()
+//verifica se existe algum elemento toxixo e se vai dar dano ao outros
+void Nave::trata_efeito_toxicidade()
 {
 	for (int i = 0; i < salas.size(); i++)
 	{
@@ -556,8 +560,24 @@ void Nave::sala_verifica_toxicidade()
 	}
 }
 
+//verifica se existe algum elemento que se regenera e vai regenar vida caso exista
+void Nave::trata_efeito_regenerador()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_regenerador();
+	}
+}
 
-
+//verifica se existe algum flamejante na sala e se sim vai tirar oxigenio a sala
+void Nave::trata_efeito_flamejante()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_flamajenta();
+	}
+	
+}
 
 
 
@@ -734,9 +754,7 @@ void Nave::ataque_pirata(int dano, int num)
 void Nave::invadida_xenomorfos()
 {
 	int aux;
-
-	srand(time(NULL));
-	aux = rand() % 12 + 1;
+	aux = rand() % 12 + 1;// gera numero ente 1 e 12
 	for (int i = 0; i < salas.size(); i++)
 	{
 		if (salas.at(i)->get_numero() == aux)
@@ -751,7 +769,6 @@ void Nave::invadida_xenomorfos()
 	cout << "xenomorfos, uma das salas!!!" << endl;
 	c.gotoxy(85, 21);
 	cout << "foi invadida." << endl;
-	system("PAUSE");
 }
 
 //nave atravessa po cosmico
@@ -759,11 +776,11 @@ void Nave::atravessa_po_cosmico(int dano)
 {
 	int aux,aux2;
 
-	srand(time(NULL));
-	aux = rand() % 5 + 3;
+	
+	aux = rand() % 3 + 3;//gera numero aleatorio entre 3 e 5
 	do
 	{
-		aux2 = rand() % 12 + 1;
+		aux2 = rand() % 12 + 1;;//gera numero aleatorio entre 1 e 12
 		for (int i = 0; i < salas.size(); i++)
 		{
 			if (salas.at(i)->get_numero() == aux2)
@@ -803,15 +820,42 @@ void Nave::dano_sala_curto_circuito()
 	}
 }
 
-//parte onde se ira ocorrer combate
-void Nave::combate()
+
+
+
+//accoes dos xenomorfos no fim do turno, bem como o ataque
+void Nave::accoes_xenomorfos()
+{
+	
+
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->trata_caracteristica_hipnotizador();
+		salas.at(i)->combate_xenomorfos();
+	}
+}
+
+//accoes dos piratas no fim do turno
+void Nave::accoes_piratas()
 {
 	for (int i = 0; i < salas.size(); i++)
 	{
-		salas.at(i)->combate_tripulante();
-		salas.at(i)->combate_xenomorfos();
 		salas.at(i)->combate_piratas();
-		
+	}
+}
+
+//accoes dos piratas no fim do turno
+void Nave::accoes_tripulantes()
+{
+	
+	/*for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->combate_tripulante();
+	}*/
+	
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->reparar_sala();
 	}
 }
 
@@ -823,98 +867,101 @@ void Nave::accoes_salas()
 
 	for (i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
-		{
-			//verifica se a sala nao tem dano, se retornar falso é porque tem dano
-			if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
-			{
-				escudo_desativado = escudo;
-				escudo = 0;
-				escudo_activado = false;
-			}
-			else
-			{
-				if (escudo_activado == false)
-				{
-					escudo = escudo_desativado;
-					escudo_activado = true;
-				}		
-			}	
-		}
+		//if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
+		//{
+		//	//verifica se a sala nao tem dano, se retornar falso é porque tem dano
+		//	if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
+		//	{
+		//		escudo_desativado = escudo;
+		//		escudo = 0;
+		//		escudo_activado = false;
+		//	}
+		//	else
+		//	{
+		//		if (escudo_activado == false)
+		//		{
+		//			escudo = escudo_desativado;
+		//			escudo_activado = true;
+		//		}		
+		//	}	
+		//}
 		
-		//se for a sala de sistema de segurança interno
-		if (salas.at(i)->get_nome() == "Sist_Seg_Interno" && salas.at(i)->get_integridade() == 100)
-		{
-			salas.at(i)->sistema_seguranca_interno();
-			num_sala = salas.at(i)->get_numero();
-			switch (num_sala)
-			{
-			
-				case 2:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				case 3:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				case 4:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				case 10:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				case 11:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				case 12:
-					for (j = 0; j < salas.size(); j++)
-					{
-						aux = salas.at(j)->get_numero();
-						if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
-						{
-							salas.at(j)->sistema_seguranca_interno();
-						}
-					}
-					break;
-				default:
-					break;
+		////se for a sala de sistema de segurança interno
+		//if (salas.at(i)->get_nome() == "Sist_Seg_Interno")
+		//{
+		//	//vai ver se tem alguem inimigo na sala e vai atacar caso estajam
+		//	salas.at(i)->sistema_seguranca_interno();
+		//	
+		//	//vai fazer o mesmo as salas adjacentes
+		//	num_sala = salas.at(i)->get_numero();
+		//	switch (num_sala)
+		//	{
+		//	
+		//		case 2:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		case 3:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		case 4:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		case 10:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		case 11:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		case 12:
+		//			for (j = 0; j < salas.size(); j++)
+		//			{
+		//				aux = salas.at(j)->get_numero();
+		//				if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
+		//				{
+		//					salas.at(j)->sistema_seguranca_interno();
+		//				}
+		//			}
+		//			break;
+		//		default:
+		//			break;
 
-			}
-		}
+		//	}
+		//}
 
 		//se for a sala de suporte de vida
 		if (salas.at(i)->get_nome() == "Suporte_Vida" && salas.at(i)->get_integridade()==100)
@@ -928,13 +975,13 @@ void Nave::accoes_salas()
 		//se for a sala enfermaria
 		if (salas.at(i)->get_nome() == "Enfermaria" && salas.at(i)->get_integridade() == 100)
 		{
-				salas.at(j)->enfermaria();
+				salas.at(i)->enfermaria();
 		}
 
 		// se for a sala de armas
 		if (salas.at(i)->get_nome() == "Sala_Armas")
 		{
-			salas.at(j)->sala_armas();
+			salas.at(i)->sala_armas();
 		}
 
 		//se for a sala auto reparador
@@ -1014,15 +1061,68 @@ void Nave::accoes_salas()
 
 
 
-//void Nave::sala_verifica_Reparador() 
-//{
-//	for (i = 0; i < salas.size(); i++)
-//	{
-//		if (salas.at(i)->get_nome == "Raio_Laser")
-//		{
-//			verifica = salas.at(i)->verifica_sala_operada();
-//			break;
-//		}
-//	}
-//}
+//imprime as accoes em cada sala
+void Nave::imprime_accoes_salas()
+{
 
+	int y = 19;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->imprime_accoes_xeno(&y);
+	}
+
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->imprime_accoes_pir(&y);
+	}
+
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->imprime_accoes_trip(&y);
+	}
+}
+
+//limpa os vector das string de accoes em cada sala
+void Nave::limpa_accoes_salas()
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->limpa_accoes();
+	}
+}
+
+
+
+
+//imprime os dados dos tripulantes
+void Nave::imprime_info_trip()
+{
+	int y = 3;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->get_info_trip();
+		salas.at(i)->imprime_info_unidades(&y);
+	}
+}
+
+//imprime os dados dos xenomorfos
+void Nave::imprime_info_xeno()
+{
+	int y = 3;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->get_info_xeno();
+		salas.at(i)->imprime_info_unidades(&y);
+	}
+}
+
+//mprime os dados dos piratas
+void Nave::imprime_info_pir()
+{
+	int y = 3;
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->get_info_pir();
+		salas.at(i)->imprime_info_unidades(&y);
+	}
+}

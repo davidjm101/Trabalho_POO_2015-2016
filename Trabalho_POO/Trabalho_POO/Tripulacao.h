@@ -28,8 +28,6 @@ public:
 	char get_letra();
 	
 
-	void get_info();
-
 	bool get_indeciso();
 	void set_indeciso(int conta_numero_vezes_hipnotizado);
 	void set_robotico(bool valor);

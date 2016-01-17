@@ -34,7 +34,7 @@ void Unidade::reduz_vida(int valor)
 //acrescenta vida à unidade
 void Unidade::acrescenta_vida(int valor)
 {
-	this->vida = vida + valor;
+	vida+= valor;
 }
 
 void Unidade::set_respira(bool valor)

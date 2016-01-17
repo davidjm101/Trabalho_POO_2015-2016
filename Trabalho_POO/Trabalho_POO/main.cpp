@@ -6,13 +6,13 @@ void main()
 	int i = 0;
 	Turno turno;
 	turno.inicio_jogo();
-	turno.fase_ordem();
-	/*turno.inicio_turno();*/
-	/*do {
+	do {
 		turno.inicio_turno();
 		turno.fase_ordem();
 		turno.final_turno();
 		turno.eventos();
-	} while (turno.acabou_jogo()==false);*/
+	
+		
+	} while (turno.acabou_jogo()==false);
 	
 }

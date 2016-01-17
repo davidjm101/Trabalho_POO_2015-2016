@@ -19,12 +19,12 @@ void Chuva_Meteorito::accao(Nave *nave)
 	srand(time(NULL));
 	if (nave->verifica_ponte_operada() == true)//ponte esta a ser operada, antige a nave entre 4a8 vezes
 	{
-		aux = rand() % 8 + 4;
+		aux = rand() % 5 + 4;
 		nave->atravessa_chuva_meteoritos(get_dano(), aux);
 	}
 	else
 	{
-		aux = rand() % 12 + 6;
+		aux = rand() % 7 + 6;
 		nave->atravessa_chuva_meteoritos(get_dano(), aux);
 	}
 }

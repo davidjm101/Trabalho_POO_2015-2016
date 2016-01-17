@@ -3,6 +3,7 @@
 #include "Tripulacao.h"
 #include "xenomorfos.h"
 #include "Pirata.h"
+#include "consola.h"
 
 class Sala {
 	string nome;
@@ -16,8 +17,14 @@ class Sala {
 	vector <Tripulacao*> tripulantes;
 	vector <xenomorfos*> Xenomorfos;
 	vector <Pirata*> piratas;
+	vector <string> accoes_trip;
+	vector <string> accoes_xeno;
+	vector <string> accoes_pir;
+	//vector <string> accoes_trip;
+	vector <string> info_uni;
 	int valor_escudo;
 	bool escudo_ativado;
+	Consola c;
 
 public:
 	Sala(string nome, int numero);
@@ -65,7 +72,10 @@ public:
 	void trata_caracteristica_regenerador();
 	bool trata_caracteristica_mutatis_mutantis();
 	void trata_caracteristica_hipnotizador();
-	
+	void trata_caracteristica_flamajenta();
+
+
+
 	//funcoes para o movimento tripulante
 	bool verifica_tripulante(char nome);
 	bool verifica_robot_curto_circuito(char nome);
@@ -95,7 +105,8 @@ public:
 	void get_letra_tripulantes();
 	void get_letra_xenomorfos();
 	void get_letra_piratas();
-	void get_info_tripulante();
+
+	
 
 	
 	void altera_valor_do_dano(int valor);
@@ -112,6 +123,29 @@ public:
 	void enfermaria();
 	void sala_armas();
 	void auto_reparador();
+
+	//funcoes de impressao
+	void imprime_accoes_trip(int *y);
+	void imprime_accoes_xeno(int *y);
+	void imprime_accoes_pir(int *y);
+
+	//limpa o vector das strings de accoes
+	void limpa_accoes();
+
+	//funcao que obtem os dados dos tripulantes
+	void get_info_trip();
+	//funcao que imprime os dados do tripulanes
+	void imprime_info_unidades(int *y);
+
+	//funcao que obtem os dados dos xenomorfos
+	void get_info_xeno();
+	//funcao que imprime os dados do xenomorfos
+	void imprime_info_xenomorfo(int *y);
+
+	//funcao que obtem os dados dos piratas
+	void get_info_pir();
+	//funcao que imprime os dados do piratas
+	void imprime_info_pirata(int *y);
 
 
 

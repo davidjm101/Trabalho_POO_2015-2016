@@ -30,11 +30,13 @@ class xenomorfos : public Unidade
 		void set_mutatis_mutandis(int valor);
 		void altera_vida_do_Xenomorfo();
 
+
+		void regenera_vida();
 		int get_xenomorfo();
 		bool get_mutatis_mutandis();
 		bool get_hipnotizador();
 		int get_toxico();
-		bool get_flamejante();
+		int get_flamejante();
 		int get_regenerador();
 		bool get_misterioso();
 		bool get_casulo();

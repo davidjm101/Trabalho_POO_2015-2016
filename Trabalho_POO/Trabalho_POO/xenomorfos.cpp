@@ -22,6 +22,7 @@ void xenomorfos::set_xenomorfo(int valor)
 
 	this->xenomorfo = valor;
 }
+
 int xenomorfos::get_xenomorfo()
 {
 	return xenomorfo;
@@ -95,9 +96,17 @@ void xenomorfos::set_flamejante(bool aux)
 	
 }
 
-bool xenomorfos::get_flamejante()
+
+
+//verifica se é flamejante e se for retorna o dano
+int xenomorfos::get_flamejante()
 {
-	return flamejante;
+	int dano=0;
+	if (flamejante == true)
+	{
+		dano = 5;
+	}
+	return dano;
 }
 
 void xenomorfos::set_toxico(int valor)
@@ -130,6 +139,22 @@ void xenomorfos::set_mutatis_mutandis(int valor)
 	else
 		this->mutatis_mutandis = false;
 
+}
+
+//regenera vida se tiver essa opcao
+void xenomorfos::regenera_vida()
+{
+	if (regenerador > 0)
+	{
+		if (get_vida() < 100)
+		{
+			acrescenta_vida(regenerador);
+		}
+		if (get_vida() > 100)
+		{
+			set_vida(100);
+		}
+	}
 }
 
 bool xenomorfos::get_mutatis_mutandis()

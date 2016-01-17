@@ -23,9 +23,17 @@ Turno::~Turno()
 void Turno::inicio_jogo()
 {
 	
+	
+	c.gotoxy(92, 8);
+	cout << numero;
 	nave->set_salas_normais();
 	nave->set_salas_opcionais();
 	nave->adiciona_tripulantes();
+	system("cls");
+}
+
+void Turno::inicio_turno()
+{
 	desenho.desenha_nave();
 	desenho.desenha_info();
 	desenho.desenha_info_nave();
@@ -33,63 +41,119 @@ void Turno::inicio_jogo()
 	desenho.desenha_accoes();
 	desenho.desenha_comando();
 	nave->imprime_dados_sala();
-}
+	c.gotoxy(104, 4);
+	cout << nave->get_milhas();
+	c.gotoxy(92, 6);
+	cout << nave->get_escudo();
+	c.gotoxy(92, 8);
+	cout << numero;
 
-void Turno::inicio_turno()
-{
+	/*nave->imprime_accoes_salas();*/
+	nave->dano_sala_fogo();
+	nave->trata_efeito_toxicidade();
+	nave->trata_efeito_regenerador();
+	nave->trata_efeito_flamejante();
 	nave->sala_verifica_respirar();
-	nave->imprime_dado_tripulante();
+	nave->limpa_accoes_salas();
+
 }
 
 
 void Turno::fase_ordem()
 {
 	
-	string comando="";
+	string comando;
+	
 	string token;
+	string token1;
+	string aux;
 	char nome;
-	int numero;
-	//desenho.desenha_nave();
-	//desenho.desenha_info();
-	//desenho.desenha_milhas();
-	//nave->imprime_dados_sala();
-	c.gotoxy(104, 4);
-	cout << nave->get_milhas();
-	c.gotoxy(92, 6);
-	cout << nave->get_escudo();
-	
-	//ler comando
-	c.gotoxy(22, 31);
-	cin >> comando;
-	/*cin.ignore();
-	getline(cin,comando);
-	if (comando.size() > 2)
+	int num;
+	do
 	{
-		token=comando.substr(5, 1);
-		nome= token[0];
-		nave->imprime_dado_tripulante(nome);
-	}*/
-		token = comando.substr(0, 1);
-		nome = token[0];
-		token = comando.substr(1, comando.size());
-		numero = stoi(token);
-		nave->mover_membro_tripulacao(nome, numero);
-	
-	
-	desenho.desenha_nave();
-	desenho.desenha_info();
-	desenho.desenha_info_nave();
-	nave->imprime_dados_sala();
-	nave->imprime_dado_tripulante();
-	
-	
+		c.gotoxy(104, 4);
+		cout << nave->get_milhas();
+		c.gotoxy(92, 6);
+		cout << nave->get_escudo();
+		c.gotoxy(92, 8);
+		cout << numero;
+
+		c.gotoxy(22, 31);
+		getline(cin, comando);
+		stringstream stream(comando);
+		stream >> token >> token1;
+
+		if (token == "info")
+		{
+			
+			if (token1 == "trip")
+			{
+				desenho.desenha_nave();
+				desenho.desenha_info();
+				desenho.desenha_info_nave();
+				desenho.desenha_info_unidades();
+				desenho.desenha_accoes();
+				desenho.desenha_comando();
+				nave->imprime_dados_sala();
+
+				nave->imprime_info_trip();			
+			}
+			if (token1 == "xeno")
+			{
+				desenho.desenha_nave();
+				desenho.desenha_info();
+				desenho.desenha_info_nave();
+				desenho.desenha_info_unidades();
+				desenho.desenha_accoes();
+				desenho.desenha_comando();
+				nave->imprime_dados_sala();
+
+				nave->imprime_info_xeno();
+			}
+			if (token1 == "pir")
+			{
+				desenho.desenha_nave();
+				desenho.desenha_info();
+				desenho.desenha_info_nave();
+				desenho.desenha_info_unidades();
+				desenho.desenha_accoes();
+				desenho.desenha_comando();
+				nave->imprime_dados_sala();
+
+				nave->imprime_info_pir();
+			}
+		}
+		else if (token == "move")
+		{
+			
+			aux = token1.substr(0, 1);
+			nome = aux[0];
+			aux = token1.substr(1, token1.size());
+			num = stoi(aux);
+			nave->mover_membro_tripulacao(nome, num);
+
+			desenho.desenha_nave();
+			desenho.desenha_info();
+			desenho.desenha_info_nave();
+			desenho.desenha_info_unidades();
+			desenho.desenha_accoes();
+			desenho.desenha_comando();
+			nave->imprime_dados_sala();
+		}
+	} while (token != "next");
 }
 
 void Turno::final_turno()
 {
+	nave->dano_sala_curto_circuito();
+	nave->accoes_salas();
+	nave->trata_efeito_mutanti_mutantis();
+	nave->accoes_xenomorfos();
+	/*nave->accoes_piratas();*/
+
+	nave->accoes_tripulantes();
 	nave->mover_nave();
-	c.gotoxy(85, 4);
-	cout << nave->get_milhas();
+	
 }
 
 void Turno::eventos()
@@ -97,14 +161,17 @@ void Turno::eventos()
 	
 	int aux;
 	srand(time(NULL));
-	if (numero == 5)
+	/*if (numero == 5)
+	{*/
+		/*aux = rand() % 4;*/
+	if (numero == 1)
 	{
-		/*aux = rand() % 4 + 1;*/
 		evento.at(0)->accao(nave);
-		nave->imprime_dados_sala();
-		numero =1;	
 		
 	}
+		
+		
+	/*}*/
 	numero++;
 	
 }

@@ -38,14 +38,24 @@ public:
 	void trata_efeito_mutanti_mutantis();
 
 	void imprime_dados_sala();
-	void imprime_dado_tripulante();
+	
 
 	void dano_sala_fogo();
 	void dano_sala_curto_circuito();
 	void accoes_salas();
 
-	void sala_verifica_toxicidade();
-	void sala_verifica_Regenerador();
+	void trata_efeito_toxicidade();
+	void trata_efeito_regenerador();
+	void trata_efeito_flamejante();
+
+	//accoes que ocorrem no fim do turno pelos xenomorfos, bem como o combate
+	void accoes_xenomorfos();
+
+	//accoes que ocorrem no fim do turno pelos piratas, bem como o combate
+	void accoes_piratas();
+
+	//accoes que ocorrem no fim do turno pelos tripulantes, bem como o combate
+	void accoes_tripulantes();
 	
 	int get_escudo();
 	int get_milhas();
@@ -53,8 +63,16 @@ public:
 	bool verifica_existe_tripulantes();
 	void sala_verifica_Robotico();
 	void sala_verifica_Reparador();
+
+	void imprime_accoes_salas();
+	//limpa o vector das accoes das salas para que receba novas accoes em cada turno
+	void limpa_accoes_salas();
+
+	void imprime_info_trip();
+	void imprime_info_xeno();
+	void imprime_info_pir();
 	
-	void combate();
+
 
 
 
