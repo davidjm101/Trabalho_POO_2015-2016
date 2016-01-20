@@ -62,6 +62,13 @@ void  Unidade::set_repara(bool aux)
 	this->repara = aux;
 }
 
+void Unidade::set_combate(bool aux)
+{
+	this->combate = aux;
+}
+
+
+
 string Unidade::get_nome()
 {
 	return nome;
@@ -102,5 +109,8 @@ bool Unidade::get_repara()
 	return repara;
 }
 
-
+bool Unidade::get_combate()
+{
+	return combate;
+}
 

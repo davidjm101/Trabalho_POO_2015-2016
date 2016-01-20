@@ -10,7 +10,6 @@ class Tripulacao : public Unidade
 	int forca_combate;
 	int forca_arma;
 	static char aux;
-	bool combate;
 	char letra;
 	bool indeciso;
 	bool robotico;
@@ -20,11 +19,9 @@ public:
 	Tripulacao();
 	~Tripulacao();
 	void set_forca_combate(int valor);
-	void set_combate(bool aux);
 	void set_forca_arma(int valor);
 	void set_arma(bool aux);
 	int get_forca_combate();
-	bool get_combate();
 	char get_letra();
 	
 

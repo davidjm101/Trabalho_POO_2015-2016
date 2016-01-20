@@ -48,12 +48,13 @@ void Turno::inicio_turno()
 	c.gotoxy(92, 8);
 	cout << numero;
 
-	/*nave->imprime_accoes_salas();*/
+	nave->imprime_accoes_salas();
 	nave->dano_sala_fogo();
 	nave->trata_efeito_toxicidade();
 	nave->trata_efeito_regenerador();
 	nave->trata_efeito_flamejante();
 	nave->sala_verifica_respirar();
+	/*nave->mover_pirata();*/
 	nave->limpa_accoes_salas();
 
 }
@@ -148,8 +149,8 @@ void Turno::final_turno()
 	nave->dano_sala_curto_circuito();
 	nave->accoes_salas();
 	nave->trata_efeito_mutanti_mutantis();
-	nave->accoes_xenomorfos();
-	/*nave->accoes_piratas();*/
+	/*nave->accoes_xenomorfos();
+	nave->accoes_piratas();*/
 
 	nave->accoes_tripulantes();
 	nave->mover_nave();
@@ -173,7 +174,7 @@ void Turno::eventos()
 		
 	/*}*/
 	numero++;
-	
+	nave->mover_pirata();
 }
 
 

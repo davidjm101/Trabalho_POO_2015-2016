@@ -11,6 +11,7 @@ class Unidade {
 	int exoesq;
 	int quanto_repara;
 	bool repara;
+	bool combate;
 
 public:
 	Unidade();
@@ -24,6 +25,7 @@ public:
 	void set_exoesq(int valor);
 	void set_quanto_reparar(int valor);
 	void set_repara(bool aux);
+	void set_combate(bool aux);
 
 	void reduz_vida(int valor);
 	void acrescenta_vida(int valor);
@@ -40,4 +42,5 @@ public:
 	int get_exoesq();
 	int get_quanto_reparar();
 	bool get_repara();
+	bool get_combate();
 };

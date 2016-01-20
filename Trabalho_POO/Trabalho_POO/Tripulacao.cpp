@@ -29,11 +29,6 @@ void Tripulacao::set_forca_combate(int valor)
 }
 
 
-void Tripulacao::set_combate(bool aux)
-{
-	this->combate = aux;
-}
-
 void Tripulacao::set_forca_arma(int valor)
 {
 	this->forca_arma = valor;
@@ -92,12 +87,6 @@ bool Tripulacao::get_indeciso()
 int Tripulacao::get_forca_combate()
 {
 	return forca_combate;
-}
-
-
-bool Tripulacao::get_combate()
-{
-	return combate;
 }
 
 

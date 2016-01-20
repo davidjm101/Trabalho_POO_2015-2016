@@ -38,18 +38,22 @@ int Pirata::get_forca_combate_para_Sala()
 	return forca_combate_para_Sala;
 }
 
-void Pirata::set_combate(bool aux) {
-
-	this->combate = aux;
-}
-
-bool Pirata::get_combate()
-{
-	return combate;
-}
-
 char Pirata::get_letra()
 {
 	return letra;
 }
 
+
+bool Pirata::verifica_move()
+{
+	int aux;
+	bool move = false;
+	aux = aux = rand() % 6 + 1;
+	if (aux == 1)
+	{
+		move = true;
+	}
+	else
+		move = false;
+	return move;
+}

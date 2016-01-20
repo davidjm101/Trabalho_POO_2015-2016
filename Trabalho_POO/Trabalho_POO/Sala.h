@@ -84,7 +84,8 @@ public:
 	void inser_tripulante(Tripulacao* t);
 
 	//funcoes de mover xenomorfos e piratas
-	void move_pirata();
+	void move_pirata(vector<Pirata*>& pir);
+	void inser_pirata(Pirata* p);
 
 	
 
@@ -148,7 +149,7 @@ public:
 	void imprime_info_pirata(int *y);
 
 
-
+	
 
 
 

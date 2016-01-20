@@ -22,6 +22,9 @@ public:
 	void adiciona_tripulantes();
 	void mover_nave();
 	void mover_membro_tripulacao(char nome, int numero);
+
+	void mover_pirata();
+	void inser_pirata_nova_sala(Pirata* p, int sala);
 	
 	void sala_verifica_misterioso();
 

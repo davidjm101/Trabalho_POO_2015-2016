@@ -307,6 +307,324 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 }
 
 
+//mover pirata
+void Nave::mover_pirata()
+{
+	vector<Pirata*> piratas;
+	int i,j;
+	int aux;
+	int sala;
+	
+	for (i = 0; i < salas.size(); i++)
+	{
+		
+		salas.at(i)->move_pirata(piratas);
+		if (piratas.size() > 0)
+		{
+			for (j = 0; j < piratas.size(); j++)
+			{
+				sala = salas.at(i)->get_numero();
+				switch (sala)
+				{
+				case 1:
+					aux = aux = rand() % 2 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 2);//move para a sala com o numero 2
+					}
+					else
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					piratas.clear();
+					break;
+
+				case 2:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 1);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					piratas.clear();
+					break;
+
+				case 3:
+					aux = aux = rand() % 5 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 2);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 5)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					piratas.clear();
+					break;
+
+				case 4:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 8);//move para a sala com o numero 8
+					}
+					piratas.clear();
+					break;
+
+				case 5:
+					aux = aux = rand() % 7 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 1);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 2);//move para a sala com o numero 2
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 5)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 9);//move para a sala com o numero 9
+					}
+					else if (aux == 6)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 7)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 11);//move para a sala com o numero 11
+					}
+					piratas.clear();
+					break;
+
+				case 6:
+					aux = aux = rand() % 8 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 2);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 5)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 6)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 7)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 11);//move para a sala com o numero 11
+					}
+					else if (aux == 8)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 12);//move para a sala com o numero 12
+					}
+					piratas.clear();
+					break;
+
+				case 7:
+					aux = aux = rand() % 6 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 8);//move para a sala com o numero 8
+					}
+					else if (aux == 5)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 11);//move para a sala com o numero 11
+					}
+					else if (aux == 6)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 12);//move para a sala com o numero 12
+					}
+					piratas.clear();
+					break;
+
+				case 8:
+					aux = aux = rand() % 3 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 12);//move para a sala com o numero 12
+					}
+					piratas.clear();
+					break;
+
+				case 9:
+					aux = aux = rand() % 2 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 10);//move para a sala com o numero 10
+					}
+					piratas.clear();
+					break;
+
+				case 10:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 9);//move para a sala com o numero 9
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 11);//move para a sala com o numero 11
+					}
+					piratas.clear();
+					break;
+
+				case 11:
+					aux = aux = rand() % 5 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 5)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 12);//move para a sala com o numero 12
+					}
+					piratas.clear();
+					break;
+
+				case 12:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 2)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 3)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 8);//move para a sala com o numero 8
+					}
+					else if (aux == 4)
+					{
+						inser_pirata_nova_sala(piratas.at(j), 11);//move para a sala com o numero 11
+					}
+					piratas.clear();
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+		
+	}
+}
+//vai inserir o pirata numa nova sala
+void Nave::inser_pirata_nova_sala(Pirata* p, int sala)
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_numero() == sala)
+		{ 
+			salas.at(i)->inser_pirata(p);
+			break;
+		}
+	}
+}
+
+
+
 //mover nave
 void Nave::mover_nave()
 {
@@ -848,15 +1166,15 @@ void Nave::accoes_piratas()
 void Nave::accoes_tripulantes()
 {
 	
-	/*for (int i = 0; i < salas.size(); i++)
-	{
-		salas.at(i)->combate_tripulante();
-	}*/
-	
 	for (int i = 0; i < salas.size(); i++)
 	{
-		salas.at(i)->reparar_sala();
+		salas.at(i)->combate_tripulante();
 	}
+	
+	//for (int i = 0; i < salas.size(); i++)
+	//{
+	//	salas.at(i)->reparar_sala();
+	//}
 }
 
 //acontecimentos relativos as salas da nave
@@ -867,101 +1185,98 @@ void Nave::accoes_salas()
 
 	for (i = 0; i < salas.size(); i++)
 	{
-		//if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
-		//{
-		//	//verifica se a sala nao tem dano, se retornar falso é porque tem dano
-		//	if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
-		//	{
-		//		escudo_desativado = escudo;
-		//		escudo = 0;
-		//		escudo_activado = false;
-		//	}
-		//	else
-		//	{
-		//		if (escudo_activado == false)
-		//		{
-		//			escudo = escudo_desativado;
-		//			escudo_activado = true;
-		//		}		
-		//	}	
-		//}
+		if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
+		{
+			//verifica se a sala nao tem dano, se retornar falso é porque tem dano
+			if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
+			{
+				escudo_desativado = escudo;
+				escudo = 0;
+				escudo_activado = false;
+			}
+			else if (salas.at(i)->controlo_escudo() == true && escudo_activado == false)
+			{
+					escudo = escudo_desativado;
+					escudo_activado = true;	
+			}	
+		}
 		
-		////se for a sala de sistema de segurança interno
-		//if (salas.at(i)->get_nome() == "Sist_Seg_Interno")
-		//{
-		//	//vai ver se tem alguem inimigo na sala e vai atacar caso estajam
-		//	salas.at(i)->sistema_seguranca_interno();
-		//	
-		//	//vai fazer o mesmo as salas adjacentes
-		//	num_sala = salas.at(i)->get_numero();
-		//	switch (num_sala)
-		//	{
-		//	
-		//		case 2:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		case 3:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		case 4:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		case 10:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		case 11:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		case 12:
-		//			for (j = 0; j < salas.size(); j++)
-		//			{
-		//				aux = salas.at(j)->get_numero();
-		//				if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
-		//				{
-		//					salas.at(j)->sistema_seguranca_interno();
-		//				}
-		//			}
-		//			break;
-		//		default:
-		//			break;
+		//se for a sala de sistema de segurança interno
+		if (salas.at(i)->get_nome() == "Sist_Seg_Interno")
+		{
+			//vai ver se tem alguem inimigo na sala e vai atacar caso estajam
+			salas.at(i)->sistema_seguranca_interno();
+			
+			//vai fazer o mesmo as salas adjacentes
+			num_sala = salas.at(i)->get_numero();
+			switch (num_sala)
+			{
+			
+				case 2:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 1 || aux == 3 || aux == 5 || aux == 6)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 3:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux == 7)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 4:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 3 || aux == 6 || aux == 7 || aux == 8)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 10:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 6 || aux == 9 || aux == 11)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 11:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 6 || aux == 7 || aux == 10 || aux == 12)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				case 12:
+					for (j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
+						{
+							salas.at(j)->sistema_seguranca_interno();
+						}
+					}
+					break;
+				default:
+					break;
 
-		//	}
-		//}
+			}
+		}
 
 		//se for a sala de suporte de vida
 		if (salas.at(i)->get_nome() == "Suporte_Vida" && salas.at(i)->get_integridade()==100)
