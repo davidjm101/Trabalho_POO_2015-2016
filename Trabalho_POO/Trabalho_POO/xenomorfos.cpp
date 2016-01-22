@@ -2,7 +2,7 @@
 #include "xenomorfos.h"
 #include "Sala.h"
 
-char xenomorfos::aux = 'a';
+char xenomorfos::aux = 'A';
 
 
 
@@ -161,6 +161,45 @@ bool xenomorfos::get_mutatis_mutandis()
 {
 
 	return mutatis_mutandis;
+}
+
+
+bool xenomorfos::verifica_move()
+{
+	int aux;
+	bool move = false;
+	if (get_nome() == "Geigermorfo")
+	{
+		aux = aux = rand() % 2 + 1;
+		if (aux == 1)
+		{
+			move = true;
+		}
+		else
+			move = false;
+	}
+	else if (get_nome() == "Blob")
+	{
+		aux = aux = rand() % 7 + 1;
+		if (aux == 1)
+		{
+			move = true;
+		}
+		else
+			move = false;
+	}
+	else if (get_nome() == "Mxyzypykwi")
+	{
+		aux = aux = rand() % 3 + 1;
+		if (aux == 1)
+		{
+			move = true;
+		}
+		else
+			move = false;
+	}
+	
+	return move;
 }
 
 

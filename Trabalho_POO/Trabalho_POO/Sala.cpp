@@ -283,12 +283,12 @@ void Sala::set_xenomorfo_mxyzypykwi()
 
 
 //verifica se existe algum tripulante na sala com este nome
-bool Sala::verifica_tripulante(char nome)
+bool Sala::verifica_tripulante(char letra)
 {
 	bool verifica = false;
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome)
+		if (tripulantes.at(i)->get_letra() == letra)
 		{
 			verifica = true;
 		}
@@ -297,12 +297,12 @@ bool Sala::verifica_tripulante(char nome)
 }
 
 //verifica se o robot pode se mexer, caso a sala nao esteja em curto-circuito
-bool Sala::verifica_robot_curto_circuito(char nome)
+bool Sala::verifica_robot_curto_circuito(char letra)
 {
 	bool verifica=true;
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome)
+		if (tripulantes.at(i)->get_letra() == letra)
 		{
 			if (tripulantes.at(i)->get_nome() == "Robot - X34-ZT2")
 			{
@@ -317,27 +317,27 @@ bool Sala::verifica_robot_curto_circuito(char nome)
 }
 
 //verifica se o tripulante esta indeciso e se vai se mover ou nao
-bool Sala::verifica_tripulante_indeciso(char nome)
+bool Sala::verifica_tripulante_indeciso(char letra)
 {
-	bool verifica = false;
+	bool indeciso = false;
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome)
+		if (tripulantes.at(i)->get_letra() == letra)
 		{
-			verifica=tripulantes.at(i)->get_indeciso();
+			indeciso =tripulantes.at(i)->get_indeciso();
 		}
 	}
-	return verifica;
+	return indeciso;
 }
 
 //obtem o tripulante da sala original para se mover para outra sala
 //apagando-o da sala original
-Tripulacao* Sala::obtem_tripulante(char nome)
+Tripulacao* Sala::obtem_tripulante(char letra)
 {
 	Tripulacao* t= new Tripulacao();
 	for (int i = 0; i < tripulantes.size(); i++)
 	{
-		if (tripulantes.at(i)->get_letra() == nome )
+		if (tripulantes.at(i)->get_letra() == letra )
 		{
 
 			t = tripulantes.at(i);
@@ -380,7 +380,29 @@ void Sala::inser_pirata(Pirata* p)
 	piratas.push_back(p);
 }
 
+//funcao para mover xenomorfo
+void Sala::move_xenomorfo(vector<xenomorfos*>& xeno)
+{
+	if (Xenomorfos.size() > 0)
+	{
+		for (int i = 0; i< Xenomorfos.size(); i++)
+		{
+			if (Xenomorfos.at(i)->verifica_move() == true)
+			{
 
+				xeno.push_back(Xenomorfos.at(i));
+				Xenomorfos.erase(Xenomorfos.begin() + i);
+
+			}
+		}
+
+	}
+}
+
+void Sala::inser_xenomrofo(xenomorfos* x)
+{
+	Xenomorfos.push_back(x);
+}
 
 
 //sbuscar 
@@ -395,6 +417,31 @@ void Sala::get_letra_tripulantes()
 	}
 
 }
+
+void Sala::get_letra_xenomorfos()
+{
+	if (Xenomorfos.size() > 0)
+	{
+		for (int i = 0; i < Xenomorfos.size(); i++)
+		{
+			cout << Xenomorfos.at(i)->get_letra() << " ";
+		}
+	}
+
+}
+
+void Sala::get_letra_piratas()
+{
+	if (piratas.size() > 0)
+	{
+		for (int i = 0; i < piratas.size(); i++)
+		{
+			cout << piratas.at(i)->get_letra() << " ";
+		}
+	}
+
+}
+
 
 
 //reparar sala
@@ -414,6 +461,9 @@ void Sala::reparar_sala()
 			{
 				//repoem a 100, pois a integridade nao deve ser maior que 100 e para o ciclo
 				integridade = 100;
+			}
+			if (integridade == 100)
+			{
 				fogo = false;
 				brecha = false;
 				curto_circuito = false;
@@ -431,6 +481,9 @@ void Sala::reparar_sala()
 			{
 				//repoem a 100, pois a integridade nao deve ser maior que 100 e para o ciclo
 				integridade = 100;
+			}
+			if (integridade == 100)
+			{
 				fogo = false;
 				brecha = false;
 				curto_circuito = false;
@@ -477,8 +530,15 @@ void Sala::trata_caracteristica_unidade_respira()
 	{
 		if (tripulantes.at(i)->get_respira() == true)
 		{
+			//retira 1 de oxigenio a sala por cada tripulante na sala
 			if (oxigenio > 0)
+			{
 				oxigenio = oxigenio - 1;
+				if (oxigenio < 0)
+				{
+					oxigenio = 0;
+				}
+			}
 			else
 			{
 				tripulantes.at(i)->reduz_vida(1);
@@ -486,9 +546,11 @@ void Sala::trata_caracteristica_unidade_respira()
 				if (tripulantes.at(i)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O tripulante " << tripulantes.at(i)->get_letra() << " morreu por falta de oxigenio";
+					ss << "Tripulante " << tripulantes.at(i)->get_letra() << " morreu por falta de oxigenio";
 					accao = ss.str();
 					accoes_trip.push_back(accao);
+					ss.str(string());
+					//apaga o tripulante do vector
 					tripulantes.erase(tripulantes.begin() + i);
 				
 				}
@@ -501,8 +563,15 @@ void Sala::trata_caracteristica_unidade_respira()
 	{
 		if (piratas.at(i)->get_respira() == true)
 		{
+			//retira 1 de oxigenio a sala por cada pirata na sala
 			if (oxigenio > 0)
+			{
 				oxigenio = oxigenio - 1;
+				if (oxigenio < 0)
+				{
+					oxigenio = 0;
+				}
+			}
 			else
 			{
 				piratas.at(i)->reduz_vida(1);
@@ -510,9 +579,11 @@ void Sala::trata_caracteristica_unidade_respira()
 				if (piratas.at(i)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O pirata " << piratas.at(i)->get_letra() << " morreu por falta de oxigenio";
+					ss << "Pirata " << piratas.at(i)->get_letra() << " morreu por falta de oxigenio";
 					accao = ss.str();
 					accoes_pir.push_back(accao);
+					ss.str(string());
+					//apaga o pirata do vector
 					piratas.erase(piratas.begin() + i);
 				
 				}
@@ -525,8 +596,16 @@ void Sala::trata_caracteristica_unidade_respira()
 	{
 		if (Xenomorfos.at(i)->get_respira() == true)
 		{
+			//retira 1 de oxigenio a sala por cada xenomorofo na sala
 			if (oxigenio > 0)
+			{
 				oxigenio = oxigenio - 1;
+				if (oxigenio < 0)
+				{
+					oxigenio = 0;
+				}
+			}
+				
 			else
 			{
 				Xenomorfos.at(i)->reduz_vida(1);
@@ -534,21 +613,17 @@ void Sala::trata_caracteristica_unidade_respira()
 				if (Xenomorfos.at(i)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " morreu por falta de oxigenio";
+					ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " morreu por falta de oxigenio";
 					accao = ss.str();
 					accoes_xeno.push_back(accao);
+					ss.str(string());
+					//apaga o xenomorfo do vector
 					Xenomorfos.erase(Xenomorfos.begin() + i);
 				
 				}
 			}
 				
 		}
-
-		if (Xenomorfos.at(i)->get_flamejante() == true)  ///Instrução de verificação se o xenomorfo é flamejante
-		{
-			oxigenio = oxigenio - 5;	
-		}
-
 	}
 
 }
@@ -572,17 +647,20 @@ void Sala::trata_caracteristica_toxico()
 				piratas.at(j)->reduz_vida(valordetoxico);
 
 				//string usada para a impressao na parte das accoes
-				ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " antigiu com toxico o pirata " << piratas.at(j)->get_letra();
+				ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " antigiu com toxico o pirata " << piratas.at(j)->get_letra();
 				accao = ss.str();
 				accoes_xeno.push_back(accao);
+				ss.str(string());
 
 				//se o pirata ja nao tiver vida entao e removido do vector
 				if (piratas.at(j)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O pirata " << piratas.at(j)->get_letra() << " foi destruido";
+					ss << "Pirata " << piratas.at(j)->get_letra() << " foi destruido pelo toxico";
 					accao = ss.str();
-					accoes_xeno.push_back(accao);
+					accoes_pir.push_back(accao);
+					ss.str(string());
+					//remove do vector o pirata que ja nao tem vida
 					piratas.erase(piratas.begin() + j);
 					
 				}
@@ -592,16 +670,21 @@ void Sala::trata_caracteristica_toxico()
 			{
 				tripulantes.at(z)->reduz_vida(valordetoxico);
 				//string usada para a impressao na parte das accoes
-				ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " antigiu com toxico o tripulante " << tripulantes.at(z)->get_letra();
+				ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " antigiu com toxico o tripulante " << tripulantes.at(z)->get_letra();
 				accao = ss.str();
 				accoes_xeno.push_back(accao);
+				ss.str(string());
+
 				//se o tripulante ja nao tiver vida entao e removido do vector
 				if (tripulantes.at(z)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O tripulante " << tripulantes.at(z)->get_letra() << " foi destruido";
+					ss << "Tripulante " << tripulantes.at(z)->get_letra() << " foi destruido pelo toxico";
 					accao = ss.str();
-					accoes_xeno.push_back(accao);
+					accoes_trip.push_back(accao);
+					ss.str(string());
+
+					//remove do vector o tripulante que ja nao tem vida
 					tripulantes.erase(tripulantes.begin() + z);
 					
 				}
@@ -613,7 +696,6 @@ void Sala::trata_caracteristica_toxico()
 //vai verificar se a unidade se regenera, se sim entao regenera vida
 void Sala::trata_caracteristica_regenerador()
 {
-	int regenera;
 	for (int i = 0; i < Xenomorfos.size(); i++)
 	{
 		Xenomorfos.at(i)->regenera_vida();
@@ -629,13 +711,11 @@ bool Sala::trata_caracteristica_mutatis_mutantis()
 	{
 		if (Xenomorfos.at(i)->get_mutatis_mutandis()>0)
 		{
-			srand(time(NULL));
 			aux = rand() % 2 + 1;// probabilidade de 10%
-			if (aux == 2)
+			if (aux == 1)
 			{
 				verifica = true;
-			}
-			
+			}	
 		}
 	}
 	return verifica;
@@ -646,23 +726,22 @@ bool Sala::trata_caracteristica_mutatis_mutantis()
 void Sala::trata_caracteristica_hipnotizador()
 {
 	int aux;
-	int num_trip;
 	string accao;
 	stringstream ss;
 	for (int i = 0; i < Xenomorfos.size(); i++)
 	{
 		if (Xenomorfos.at(i)->get_hipnotizador()>0)
 		{
-			aux = rand() % 7 + 1;
+			aux = rand() % 7 + 1;//probabilidade de 15%
 			if (aux == 1)
 			{
-				num_trip = tripulantes.size();
-				aux= rand() % num_trip;
+				aux= rand() % tripulantes.size();
 				tripulantes.at(aux)->set_indeciso(true);
 				//string usada para a impressao na parte das accoes
-				ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " foi hipnotizado";
+				ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " foi hipnotizado";
 				accao = ss.str();
-				accoes_xeno.push_back(accao);
+				accoes_trip.push_back(accao);
+				ss.str(string());
 			}
 		}
 	}
@@ -679,40 +758,14 @@ void Sala::trata_caracteristica_flamajenta()
 		{
 			oxigenio -= dano;
 		}
-	}
-}
-
-
-
-
-
-
-
-
-
-void Sala::get_letra_xenomorfos()
-{
-	if (Xenomorfos.size() > 0)
-	{
-		for (int i = 0; i < Xenomorfos.size(); i++)
+		if (oxigenio < 0)
 		{
-			cout << Xenomorfos.at(i)->get_letra() << " ";
+			oxigenio = 0;
 		}
 	}
-
 }
 
-void Sala::get_letra_piratas()
-{
-	if (piratas.size() > 0)
-	{
-		for (int i = 0; i < piratas.size(); i++)
-		{
-			cout << piratas.at(i)->get_letra() << " ";
-		}
-	}
 
-}
 
 
 
@@ -731,12 +784,11 @@ void Sala::atacada_piratas(int dano)
 {
 	int aux;
 	integridade -= dano;
-	srand(time(NULL));
 	aux = rand() % 3 + 1;
 	//mete fogo a sala
 	if (aux == 1)
 	{
-		if (brecha == false)//verifica se a brecha na sala, poisa caso houver nao pode haver fogo
+		if (brecha == false)//verifica se a brecha na sala, pois caso houver nao pode haver fogo
 		{
 			fogo = true;
 		}
@@ -770,8 +822,6 @@ void Sala::invadida_piratas(int num)
 void Sala::invadida_xenomorfos()
 {
 	int aux;
-
-	srand(time(NULL));
 	aux = rand() % 3 + 1;
 	/*if (aux == 1)
 	{
@@ -812,9 +862,6 @@ void Sala::combate_tripulante()
 	
 		for (i = 0; i < tripulantes.size(); i++)
 		{
-			//indica que o tripulante nao pode nem operar nem reparar
-			
-
 			verifica = true;
 			//vai verificar se o tripulante e robot
 			if (tripulantes.at(i)->get_nome() == "Robot - X34 - ZT2")
@@ -825,9 +872,11 @@ void Sala::combate_tripulante()
 					//se tiver o robot nao pode atacar
 					verifica = false;
 					
-					////strind usada para a impressao na parte das accoes
-					//accao = "O robot nao pode atacar, sala curto-circuito";
-					//accoes_trip.push_back(accao);
+					////string usada para a impressao na parte das accoes
+					ss << "Tripulante " << tripulantes.at(i)->get_letra() << " nao pode atacar, sala curto_cir ";
+					accao = ss.str();
+					accoes_trip.push_back(accao);
+					ss.str(string());
 				}
 			}
 			//este verifica e por causa do robot
@@ -857,20 +906,25 @@ void Sala::combate_tripulante()
 						{
 							ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
 							Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
-						    
+
+
 							////string usada para a impressao na parte das accoes
-							//ss << "O tripulante " << tripulantes.at(i)->get_letra() << " atacou o xenomorfo " << Xenomorfos.at(aux)->get_letra();
-							//accao = ss.str();
-							//accoes_trip.push_back(accao);
+							ss << "Tripulante " << tripulantes.at(i)->get_letra() << " atacou xenomorfo " << Xenomorfos.at(aux)->get_letra();
+							accao = ss.str();
+							accoes_trip.push_back(accao);
+							ss.str(string());
 						}
+
+
 						//se o xenomorfos ja nao tiver vida, e removido do vector
 						if (Xenomorfos.at(aux)->get_vida() <= 0)
 						{
 							////string usada para a impressao na parte das accoes
-							//ss << "O xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
-							//accao = ss.str();
-							//accoes_trip.push_back(accao);
+							ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
+							accao = ss.str();
+							accoes_trip.push_back(accao);
 							Xenomorfos.erase(Xenomorfos.begin()+aux);
+							ss.str(string());
 						}
 
 					}
@@ -885,19 +939,20 @@ void Sala::combate_tripulante()
 						piratas.at(aux)->reduz_vida(ataque);//ataca o pirata
 
 						////string usada para a impressao na parte das accoes
-						//ss << "O tripulante " << tripulantes.at(i)->get_letra() << " atacou o pirata " << piratas.at(aux)->get_letra();
-						//accao = ss.str();
-						//accoes_trip.push_back(accao);
+						ss << "Tripulante " << tripulantes.at(i)->get_letra() << " atacou pirata " << piratas.at(aux)->get_letra();
+						accao = ss.str();
+						accoes_trip.push_back(accao);
+						ss.str(string());
 						
 
 						//se o pirata ja nao tiver vida, e removido do vector
 						if (piratas.at(aux)->get_vida() <= 0)
 						{
 							////string usada para a impressao na parte das accoes
-							//ss << "O pirata " << piratas.at(aux)->get_letra() << " foi destruido";
-							//accao = ss.str();
-							//accoes_trip.push_back(accao);
-							
+							ss << "Pirata " << piratas.at(aux)->get_letra() << " foi destruido";
+							accao = ss.str();
+							accoes_trip.push_back(accao);
+							ss.str(string());
 							piratas.erase(piratas.begin() + aux);
 
 							
@@ -920,18 +975,20 @@ void Sala::combate_tripulante()
 					piratas.at(aux)->reduz_vida(ataque);//ataca o pirata
 
 					////string usada para a impressao na parte das accoes
-					//ss << "O tripulante " << tripulantes.at(i)->get_letra() << " atacou o pirata " << piratas.at(aux)->get_letra();
-					//accao = ss.str();
-					//accoes_trip.push_back(accao);
+					ss << "Tripulante " << tripulantes.at(i)->get_letra() << " atacou pirata " << piratas.at(aux)->get_letra();
+					accao = ss.str();
+					accoes_trip.push_back(accao);
+					ss.str(string());
 				
 					//se o pirata ja nao tiver vida, e removido do vector
 					if (piratas.at(aux)->get_vida() <= 0)
 					{
 						//
 						////string usada para a impressao na parte das accoes
-						//ss << "O pirata " << piratas.at(aux)->get_letra() << " foi destruido";
-						//accao = ss.str();
-						//accoes_trip.push_back(accao);
+						ss << "Pirata " << piratas.at(aux)->get_letra() << " foi destruido";
+						accao = ss.str();
+						accoes_trip.push_back(accao);
+						ss.str(string());
 						piratas.erase(piratas.begin() + aux);
 					}
 				}
@@ -955,18 +1012,20 @@ void Sala::combate_tripulante()
 						Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
 
 						////string usada para a impressao na parte das accoes
-						//ss << "O tripulante " << tripulantes.at(i)->get_letra() << " atacou o xenomorfo " << Xenomorfos.at(aux)->get_letra();
-						//accao = ss.str();
-						//accoes_trip.push_back(accao);
+						ss << "Tripulante " << tripulantes.at(i)->get_letra() << " atacou xenomorfo " << Xenomorfos.at(aux)->get_letra();
+						accao = ss.str();
+						accoes_trip.push_back(accao);
+						ss.str(string());
 					}
 					//se o xenomorfos ja nao tiver vida, e removido do vector
 					if (Xenomorfos.at(aux)->get_vida() <= 0)
 					{
 						//
 						////string usada para a impressao na parte das accoes
-						//ss << "O xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
-						//accao = ss.str();
-						//accoes_trip.push_back(accao);
+						ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
+						accao = ss.str();
+						accoes_trip.push_back(accao);
+						ss.str(string());
 						Xenomorfos.erase(Xenomorfos.begin() + aux);
 					}
 				}
@@ -995,9 +1054,6 @@ void Sala::combate_xenomorfos()
 		//tripulante ataca
 		for (i = 0; i < Xenomorfos.size(); i++)
 		{
-			//vain indicar que o xenomorfos estao em combate e nao podem nem reparar nem operar
-			
-
 			ataque = Xenomorfos.at(i)->get_xenomorfo();//vai buscar a forca de ataque
 			//apenas o que tem xenomorfo maior que 0 atacam
 			if(ataque > 0)
@@ -1019,17 +1075,19 @@ void Sala::combate_xenomorfos()
 							tripulantes.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
 
 							//string usada para a impressao na parte das accoes
-							ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou o tripulante " << tripulantes.at(aux)->get_letra();
+							ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou tripulante " << tripulantes.at(aux)->get_letra();
 							accao = ss.str();
 							accoes_xeno.push_back(accao);
+							ss.str(string());
 						}
 						//se o tripulante ja nao tiver vida, e removido do vector
 						if (tripulantes.at(aux)->get_vida() <= 0)
 						{
 							//string usada para a impressao na parte das accoes
-							ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
+							ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
 							accao = ss.str();
 							accoes_xeno.push_back(accao);
+							ss.str(string());
 							tripulantes.erase(tripulantes.begin() + aux);
 							
 						}
@@ -1041,17 +1099,19 @@ void Sala::combate_xenomorfos()
 						piratas.at(aux)->reduz_vida(ataque);//ataca o pirata
 
 						//string usada para a impressao na parte das accoes
-						ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou o pirata " << piratas.at(aux)->get_letra();
+						ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou pirata " << piratas.at(aux)->get_letra();
 						accao = ss.str();
 						accoes_xeno.push_back(accao);
+						ss.str(string());
 
 						//se o pirata ja nao tiver vida, e removido do vector
 						if (piratas.at(aux)->get_vida() <= 0)
 						{
 							//string usada para a impressao na parte das accoes
-							ss << "O pirata " << piratas.at(aux)->get_letra() << " foi destruido";
+							ss << "Pirata " << piratas.at(aux)->get_letra() << " foi destruido";
 							accao = ss.str();
 							accoes_xeno.push_back(accao);
+							ss.str(string());
 							piratas.erase(piratas.begin() + aux);
 							
 						}
@@ -1068,8 +1128,9 @@ void Sala::combate_xenomorfos()
 					piratas.at(aux)->reduz_vida(ataque);//ataca o pirata
 
 					//string usada para a impressao na parte das accoes
-					ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou o pirata " << piratas.at(aux)->get_letra();
+					ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou pirata " << piratas.at(aux)->get_letra();
 					accao = ss.str();
+					ss.str(string());
 					accoes_xeno.push_back(accao);
 					
 					
@@ -1077,9 +1138,10 @@ void Sala::combate_xenomorfos()
 					if (piratas.at(aux)->get_vida() <= 0)
 					{
 						//string usada para a impressao na parte das accoes
-						ss << "O pirata " << piratas.at(aux)->get_letra() << " foi destruido";
+						ss << "Pirata " << piratas.at(aux)->get_letra() << " foi destruido";
 						accao = ss.str();
 						accoes_xeno.push_back(accao);
+						ss.str(string());
 						piratas.erase(piratas.begin() + aux);
 						
 					}
@@ -1099,17 +1161,19 @@ void Sala::combate_xenomorfos()
 						tripulantes.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
 
 						//string usada para a impressao na parte das accoes
-						ss << "O xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou o tripulante " << tripulantes.at(aux)->get_letra();
+						ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacou tripulante " << tripulantes.at(aux)->get_letra();
 						accao = ss.str();
+						ss.str(string());
 						accoes_xeno.push_back(accao);
 					}
 					//se o xenomorfos ja nao tiver vida, e removido do vector
 					if (tripulantes.at(aux)->get_vida() <= 0)
 					{
 						//string usada para a impressao na parte das accoes
-						ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
+						ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
 						accao = ss.str();
 						accoes_xeno.push_back(accao);
+						ss.str(string());
 						tripulantes.erase(tripulantes.begin() + aux);
 						
 						
@@ -1147,15 +1211,16 @@ void Sala::combate_piratas()
 			ataque = piratas.at(i)->get_forca_combate_para_Sala();//vai buscar a forca de ataque para a atacar a sala
 			integridade -= ataque;
 			//string usada para a impressao na parte das accoes
-			ss << "O pirata " << piratas.at(i)->get_letra() << " atacou a sala " << numero;
+			ss << "Pirata " << piratas.at(i)->get_letra() << " atacou sala " << numero;
 			accao = ss.str();
 			accoes_pir.push_back(accao);
+			ss.str(string());
 		}
 
 		else
 		{
 			ataque = piratas.at(i)->get_forca_combate_para_Inimigo();//vai buscar a forca de ataque para atacar tripulante
-																		//existe tripulantes e xenomorfos para atacar
+			//existe tripulantes e xenomorfos para atacar
 			if (tripulantes.size() != 0 && Xenomorfos.size() != 0)
 			{
 				piratas.at(i)->set_combate(true);
@@ -1171,19 +1236,20 @@ void Sala::combate_piratas()
 						ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
 						tripulantes.at(aux)->reduz_vida(ataque);//ataca o tripulante
 
-																//string usada para a impressao na parte das accoes
-						ss << "O pirata " << piratas.at(i)->get_letra() << " atacou o tripulante " << tripulantes.at(aux)->get_letra();
+						//string usada para a impressao na parte das accoes
+						ss << "Pirata " << piratas.at(i)->get_letra() << " atacou tripulante " << tripulantes.at(aux)->get_letra();
 						accao = ss.str();
 						accoes_pir.push_back(accao);
+						ss.str(string());
 					}
 					//se o tripulante ja nao tiver vida, e removido do vector
 					if (tripulantes.at(aux)->get_vida() <= 0)
 					{
 						//string usada para a impressao na parte das accoes
-						ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
+						ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
 						accao = ss.str();
 						accoes_pir.push_back(accao);
-
+						ss.str(string());
 						tripulantes.erase(tripulantes.begin() + aux);
 					}
 				}
@@ -1197,19 +1263,20 @@ void Sala::combate_piratas()
 						ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
 						Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
 
-																//string usada para a impressao na parte das accoes
-						ss << "O pirata " << piratas.at(i)->get_letra() << " atacou o xenomorfo " << Xenomorfos.at(aux)->get_letra();
+					    //string usada para a impressao na parte das accoes
+						ss << "Pirata " << piratas.at(i)->get_letra() << " atacou xenomorfo " << Xenomorfos.at(aux)->get_letra();
 						accao = ss.str();
 						accoes_pir.push_back(accao);
+						ss.str(string());
 					}
 					//se o xenomorfo ja nao tiver vida, e removido do vector
 					if (Xenomorfos.at(aux)->get_vida() <= 0)
 					{
 						//string usada para a impressao na parte das accoes
-						ss << "O xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
+						ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
 						accao = ss.str();
 						accoes_pir.push_back(accao);
-
+						ss.str(string());
 						Xenomorfos.erase(Xenomorfos.begin() + aux);
 
 					}
@@ -1228,18 +1295,19 @@ void Sala::combate_piratas()
 					Xenomorfos.at(aux)->reduz_vida(ataque);//ataca o xenomorfos
 
 					//string usada para a impressao na parte das accoes
-					ss << "O pirata " << piratas.at(i)->get_letra() << " atacou o xenomorfo " << Xenomorfos.at(aux)->get_letra();
+					ss << "Pirata " << piratas.at(i)->get_letra() << " atacou xenomorfo " << Xenomorfos.at(aux)->get_letra();
 					accao = ss.str();
 					accoes_pir.push_back(accao);
+					ss.str(string());
 				}
 				//se o xenomorfo ja nao tiver vida, e removido do vector
 				if (Xenomorfos.at(aux)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
+					ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " foi destruido";
 					accao = ss.str();
 					accoes_pir.push_back(accao);
-
+					ss.str(string());
 					Xenomorfos.erase(Xenomorfos.begin() + aux);
 				}
 			}
@@ -1255,20 +1323,21 @@ void Sala::combate_piratas()
 					ataque -= exoesqueleto; //remove ao ataque o valor do exoesqueleto
 					tripulantes.at(aux)->reduz_vida(ataque);//ataca o tripulante
 
-															//string usada para a impressao na parte das accoes
-					ss << "O pirata " << piratas.at(i)->get_letra() << " atacou o tripulante " << tripulantes.at(aux)->get_letra();
+					//string usada para a impressao na parte das accoes
+					ss << "Pirata " << piratas.at(i)->get_letra() << " atacou tripulante " << tripulantes.at(aux)->get_letra();
 					accao = ss.str();
 					accoes_pir.push_back(accao);
+					ss.str(string());
 					
 				}
 				//se o tripulante ja nao tiver vida, e removido do vector
 				if (tripulantes.at(aux)->get_vida() <= 0)
 				{
 					//string usada para a impressao na parte das accoes
-					ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
+					ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " foi destruido";
 					accao = ss.str();
 					accoes_pir.push_back(accao);
-			
+					ss.str(string());
 					tripulantes.erase(tripulantes.begin() + aux);
 				}
 				
@@ -1288,9 +1357,11 @@ void Sala::combate_piratas()
 
 
 //verifica que a sala esta em fogo e se sim cada unidade perde vida
-void Sala::dano_fogo()
+bool Sala::dano_fogo()
 {
 	int aux = 2; // dano do fogo para cada unidade
+	int aux2;
+	bool fogo_adj=false;
 	string accao;
 	stringstream ss;
 	if (oxigenio == 0)
@@ -1304,29 +1375,83 @@ void Sala::dano_fogo()
 		{
 			tripulantes.at(i)->reduz_vida(aux);
 			//string usada para a impressao na parte das accoes
-			ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " perdeu vida devido ao fogo";
+			ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " perdeu vida pelo fogo";
 			accao = ss.str();
 			accoes_trip.push_back(accao);
+			ss.str(string());
+
+			if (tripulantes.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+			{
+				//string usada para a impressao na parte das accoes
+				ss << "Tripulante " << tripulantes.at(i)->get_letra() << " foi destruido pelo fogo";
+				accao = ss.str();
+				accoes_trip.push_back(accao);
+				ss.str(string());
+
+				//elimina o tripulante do vector caso ele ja nao tenha vida 
+				tripulantes.erase(tripulantes.begin() + i);
+			}
+			
 		}
 
 		for (int i = 0; i < piratas.size(); i++)
 		{
 			piratas.at(i)->reduz_vida(aux);
 			//string usada para a impressao na parte das accoes
-			ss << "O pirata " << piratas.at(aux)->get_letra() << " perdeu vida devido ao fogo";
+			ss << "Pirata " << piratas.at(aux)->get_letra() << " perdeu vida pelo fogo";
 			accao = ss.str();
 			accoes_pir.push_back(accao);
+			ss.str(string());
+
+			if (piratas.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+			{
+				//string usada para a impressao na parte das accoes
+				ss << "Pirata " << piratas.at(i)->get_letra() << " foi destruido pelo fogo";
+				accao = ss.str();
+				accoes_pir.push_back(accao);
+				ss.str(string());
+
+				//elimina o pirata do vector caso ele ja nao tenha vida 
+				piratas.erase(piratas.begin() + i);
+			}
 		}
 
 		for (int i = 0; i < Xenomorfos.size(); i++)
 		{
 			Xenomorfos.at(i)->reduz_vida(aux);
 			//string usada para a impressao na parte das accoes
-			ss << "O xenomorfo " << Xenomorfos.at(aux)->get_letra() << " perdeu vida devido ao fogo";
+			ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " perdeu vida pelo fogo";
 			accao = ss.str();
 			accoes_xeno.push_back(accao);
+			ss.str(string());
+
+			if (Xenomorfos.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+			{
+				//string usada para a impressao na parte das accoes
+				ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " foi destruido pelo fogo";
+				accao = ss.str();
+				accoes_xeno.push_back(accao);
+				ss.str(string());
+				//elimina o xenemorfo do vector caso ele ja nao tenha vida 
+				Xenomorfos.erase(Xenomorfos.begin() + i);
+			}
+		}
+		aux2= rand() % 2 + 1;
+		if (aux == 1)//a sala recebe 10 de dano
+		{
+			integridade -= dano;
+			if (integridade < 0)
+			{
+				integridade = 0;
+			}
+		}
+		aux2 = rand() % 20 + 1;// 5% de as salas adjacentes pegaram fogo
+		if (aux == 1)
+		{
+			fogo_adj = true;
 		}
 	}
+	return fogo_adj;
 }
 
 //verifica que a sala esta em curto_circuito e se sim cada unidade perde vida
@@ -1360,27 +1485,66 @@ void Sala::dano_curto_circuito()
 			{
 				tripulantes.at(i)->reduz_vida(dano);
 				//string usada para a impressao na parte das accoes
-				ss << "O tripulante " << tripulantes.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
+				ss << "Tripulante " << tripulantes.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
 				accao = ss.str();
 				accoes_trip.push_back(accao);
+				ss.str(string());
+
+				if (tripulantes.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+				{
+					//string usada para a impressao na parte das accoes
+					ss << "Tripulante " << tripulantes.at(i)->get_letra() << " foi destruido pelo curto_circuito";
+					accao = ss.str();
+					accoes_pir.push_back(accao);
+					ss.str(string());
+
+					//elimina o tripulante do vector caso ele ja nao tenha vida 
+					tripulantes.erase(tripulantes.begin() + i);
+				}
 			}
 
 			for (int i = 0; i < piratas.size(); i++)
 			{
 				piratas.at(i)->reduz_vida(dano);
 				//string usada para a impressao na parte das accoes
-				ss << "O pirata " << piratas.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
+				ss << "Pirata " << piratas.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
 				accao = ss.str();
 				accoes_pir.push_back(accao);
+				ss.str(string());
+
+				if (piratas.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+				{
+					//string usada para a impressao na parte das accoes
+					ss << "Pirata " << piratas.at(i)->get_letra() << " foi destruido pelo curto_circuito";
+					accao = ss.str();
+					accoes_pir.push_back(accao);
+					ss.str(string());
+
+					//elimina o pirata do vector caso ele ja nao tenha vida 
+					piratas.erase(piratas.begin() + i);
+				}
 			}
 
 			for (int i = 0; i < Xenomorfos.size(); i++)
 			{
 				Xenomorfos.at(i)->reduz_vida(dano);
 				//string usada para a impressao na parte das accoes
-				ss << "O Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
+				ss << "Xenomorfo " << Xenomorfos.at(aux)->get_letra() << " perdeu vida devido ao curto_circuito";
 				accao = ss.str();
 				accoes_xeno.push_back(accao);
+				ss.str(string());
+
+				if (Xenomorfos.at(i)->get_vida() <= 0)//verifica se o tripulante ainda tem vida
+				{
+					//string usada para a impressao na parte das accoes
+					ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " foi destruido pelo curto_circuito";
+					accao = ss.str();
+					accoes_pir.push_back(accao);
+					ss.str(string());
+
+					//elimina o pirata do vector caso ele ja nao tenha vida 
+					Xenomorfos.erase(Xenomorfos.begin() + i);
+				}
 			}
 		}
 	}
@@ -1459,25 +1623,60 @@ void Sala::sistema_seguranca_interno()
 {
 	int i;
 	int sala;
-	if (integridade == 100)
+	string accao;
+	stringstream ss;
+	for (i = 0; i < piratas.size(); i++)
 	{
-		for (i = 0; i < piratas.size(); i++)
+		if (piratas.at(i)->get_combate() == true)
 		{
-			if (piratas.at(i)->get_combate() == true)
-			{
-				piratas.at(i)->reduz_vida(1);
-			}
-			
-		}
-		for (i = 0; i < Xenomorfos.size(); i++)
-		{
-			if (Xenomorfos.at(i)->get_combate() == true)
-			{
-				Xenomorfos.at(i)->reduz_vida(1);
-			}
+			piratas.at(i)->reduz_vida(1);
 
+			//string usada para a impressao na parte das accoes
+			ss << "Pirata " << piratas.at(i)->get_letra() << " atacado seguranca interno";
+			accao = ss.str();
+			accoes_pir.push_back(accao);
+			ss.str(string());
 		}
+
+		
+
+		if (piratas.at(i)->get_vida() <= 0)//verifica se o pirata ainda tem vida
+		{
+			//string usada para a impressao na parte das accoes
+			ss << "Pirata " << piratas.at(i)->get_letra() << " destruido pelo seguranca interno";
+			accao = ss.str();
+			accoes_pir.push_back(accao);
+			ss.str(string());
+			//elimina o pirata do vector caso ele ja nao tenha vida 
+			piratas.erase(piratas.begin() + i);
+		}
+			
+			
 	}
+	for (i = 0; i < Xenomorfos.size(); i++)
+	{
+		if (Xenomorfos.at(i)->get_combate() == true)
+		{
+			Xenomorfos.at(i)->reduz_vida(1);
+
+			//string usada para a impressao na parte das accoes
+			ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " atacado seguranca interno";
+			accao = ss.str();
+			accoes_xeno.push_back(accao);
+			ss.str(string());
+		}
+		if (Xenomorfos.at(i)->get_vida() <= 0)//verifica se o xenomorfo ainda tem vida
+		{
+			//string usada para a impressao na parte das accoes
+			ss << "Xenomorfo " << Xenomorfos.at(i)->get_letra() << " destruido pelo seguranca interno";
+			accao = ss.str();
+			accoes_xeno.push_back(accao);
+			ss.str(string());
+
+			//elimina o xenomorfo do vector caso ele ja nao tenha vida 
+			Xenomorfos.erase(Xenomorfos.begin() + i);
+		}
+   }
 }
 
 //funcao da sala de enfermaria
@@ -1515,6 +1714,13 @@ void Sala::auto_reparador()
 		{
 			integridade = 100;
 		}
+
+		if (integridade == 100)
+		{
+			brecha = false;
+			fogo = false;
+			curto_circuito = false;
+		}
 	}
 }
 
@@ -1528,16 +1734,20 @@ void Sala::auto_reparador()
 
 void Sala::imprime_accoes_trip(int *y)
 {
-	for (int i = 0; i < accoes_trip.size(); i++)
+	int i;
+	for (i = 0; i < accoes_trip.size(); i++)
 	{
 		c.gotoxy(120, *y);
 		cout << accoes_trip.at(i) << endl;
 		(*y)++;
 	}
+
+
 }
 
 void Sala::imprime_accoes_xeno(int *y)
 {
+
 	for (int i = 0; i < accoes_xeno.size(); i++)
 	{
 		c.gotoxy(120, *y);
@@ -1548,14 +1758,12 @@ void Sala::imprime_accoes_xeno(int *y)
 
 void Sala::imprime_accoes_pir(int *y)
 {
-	if (accoes_pir.size() != 0)
+	
+	for (int i = 0; i < accoes_pir.size(); i++)
 	{
-		for (int i = 0; i < accoes_pir.size(); i++)
-		{
-			c.gotoxy(120, *y);
-			cout << accoes_pir.at(i) << endl;
-			(*y)++;
-		}
+		c.gotoxy(120, *y);
+		cout << accoes_pir.at(i) << endl;
+		(*y)++;
 	}
 	
 }

@@ -3,7 +3,8 @@
 
 Turno::Turno()
 {
-	numero = 1;
+	turno = 1;
+	conta_turno_eventos = 1;
 	nave = new Nave();
 	Ataque_Piratas* ata_pirata = new Ataque_Piratas();
 	evento.push_back(ata_pirata);
@@ -25,15 +26,22 @@ void Turno::inicio_jogo()
 	
 	
 	c.gotoxy(92, 8);
-	cout << numero;
+	cout << turno;
 	nave->set_salas_normais();
 	nave->set_salas_opcionais();
 	nave->adiciona_tripulantes();
-	system("cls");
 }
 
 void Turno::inicio_turno()
 {
+	nave->dano_sala_fogo();
+	nave->trata_efeito_toxicidade();
+	nave->trata_efeito_regenerador();
+	nave->trata_efeito_flamejante();
+	nave->sala_verifica_respirar();
+	nave->mover_pirata();
+	/*nave->mover_xenomorfo();*/
+
 	desenho.desenha_nave();
 	desenho.desenha_info();
 	desenho.desenha_info_nave();
@@ -46,15 +54,9 @@ void Turno::inicio_turno()
 	c.gotoxy(92, 6);
 	cout << nave->get_escudo();
 	c.gotoxy(92, 8);
-	cout << numero;
-
+	cout << turno;
+	nave->imprime_accoes_eventos();
 	nave->imprime_accoes_salas();
-	nave->dano_sala_fogo();
-	nave->trata_efeito_toxicidade();
-	nave->trata_efeito_regenerador();
-	nave->trata_efeito_flamejante();
-	nave->sala_verifica_respirar();
-	/*nave->mover_pirata();*/
 	nave->limpa_accoes_salas();
 
 }
@@ -72,12 +74,7 @@ void Turno::fase_ordem()
 	int num;
 	do
 	{
-		c.gotoxy(104, 4);
-		cout << nave->get_milhas();
-		c.gotoxy(92, 6);
-		cout << nave->get_escudo();
-		c.gotoxy(92, 8);
-		cout << numero;
+		
 
 		c.gotoxy(22, 31);
 		getline(cin, comando);
@@ -97,7 +94,9 @@ void Turno::fase_ordem()
 				desenho.desenha_comando();
 				nave->imprime_dados_sala();
 
-				nave->imprime_info_trip();			
+
+				nave->imprime_info_trip();	
+				
 			}
 			if (token1 == "xeno")
 			{
@@ -110,6 +109,7 @@ void Turno::fase_ordem()
 				nave->imprime_dados_sala();
 
 				nave->imprime_info_xeno();
+				
 			}
 			if (token1 == "pir")
 			{
@@ -122,6 +122,7 @@ void Turno::fase_ordem()
 				nave->imprime_dados_sala();
 
 				nave->imprime_info_pir();
+				
 			}
 		}
 		else if (token == "move")
@@ -141,6 +142,16 @@ void Turno::fase_ordem()
 			desenho.desenha_comando();
 			nave->imprime_dados_sala();
 		}
+		else
+		{
+			desenho.desenha_nave();
+			desenho.desenha_info();
+			desenho.desenha_info_nave();
+			desenho.desenha_info_unidades();
+			desenho.desenha_accoes();
+			desenho.desenha_comando();
+			nave->imprime_dados_sala();
+		}
 	} while (token != "next");
 }
 
@@ -149,9 +160,8 @@ void Turno::final_turno()
 	nave->dano_sala_curto_circuito();
 	nave->accoes_salas();
 	nave->trata_efeito_mutanti_mutantis();
-	/*nave->accoes_xenomorfos();
-	nave->accoes_piratas();*/
-
+	nave->accoes_xenomorfos();
+	nave->accoes_piratas();
 	nave->accoes_tripulantes();
 	nave->mover_nave();
 	
@@ -162,19 +172,23 @@ void Turno::eventos()
 	
 	int aux;
 	srand(time(NULL));
-	/*if (numero == 5)
-	{*/
-		/*aux = rand() % 4;*/
-	if (numero == 1)
+	if (turno == 1)
 	{
-		evento.at(0)->accao(nave);
-		
+		aux = rand() % 4;
+		evento.at(1)->accao(nave);	
 	}
-		
-		
-	/*}*/
-	numero++;
-	nave->mover_pirata();
+	
+	if (conta_turno_eventos == 5)
+	{
+		aux = rand() % 4;
+		evento.at(3)->accao(nave);
+		conta_turno_eventos = 0;
+	}
+	
+	conta_turno_eventos++;
+	turno++;
+
+	
 }
 
 

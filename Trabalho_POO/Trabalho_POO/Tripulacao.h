@@ -26,7 +26,7 @@ public:
 	
 
 	bool get_indeciso();
-	void set_indeciso(int conta_numero_vezes_hipnotizado);
+	void set_indeciso(bool aux);
 	void set_robotico(bool valor);
 	bool get_robotico();
 	int get_forca_arma();

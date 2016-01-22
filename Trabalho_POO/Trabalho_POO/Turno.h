@@ -12,7 +12,8 @@
 
 class Turno
 {
-	int numero;
+	int turno;
+	int conta_turno_eventos;
 	Nave* nave;
 	Consola c;
 	Desenho desenho;

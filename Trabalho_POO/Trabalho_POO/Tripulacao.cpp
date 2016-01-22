@@ -3,7 +3,7 @@
 #include "consola.h"
 
 
-char Tripulacao::aux = 'a';
+char Tripulacao::aux = 'A';
 
 Tripulacao::Tripulacao()
 {
@@ -40,46 +40,28 @@ void Tripulacao::set_arma(bool aux)
 }
 
 
-void Tripulacao::set_indeciso(int conta_numero_vezes_hipnotizado)
+void Tripulacao::set_indeciso(bool aux)
 {
-		srand(time(NULL));
-		int probabilidade = rand() % 100 + 1;
-
-		if (conta_numero_vezes_hipnotizado == 0) 
-		{
-			if (probabilidade <= 50)
-				this->indeciso = true;
-			else
-				this->indeciso = false;
-		}
-		else if (conta_numero_vezes_hipnotizado == 1)
-		{
-			if (probabilidade <= 75)
-				this->indeciso = true;
-			else
-				this->indeciso = false;
-		}
-		else
-			this->indeciso = true;
+	this->indeciso = aux;
 }
 
 bool Tripulacao::get_indeciso()
 {
-	bool verifica = false;
+	bool nao_mover = false;
 	int aux;
 	if (indeciso == true)
 	{
 		aux = rand() % 2 + 1;
 		if (aux == 1)//ignora o comando de mover
 		{
-			verifica = true;
+			nao_mover = true;
 		}
 		else
 		{
-			verifica = false;
+			nao_mover = false;
 		}
 	}
-	return verifica;
+	return nao_mover;
 }
 
 

@@ -14,8 +14,8 @@ void Ataque_Piratas::accao(Nave *nave)
 {
 	int aux,aux2;
 
-	aux = rand() % 31 + 30;//gera numero aleatorio entre 30 e 60
+	aux = rand() % 31 + 30;//gera numero aleatorio entre 30 e 60, dano
 	set_dano(aux);
-	aux2 = rand() % 3 + 3;//gera numero aleatorio entre 3 e 5
+	aux2 = rand() % 3 + 3;//gera numero aleatorio entre 3 e 5, numero de piratas a invadir a nave
 	nave->ataque_pirata(get_dano(), aux2);
 }

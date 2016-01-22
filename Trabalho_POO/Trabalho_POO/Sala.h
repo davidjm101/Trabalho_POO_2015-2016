@@ -77,15 +77,17 @@ public:
 
 
 	//funcoes para o movimento tripulante
-	bool verifica_tripulante(char nome);
-	bool verifica_robot_curto_circuito(char nome);
-	bool verifica_tripulante_indeciso(char nome);
-	Tripulacao* obtem_tripulante(char nome);
+	bool verifica_tripulante(char letra);
+	bool verifica_robot_curto_circuito(char letra);
+	bool verifica_tripulante_indeciso(char letra);
+	Tripulacao* obtem_tripulante(char letra);
 	void inser_tripulante(Tripulacao* t);
 
 	//funcoes de mover xenomorfos e piratas
 	void move_pirata(vector<Pirata*>& pir);
 	void inser_pirata(Pirata* p);
+	void move_xenomorfo(vector<xenomorfos*>& xeno);
+	void inser_xenomrofo(xenomorfos* x);
 
 	
 
@@ -97,7 +99,7 @@ public:
 	void atingida_po_cosmico(int dano);
 
 	//danos do fogo e curto circuito
-	void dano_fogo();
+	bool dano_fogo();
 	void dano_curto_circuito();
 	string get_problema_fogo();
 	string get_problema_brecha();

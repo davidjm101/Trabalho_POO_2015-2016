@@ -2,14 +2,16 @@
 #include "Sala.h"
 #include "Tripulacao.h"
 #include "consola.h"
+#include "bibliotecas.h"
 
 class Nave 
 {
 	int milhas;
 	int escudo;
-	int escudo_desativado;
+	int guarda_escudo;
 	bool escudo_activado;
 	vector<Sala*> salas;
+	vector<string> accoes_eventos;
 	Consola c;
 	
 
@@ -21,10 +23,12 @@ public:
 	void set_salas_opcionais();
 	void adiciona_tripulantes();
 	void mover_nave();
-	void mover_membro_tripulacao(char nome, int numero);
+	void mover_membro_tripulacao(char letra, int numero);
 
 	void mover_pirata();
 	void inser_pirata_nova_sala(Pirata* p, int sala);
+	void mover_xenomorfo();
+	void inser_xenomorfo_nova_sala(xenomorfos* x, int sala);
 	
 	void sala_verifica_misterioso();
 
@@ -74,6 +78,8 @@ public:
 	void imprime_info_trip();
 	void imprime_info_xeno();
 	void imprime_info_pir();
+
+	void imprime_accoes_eventos();
 	
 
 

@@ -16,7 +16,6 @@ Chuva_Meteorito::~Chuva_Meteorito()
 void Chuva_Meteorito::accao(Nave *nave)
 {
 	int aux;
-	srand(time(NULL));
 	if (nave->verifica_ponte_operada() == true)//ponte esta a ser operada, antige a nave entre 4a8 vezes
 	{
 		aux = rand() % 5 + 4;

@@ -232,7 +232,7 @@ int Nave::get_milhas()
 
 
 //mover membro da tripulacao
-void Nave::mover_membro_tripulacao(char nome, int numero)
+void Nave::mover_membro_tripulacao(char letra, int numero)
 {
 
 	Tripulacao* t = new Tripulacao();
@@ -257,29 +257,25 @@ void Nave::mover_membro_tripulacao(char nome, int numero)
 		for (i = 0; i < salas.size(); i++)
 		{
 			    //verifica que existe o tripulante indicado
-				verifica = salas.at(i)->verifica_tripulante(nome);
+				verifica = salas.at(i)->verifica_tripulante(letra);
 				if (verifica == true)
 				{
 					//verifica se caso for robot se ele se pode mover
-					robot_move = salas.at(i)->verifica_robot_curto_circuito(nome);
+					robot_move = salas.at(i)->verifica_robot_curto_circuito(letra);
 					if(robot_move ==true)
 					{
 						//vai verificar se o tripulante este indeciso
-						indeciso = salas.at(i)->verifica_tripulante_indeciso(nome);
-						if (indeciso == true)
-						{
-							aux= rand() % 2 + 1;//vai ver se o tripulante se move com uma probabilidade de 50%
-							if (aux == 1)//vai mover
-							{
-								indeciso = false;
-							}
-						}
-						//se retornar false, quer dizer que nao esta e entao move-se
+						indeciso = salas.at(i)->verifica_tripulante_indeciso(letra);
+						//se retornar false, quer dizer que nao esta indeciso e entao move-se
 						if (indeciso == false)
 						{
-							t = salas.at(i)->obtem_tripulante(nome);
+							t = salas.at(i)->obtem_tripulante(letra);
 							verifica = true;
 							break;
+						}
+						else
+						{
+							verifica = false;
 						}
 					}	
 				}
@@ -623,6 +619,309 @@ void Nave::inser_pirata_nova_sala(Pirata* p, int sala)
 	}
 }
 
+//mover xenomorfo
+void Nave::mover_xenomorfo()
+{
+	vector<xenomorfos*> xeno;
+	int i, j;
+	int aux;
+	int sala;
+
+	for (i = 0; i < salas.size(); i++)
+	{
+
+		salas.at(i)->move_xenomorfo(xeno);
+		if (xeno.size() > 0)
+		{
+			for (j = 0; j < xeno.size(); j++)
+			{
+				sala = salas.at(i)->get_numero();
+				switch (sala)
+				{
+				case 1:
+					aux = aux = rand() % 2 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 2);//move para a sala com o numero 2
+					}
+					else
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					break;
+
+				case 2:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 1);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					break;
+
+				case 3:
+					aux = aux = rand() % 5 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 2);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 5)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					break;
+
+				case 4:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 8);//move para a sala com o numero 8
+					}
+					break;
+
+				case 5:
+					aux = aux = rand() % 7 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 1);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 2);//move para a sala com o numero 2
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 5)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 9);//move para a sala com o numero 9
+					}
+					else if (aux == 6)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 7)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 11);//move para a sala com o numero 11
+					}
+					break;
+
+				case 6:
+					aux = aux = rand() % 8 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 2);//move para a sala com o numero 1
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 5)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 6)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 7)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 11);//move para a sala com o numero 11
+					}
+					else if (aux == 8)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 12);//move para a sala com o numero 12
+					}
+					break;
+
+				case 7:
+					aux = aux = rand() % 6 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 3);//move para a sala com o numero 3
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 8);//move para a sala com o numero 8
+					}
+					else if (aux == 5)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 11);//move para a sala com o numero 11
+					}
+					else if (aux == 6)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 12);//move para a sala com o numero 12
+					}
+					break;
+
+				case 8:
+					aux = aux = rand() % 3 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 4);//move para a sala com o numero 4
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 12);//move para a sala com o numero 12
+					}
+					break;
+
+				case 9:
+					aux = aux = rand() % 2 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 10);//move para a sala com o numero 10
+					}
+					break;
+
+				case 10:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 9);//move para a sala com o numero 9
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 11);//move para a sala com o numero 11
+					}
+					break;
+
+				case 11:
+					aux = aux = rand() % 5 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 5);//move para a sala com o numero 5
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 10);//move para a sala com o numero 10
+					}
+					else if (aux == 5)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 12);//move para a sala com o numero 12
+					}
+					break;
+
+				case 12:
+					aux = aux = rand() % 4 + 1;
+					if (aux == 1)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 6);//move para a sala com o numero 6
+					}
+					else if (aux == 2)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 7);//move para a sala com o numero 7
+					}
+					else if (aux == 3)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 8);//move para a sala com o numero 8
+					}
+					else if (aux == 4)
+					{
+						inser_xenomorfo_nova_sala(xeno.at(j), 11);//move para a sala com o numero 11
+					}
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+		xeno.clear();
+	}
+}
+//vai inserir o xenomorfo numa nova sala
+void Nave:: inser_xenomorfo_nova_sala(xenomorfos* x, int sala)
+{
+	for (int i = 0; i < salas.size(); i++)
+	{
+		if (salas.at(i)->get_numero() == sala)
+		{
+			salas.at(i)->inser_xenomrofo(x);
+			break;
+		}
+	}
+}
 
 
 //mover nave
@@ -826,15 +1125,20 @@ void Nave::sala_verifica_respirar()
 void Nave::trata_efeito_mutanti_mutantis()
 {
 	bool verifica=false;
+	int numero = 0;
 	int aux;
 	for (int i = 0; i < salas.size(); i++)
 	{
-		verifica = salas.at(i)->trata_caracteristica_mutatis_mutantis();
-		if (verifica == true)
+		numero = salas.at(i)->get_numero();
+	   //verifica que e uma sala opcional e se for entao podera sofrer do mutantis mutantis
+		if (numero == 2 || numero == 3 || numero == 4 || numero == 10 || numero == 11 || numero == 12)
 		{
-			aux = rand() % 9 + 1;
-			switch (aux)
+			verifica = salas.at(i)->trata_caracteristica_mutatis_mutantis();
+			if (verifica == true)
 			{
+				aux = rand() % 9 + 1;
+				switch (aux)
+				{
 				case 1:
 					salas.at(i)->set_nome("Propulsor");
 					break;
@@ -864,8 +1168,9 @@ void Nave::trata_efeito_mutanti_mutantis()
 					break;
 				default:
 					break;
+				}
 			}
-		}
+		}	
 	}
 }
 
@@ -921,6 +1226,8 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 	bool verifica = false;
 	int aux;
 	int conta = 0,i;
+	string accao;
+	stringstream ss;
 	//verifica se a nave tem raio laser, e se tiver se esta a ser operado
 	for (i = 0; i < salas.size(); i++)
 	{
@@ -931,53 +1238,126 @@ void Nave::atravessa_chuva_meteoritos(int dano, int num)
 		}
 	}
 	
-		srand(time(NULL));
-		aux = rand() % 2 + 1;
-		if ((aux == 1 && verifica==false) || (aux == 2 && verifica == false))//raio laser nao destroi os meteoritos
+	if (verifica == false)//o raio laser nao esta a ser operado
+	{
+		if (escudo > 0)//atingiu o escudo
 		{
-			if (escudo > 0)
+			escudo -= (dano*num);
+			if (escudo < 0)
+			{
+				escudo = 0;
+			}
+			//string usada para a impressao na parte das accoes
+			ss << "A nave atravessou chuva meteoritos,";
+			accao = ss.str();
+			accoes_eventos.push_back(accao);
+			ss.str(string());
+
+			ss << "o escudo da nave sofreu dano";
+			accao = ss.str();
+			accoes_eventos.push_back(accao);
+			ss.str(string());
+
+		}
+		else
+		{
+			//atinge uma sala
+				aux = rand() % 12 + 1;
+				for (i = 0; i < salas.size(); i++)
+				{
+					if (salas.at(i)->get_numero() == aux)
+					{
+						salas.at(i)->atingida_meteorito(dano);
+					}
+				}
+				//string usada para a impressao na parte das accoes
+				ss << "A nave atravessou chuva meteoritos,";
+				accao = ss.str();
+				accoes_eventos.push_back(accao);
+				ss.str(string());
+
+				ss << "uma sala sofreu dano";
+				accao = ss.str();
+				accoes_eventos.push_back(accao);
+				ss.str(string());
+
+				ss << "e se encontra com brecha";
+				accao = ss.str();
+				accoes_eventos.push_back(accao);
+				ss.str(string());
+		}
+	}
+	else//raio laser esta operacional
+	{
+		aux = rand() % 2 + 1;
+		if (aux == 1)//raio laser nao destrui os lasers
+		{
+			if (escudo > 0)//escudo leva dano
 			{
 				escudo -= (dano*num);
-				c.gotoxy(85, 19);
-				cout << "A nave atravessou chuva meteoritos" << endl;
-				c.gotoxy(85, 20);
-				cout << "o escudo da nave sofreu dano" << endl;
-				system("PAUSE");
+				//string usada para a impressao na parte das accoes
+				ss << "A nave atravessou chuva meteoritos,";
+				accao = ss.str();
+				accoes_eventos.push_back(accao);
+				ss.str(string());
+
+				ss << "o escudo da nave sofreu dano";
+				accao = ss.str();
+				accoes_eventos.push_back(accao);
+				ss.str(string());
+
+				if (escudo < 0)
+				{
+					escudo = 0;
+				}
 			}
 			else
 			{
-				do {
+				//uma sala leva dano
 					aux = rand() % 12 + 1;
 					for (i = 0; i < salas.size(); i++)
 					{
 						if (salas.at(i)->get_numero() == aux)
 						{
 							salas.at(i)->atingida_meteorito(dano);
-							conta++;
 						}
 					}
-				} while (conta != num);
-				c.gotoxy(85, 19);
-				cout << "A nave atravessou chuva meteoritos" << endl;
-				c.gotoxy(85, 20);
-				cout << "varia salas sofreram dano" << endl;
-				c.gotoxy(85, 21);
-				cout << "e se encontram com brechas" << endl;
-				system("PAUSE");
+					//string usada para a impressao na parte das accoes
+					ss << "A nave atravessou chuva meteoritos,";
+					accao = ss.str();
+					accoes_eventos.push_back(accao);
+					ss.str(string());
+
+					ss << "uma sala sofreu dano";
+					accao = ss.str();
+					accoes_eventos.push_back(accao);
+					ss.str(string());
+
+					ss << "e se encontra com brecha";
+					accao = ss.str();
+					accoes_eventos.push_back(accao);
+					ss.str(string());
 			}
-			
 		}
-		else
+		else//o raio laser destrui o meteoritos
 		{
-			c.gotoxy(85, 19);
-			cout << "A nave atravessou chuva meteoritos" << endl;
-			c.gotoxy(85, 20);
-			cout << "o raio laser destrui!!!" << endl;
-			c.gotoxy(85, 21);
-			cout << "todos os meteoritos." << endl;
-			system("PAUSE");
+			//string usada para a impressao na parte das accoes
+			ss << "A nave atravessou chuva meteoritos,";
+			accao = ss.str();
+			accoes_eventos.push_back(accao);
+			ss.str(string());
+
+			ss << "o raio laser destrui";
+			accao = ss.str();
+			accoes_eventos.push_back(accao);
+			ss.str(string());
+
+			ss << "todos os meteoritos.";
+			accao = ss.str();
+			accoes_eventos.push_back(accao);
+			ss.str(string());
 		}
-	
+	}
 }
 
 
@@ -987,7 +1367,8 @@ void Nave::ataque_pirata(int dano, int num)
 	int dano_excesso;
 	bool verifica=false;
 	int i,aux;
-
+	string accao;
+	stringstream ss;
 	//verifica se a nave ainda tem escudo
 	if (escudo > 0)
 	{
@@ -999,7 +1380,6 @@ void Nave::ataque_pirata(int dano, int num)
 		{
 			dano_excesso = dano - escudo;
 			escudo = 0;
-			srand(time(NULL));
 			aux = rand() % 12 + 1;
 			for (i = 0; i < salas.size(); i++)
 			{
@@ -1014,7 +1394,7 @@ void Nave::ataque_pirata(int dano, int num)
 	// a nave ja nao tem escudo
 	else
 	{
-		srand(time(NULL));
+
 		aux = rand() % 12 + 1;
 		for (i = 0; i < salas.size(); i++)
 		{
@@ -1038,7 +1418,6 @@ void Nave::ataque_pirata(int dano, int num)
 	//caso nao esteja uma sala e invadida por piratas
 	if (verifica == false)
 	{
-		srand(time(NULL));
 		aux = rand() % 12 + 1;
 		for (i = 0; i < salas.size(); i++)
 		{
@@ -1048,23 +1427,43 @@ void Nave::ataque_pirata(int dano, int num)
 				break;
 			}
 		}
-		c.gotoxy(85, 19);
-		cout << "A nave foi atacada por piratas," << endl;
-		c.gotoxy(85, 20);
-		cout << "recebeu dano," << endl;
-		c.gotoxy(85, 21);
-		cout << "a nave foi invadida" << endl;
-		system("PAUSE");
+		//string usada para a impressao na parte das accoes
+		ss << "A nave foi atacada por piratas,";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+		
+		ss << "recebeu dano";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+		ss << "e foi invadida";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+	
 	}
 	else
 	{
-		c.gotoxy(85, 19);
-		cout << "A nave foi atacada por piratas," << endl;
-		c.gotoxy(85, 20);
-		cout << "os piratas foram afugentados," << endl;
-		c.gotoxy(85, 21);
-		cout << "a nave nao foi invadida" << endl;
-		system("PAUSE");
+		//string usada para a impressao na parte das accoes
+		ss << "A nave foi atacada por piratas,";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+		ss << "os piratas foram afugentados,";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+		ss << "a nave nao foi invadida";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+		
+	
 	}
 }
 
@@ -1072,6 +1471,8 @@ void Nave::ataque_pirata(int dano, int num)
 void Nave::invadida_xenomorfos()
 {
 	int aux;
+	string accao;
+	stringstream ss;
 	aux = rand() % 12 + 1;// gera numero ente 1 e 12
 	for (int i = 0; i < salas.size(); i++)
 	{
@@ -1081,19 +1482,30 @@ void Nave::invadida_xenomorfos()
 			break;
 		}
 	}
-	c.gotoxy(85, 19);
-	cout << "A nave foi atacada por" << endl;
-	c.gotoxy(85, 20);
-	cout << "xenomorfos, uma das salas!!!" << endl;
-	c.gotoxy(85, 21);
-	cout << "foi invadida." << endl;
+	//string usada para a impressao na parte das accoes
+	ss << "A nave foi atacada por";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
+
+	ss << "xenomorfos, uma das salas";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
+
+	ss << "foi invadida.";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
+
 }
 
 //nave atravessa po cosmico
 void Nave::atravessa_po_cosmico(int dano)
 {
 	int aux,aux2;
-
+	string accao;
+	stringstream ss;
 	
 	aux = rand() % 3 + 3;//gera numero aleatorio entre 3 e 5
 	do
@@ -1111,21 +1523,173 @@ void Nave::atravessa_po_cosmico(int dano)
 		aux--;
 	} while (aux>0);
 
-	c.gotoxy(85, 19);
-	cout << "A nave atravessou campo" << endl;
-	c.gotoxy(85, 20);
-	cout << "de po cosmico, varia salas!!!" << endl;
-	c.gotoxy(85, 21);
-	cout << "receberam dano." << endl;
-	system("PAUSE");
+
+	//string usada para a impressao na parte das accoes
+	ss << "A nave atravessou campo";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
+
+	ss << "de po cosmico, varia salas";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
+
+	ss << "receberam dano.";
+	accao = ss.str();
+	accoes_eventos.push_back(accao);
+	ss.str(string());
 }
 
 //verifica se alguma sala esta em fogo e se estiver provoca o dano
 void Nave::dano_sala_fogo()
 {
+	bool fogo_adj;
+	int numero_sala;
+	int aux;
 	for (int i = 0; i < salas.size(); i++)
 	{
-		salas.at(i)->dano_fogo();
+		fogo_adj=salas.at(i)->dano_fogo();
+		if (fogo_adj == true)
+		{
+			numero_sala = salas.at(i)->get_numero();
+			switch (numero_sala)
+			{
+				case 1:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 2 || aux == 5)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+				case 2:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 1 || aux == 3 || aux==5 || aux==6)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 3:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 2 || aux == 4 || aux == 5 || aux == 6 || aux==7)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 4:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 3 || aux == 6 || aux == 7 || aux == 8 )
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 5:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 1 || aux == 2 || aux == 3 || aux == 6 || aux == 9 || aux==10 || aux==11)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 6:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 2 || aux == 3 || aux == 4 || aux == 5 || aux == 7 || aux==10 || aux==11 || aux==12)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 7:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 3 || aux == 4 || aux == 6 || aux == 8 || aux == 11 || aux == 12)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 8:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 4 || aux == 7 || aux == 12)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 9:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 10)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 10:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 9 || aux == 5 || aux == 6 || aux== 11)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 11:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 5 || aux == 6 || aux == 7 || aux ==10 || aux==12)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				case 12:
+					for (int j = 0; j < salas.size(); j++)
+					{
+						aux = salas.at(j)->get_numero();
+						if (aux == 6 || aux == 7 || aux == 8 || aux == 11)
+						{
+							salas.at(j)->set_fogo(true);
+						}
+					}
+					break;
+
+				default:
+					break;
+			}
+		}
 	}
 }
 
@@ -1171,10 +1735,10 @@ void Nave::accoes_tripulantes()
 		salas.at(i)->combate_tripulante();
 	}
 	
-	//for (int i = 0; i < salas.size(); i++)
-	//{
-	//	salas.at(i)->reparar_sala();
-	//}
+	for (int i = 0; i < salas.size(); i++)
+	{
+		salas.at(i)->reparar_sala();
+	}
 }
 
 //acontecimentos relativos as salas da nave
@@ -1187,31 +1751,32 @@ void Nave::accoes_salas()
 	{
 		if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
 		{
-			//verifica se a sala nao tem dano, se retornar falso é porque tem dano
+			//verifica se a sala tem dano, se retornar falso é porque tem dano
 			if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
 			{
-				escudo_desativado = escudo;
+				guarda_escudo = escudo;
 				escudo = 0;
 				escudo_activado = false;
 			}
 			else if (salas.at(i)->controlo_escudo() == true && escudo_activado == false)
 			{
-					escudo = escudo_desativado;
+					escudo = guarda_escudo;
 					escudo_activado = true;	
 			}	
 		}
 		
 		//se for a sala de sistema de segurança interno
-		if (salas.at(i)->get_nome() == "Sist_Seg_Interno")
+		if (salas.at(i)->get_nome() == "Sist_Seg_Interno" && salas.at(i)->get_integridade() == 100)
 		{
-			//vai ver se tem alguem inimigo na sala e vai atacar caso estajam
-			salas.at(i)->sistema_seguranca_interno();
 			
-			//vai fazer o mesmo as salas adjacentes
-			num_sala = salas.at(i)->get_numero();
-			switch (num_sala)
-			{
-			
+				//vai ver se tem alguem inimigo na sala e vai atacar caso estajam
+				salas.at(i)->sistema_seguranca_interno();
+
+				//vai fazer o mesmo as salas adjacentes
+				num_sala = salas.at(i)->get_numero();
+				switch (num_sala)
+				{
+
 				case 2:
 					for (j = 0; j < salas.size(); j++)
 					{
@@ -1275,7 +1840,7 @@ void Nave::accoes_salas()
 				default:
 					break;
 
-			}
+				}			
 		}
 
 		//se for a sala de suporte de vida
@@ -1381,6 +1946,7 @@ void Nave::imprime_accoes_salas()
 {
 
 	int y = 19;
+
 	for (int i = 0; i < salas.size(); i++)
 	{
 		salas.at(i)->imprime_accoes_xeno(&y);
@@ -1441,3 +2007,18 @@ void Nave::imprime_info_pir()
 		salas.at(i)->imprime_info_unidades(&y);
 	}
 }
+
+void Nave::imprime_accoes_eventos()
+{
+	int y = 22;
+	for (int i = 0; i < accoes_eventos.size(); i++)
+	{
+		c.gotoxy(85, y);
+		c.setTextColor(c.VERMELHO);
+		cout << accoes_eventos.at(i) << endl;
+		y++;
+	}
+	accoes_eventos.clear();
+	c.setTextColor(c.BRANCO);
+}
+

@@ -41,4 +41,6 @@ class xenomorfos : public Unidade
 		bool get_misterioso();
 		bool get_casulo();
 		char get_letra();
+		bool verifica_move();
+
 };
