@@ -2,7 +2,7 @@
 #include "xenomorfos.h"
 #include "Sala.h"
 
-char xenomorfos::aux = 'A';
+char xenomorfos::aux = 'a';
 
 
 
@@ -131,13 +131,7 @@ bool xenomorfos::get_hipnotizador()
 
 void xenomorfos::set_mutatis_mutandis(int valor)
 {
-	srand(time(NULL));
-	int probabilidade = rand() % 100 + 1;
-
-	if (probabilidade <= valor)
-		this->mutatis_mutandis = true;
-	else
-		this->mutatis_mutandis = false;
+	this->mutatis_mutandis = valor;
 
 }
 
@@ -157,7 +151,7 @@ void xenomorfos::regenera_vida()
 	}
 }
 
-bool xenomorfos::get_mutatis_mutandis()
+int xenomorfos::get_mutatis_mutandis()
 {
 
 	return mutatis_mutandis;

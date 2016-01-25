@@ -3,7 +3,7 @@
 
 
 
-char Pirata::aux = 'A';
+char Pirata::aux = 'a';
 
 Pirata::Pirata()
 {

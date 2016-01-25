@@ -27,6 +27,7 @@ public:
 	void final_turno();
 	void eventos();
 	bool acabou_jogo();
+	void imprime_acabou_jogo();
 
 };
 

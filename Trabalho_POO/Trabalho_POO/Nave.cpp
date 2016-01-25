@@ -7,6 +7,7 @@ Nave::Nave()
 {
 	milhas = 0;
 	escudo = 100;
+	escudo_activado = true;
 }
 
 Nave::~Nave()
@@ -55,16 +56,29 @@ void Nave::set_salas_opcionais()
 	{
 		do {
 			system("cls");
+			c.gotoxy(30, 4);
+			cout << "Sala a adicionar (6 salas)" << endl;
+			c.gotoxy(30, 8);
 			cout << "1:Propulsor Adicional" << endl;
+			c.gotoxy(30, 9);
 			cout << "2:Beliche" << endl;
+			c.gotoxy(30, 10);
 			cout << "3:Raio laser" << endl;
+			c.gotoxy(30, 11);
 			cout << "4:Auto reparador" << endl;
+			c.gotoxy(30, 12);
 			cout << "5:Sistema de seguranca interno" << endl;
+			c.gotoxy(30, 13);
 			cout << "6:Enfermaria" << endl;
+			c.gotoxy(30, 14);
 			cout << "7:Sala de Armas" << endl;
+			c.gotoxy(30, 15);
 			cout << "8:Alojamento do Capitao" << endl;
+			c.gotoxy(30, 16);
 			cout << "9:Oficina robotica" << endl;
+			c.gotoxy(30, 17);
 			cout << "Indique a sala que pretende juntar a nave: ";
+			c.gotoxy(72, 17);
 			cin >> sala;
 		} while (sala < 1 || sala > 9);
 		
@@ -76,6 +90,7 @@ void Nave::set_salas_opcionais()
 		if (sala == 1)
 		{
 			salas.push_back(new Sala("Propulsor",numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Propulsor adicionado a nave" <<endl;
 			contador++;
 			numero_sala++;
@@ -85,6 +100,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 2)
 		{
 			salas.push_back(new Sala("Beliche", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Beliche adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -95,6 +111,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 3)
 		{
 			salas.push_back(new Sala("Raio_Laser", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Raio laser adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -104,6 +121,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 4)
 		{
 			salas.push_back(new Sala("Auto_Reparador", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Auto reparador adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -113,6 +131,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 5)
 		{
 			salas.push_back(new Sala("Sist_Seg_Interno", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Sistema de seguranca interno adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -122,6 +141,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 6)
 		{
 			salas.push_back(new Sala("Enfermaria", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Enfermaria adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -131,6 +151,7 @@ void Nave::set_salas_opcionais()
 		else if (sala == 7)
 		{
 			salas.push_back(new Sala("Sala_Armas", numero_sala));
+			c.gotoxy(30, 19);
 			cout << "Sala de Armas adicionado a nave" << endl;
 			contador++;
 			numero_sala++;
@@ -142,6 +163,7 @@ void Nave::set_salas_opcionais()
 			if (alojamento_cap == false)
 			{
 				salas.push_back(new Sala("Aloj_Capitao", numero_sala));
+				c.gotoxy(30, 19);
 				cout << "Alojamento do Capitao adicionado a nave" << endl;
 				contador++;
 				numero_sala++;
@@ -150,7 +172,9 @@ void Nave::set_salas_opcionais()
 			}
 			else
 			{
+				c.gotoxy(30, 19);
 				cout << "Ja possui um alojamento do capitao na nave" << endl;
+				c.gotoxy(30, 20);
 				cout << "Nao pode adicionar outro alojamento do capitao a nave" << endl;
 				system("PAUSE");
 			}
@@ -163,6 +187,7 @@ void Nave::set_salas_opcionais()
 			{
 
 				salas.push_back(new Sala("Oficina_Robotica", numero_sala));
+				c.gotoxy(30, 19);
 				cout << "Oficina robotica adicionado a nave" << endl;
 				contador++;
 				numero_sala++;
@@ -171,7 +196,9 @@ void Nave::set_salas_opcionais()
 			}
 			else
 			{
-				cout << "Ja possui uma oficina robotica na nave" << endl;
+				c.gotoxy(30, 19);
+				cout << "Ja possui uma oficina robotica na nave" << endl; 
+				c.gotoxy(30, 20);
 				cout << "Nao pode adicionar outra oficina robotica a nave" << endl;
 				system("PAUSE");
 			}
@@ -188,14 +215,6 @@ void Nave::adiciona_tripulantes()
 {
 	int i;
 	int conta=0;
-
-	for (i = 0; i < salas.size(); i++)//adiciona o tripulantes as sala Propulsor e Ponte
-	{
-		if (salas.at(i)->get_nome() == "Propulsor" || salas.at(i)->get_nome() == "Ponte")
-		{
-			salas.at(i)->set_tripulante();
-		}
-	}
 
 	for (i = 0; i < salas.size(); i++)
 	{
@@ -214,6 +233,41 @@ void Nave::adiciona_tripulantes()
 			salas.at(i)->set_tripulante();
 		}
 	}
+
+	if (conta == 0)//nao existe capitao nem robot, adiciona 3 tripulantes
+	{
+		for (i = 0; i < salas.size(); i++)//adiciona o tripulantes as sala Propulsor e Ponte
+		{
+			if (salas.at(i)->get_numero() == 1 || salas.at(i)->get_numero() == 8 || salas.at(i)->get_numero() == 9)
+			{
+				salas.at(i)->set_tripulante();
+			}
+		}
+	}
+
+	else if (conta == 1)//existe um capitao ou um robot, entao adiciona 2 tripulantes
+	{
+		for (i = 0; i < salas.size(); i++)//adiciona o tripulantes as sala Propulsor e Ponte
+		{
+			if (salas.at(i)->get_numero() == 1 || salas.at(i)->get_numero() == 8)
+			{
+				salas.at(i)->set_tripulante();
+			}
+		}
+	}
+	else if (conta == 2)//existe um capitao e um robot, entao adiciona 1 tripulante
+	{
+		for (i = 0; i < salas.size(); i++)//adiciona o tripulantes as sala Propulsor e Ponte
+		{
+			if (salas.at(i)->get_numero() == 8)
+			{
+				salas.at(i)->set_tripulante();
+			}
+		}
+	}
+	
+
+	
 
 
 	
@@ -1086,11 +1140,45 @@ void Nave::imprime_dados_sala()
 				c.gotoxy(x, y);
 				cout << aux << ":" << salas.at(i)->get_nome() << endl;
 				c.gotoxy(x, y + 1);
-				cout << "Integ: " << salas.at(i)->get_integridade() << endl;
+				cout << "Integ: ";
+				if (salas.at(i)->get_integridade() >= 70 && salas.at(i)->get_integridade() <= 100)
+				{
+					c.setTextColor(c.VERDE);
+				}
+				else if (salas.at(i)->get_integridade() >= 40 && salas.at(i)->get_integridade() <= 69)
+				{
+					c.setTextColor(c.AMARELO);
+				}
+				else if (salas.at(i)->get_integridade() >= 0 && salas.at(i)->get_integridade() <= 39)
+				{
+					c.setTextColor(c.VERMELHO);
+				}
+				cout << salas.at(i)->get_integridade() << endl;
+				
 				c.gotoxy(x, y + 2);
-				cout << "Oxig: " << salas.at(i)->get_oxigenio() << endl;
+				c.setTextColor(c.BRANCO);
+				cout << "Oxig: ";
+				if (salas.at(i)->get_oxigenio() >= 70 && salas.at(i)->get_oxigenio() <= 100)
+				{
+					c.setTextColor(c.VERDE);
+				}
+				else if (salas.at(i)->get_oxigenio() >= 40 && salas.at(i)->get_oxigenio() <= 69)
+				{
+					c.setTextColor(c.AMARELO);
+				}
+				else if (salas.at(i)->get_oxigenio() >= 0 && salas.at(i)->get_oxigenio() <= 39)
+				{
+					c.setTextColor(c.VERMELHO);
+				}
+				cout<< salas.at(i)->get_oxigenio() << endl;
+				
 				c.gotoxy(x, y + 3);
-				cout << "Prob: " << salas.at(i)->get_problema_fogo() << " " << salas.at(i)->get_problema_brecha() << " " << salas.at(i)->get_problema_curto_circuito();
+				c.setTextColor(c.BRANCO);
+				cout << "Prob: ";
+				c.setTextColor(c.VERMELHO);
+				cout << salas.at(i)->get_problema_fogo() << " " << salas.at(i)->get_problema_brecha() << " " << salas.at(i)->get_problema_curto_circuito();
+				
+				c.setTextColor(c.BRANCO);
 				c.gotoxy(x, y + 4);
 				cout << "Trip: ";
 				salas.at(i)->get_letra_tripulantes();
@@ -1428,11 +1516,17 @@ void Nave::ataque_pirata(int dano, int num)
 			}
 		}
 		//string usada para a impressao na parte das accoes
-		ss << "A nave foi atacada por piratas,";
+		ss << "A nave foi atacada ";
 		accao = ss.str();
 		accoes_eventos.push_back(accao);
 		ss.str(string());
 		
+		ss << "por piratas,";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+
 		ss << "recebeu dano";
 		accao = ss.str();
 		accoes_eventos.push_back(accao);
@@ -1447,7 +1541,12 @@ void Nave::ataque_pirata(int dano, int num)
 	else
 	{
 		//string usada para a impressao na parte das accoes
-		ss << "A nave foi atacada por piratas,";
+		ss << "A nave foi atacada";
+		accao = ss.str();
+		accoes_eventos.push_back(accao);
+		ss.str(string());
+
+		ss << "por piratas,";
 		accao = ss.str();
 		accoes_eventos.push_back(accao);
 		ss.str(string());
@@ -1749,20 +1848,36 @@ void Nave::accoes_salas()
 
 	for (i = 0; i < salas.size(); i++)
 	{
-		if (salas.at(i)->get_nome() == "Controlo_Escudo" && salas.at(i)->get_integridade() == 100)
+		if (salas.at(i)->get_nome() == "Controlo_Escudo")
 		{
 			//verifica se a sala tem dano, se retornar falso é porque tem dano
-			if (salas.at(i)->controlo_escudo() == false && escudo_activado == true)
+			if (salas.at(i)->controlo_escudo() == false)
 			{
-				guarda_escudo = escudo;
-				escudo = 0;
-				escudo_activado = false;
+				if (escudo_activado == true)
+				{
+					guarda_escudo = escudo;
+					escudo = 0;
+					escudo_activado = false;
+				}	
 			}
-			else if (salas.at(i)->controlo_escudo() == true && escudo_activado == false)
+			//a sala nao tem dano
+			else if (salas.at(i)->controlo_escudo() == true)
 			{
+				if (escudo_activado == false)
+				{
 					escudo = guarda_escudo;
-					escudo_activado = true;	
+					escudo_activado = true;
+				}			
 			}	
+			//da mais 5 ao escudo caso a sala estja a ser operada
+			if (salas.at(i)->verifica_sala_operada() == true)
+			{
+				escudo += 5;
+				if (escudo > 100)
+				{
+					escudo = 100;
+				}
+			}
 		}
 		
 		//se for a sala de sistema de segurança interno

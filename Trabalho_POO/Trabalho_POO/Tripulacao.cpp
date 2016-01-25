@@ -3,7 +3,7 @@
 #include "consola.h"
 
 
-char Tripulacao::aux = 'A';
+char Tripulacao::aux = 'a';
 
 Tripulacao::Tripulacao()
 {

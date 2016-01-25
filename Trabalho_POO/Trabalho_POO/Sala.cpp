@@ -711,7 +711,7 @@ bool Sala::trata_caracteristica_mutatis_mutantis()
 	{
 		if (Xenomorfos.at(i)->get_mutatis_mutandis()>0)
 		{
-			aux = rand() % 2 + 1;// probabilidade de 10%
+			aux = rand() % 10 + 1;// probabilidade de 10%
 			if (aux == 1)
 			{
 				verifica = true;
@@ -823,7 +823,7 @@ void Sala::invadida_xenomorfos()
 {
 	int aux;
 	aux = rand() % 3 + 1;
-	/*if (aux == 1)
+	if (aux == 1)
 	{
 		set_xenomorfo_geigermorfo();
 	}
@@ -834,8 +834,7 @@ void Sala::invadida_xenomorfos()
 	else
 	{
 		set_xenomorfo_mxyzypykwi();
-	}*/
-	set_xenomorfo_mxyzypykwi();
+	}	
 }
 
 //sala atingida por po cosmico

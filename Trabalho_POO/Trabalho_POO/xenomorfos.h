@@ -14,7 +14,7 @@ class xenomorfos : public Unidade
 		bool flamejante;
 		int toxico;
 		bool hipnotizador;
-		bool mutatis_mutandis;
+		int mutatis_mutandis;
 		
 
 	public:
@@ -33,7 +33,7 @@ class xenomorfos : public Unidade
 
 		void regenera_vida();
 		int get_xenomorfo();
-		bool get_mutatis_mutandis();
+		int get_mutatis_mutandis();
 		bool get_hipnotizador();
 		int get_toxico();
 		int get_flamejante();
